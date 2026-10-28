@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import Navbar from "./components/common/Navbar";
 import Sidebar from "./components/common/Sidebar";
+import AmbientBackground from "./components/common/AmbientBackground";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -73,7 +74,8 @@ export default function App() {
 
   // 3. Authenticated App Layout (Dashboard, Tracker, Analytics, Rewards, Leaderboard, Profile, Specs)
   return (
-    <div className="min-h-screen bg-softWhite flex flex-col font-sans">
+    <div className="min-h-screen bg-softWhite flex flex-col font-sans relative">
+      <AmbientBackground />
       <Navbar
         onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         isSidebarCollapsed={isSidebarCollapsed}

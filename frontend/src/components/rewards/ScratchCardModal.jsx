@@ -5,6 +5,7 @@ import { useToast } from "../../context/ToastContext";
 import { useAuth } from "../../context/AuthContext";
 import { Sparkles, Copy, Check, Gift, Award, Coins } from "lucide-react";
 import confetti from "canvas-confetti";
+import { getRewardVisual } from "../../assets/rewardImages";
 
 export default function ScratchCardModal({
   isOpen,
@@ -66,8 +67,8 @@ export default function ScratchCardModal({
         {/* Scratch Card Outer Envelope */}
         <div
           onClick={handleReveal}
-          className={`w-72 h-80 rounded-3xl relative overflow-hidden shadow-2xl cursor-pointer transition-all duration-500 transform ${
-            revealed ? "bg-gradient-to-br from-forest-900 via-forest-800 to-emerald-900 border-2 border-limeAccent" : "bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 hover:scale-105 active:scale-95 shadow-glow"
+          className={`w-80 h-[400px] rounded-3xl relative overflow-hidden shadow-2xl cursor-pointer transition-all duration-500 transform ${
+            revealed ? "bg-gradient-to-br from-forest-950 via-forest-900 to-forest-950 border-2 border-limeAccent" : "bg-gradient-to-tr from-amber-400 via-yellow-300 to-amber-500 hover:scale-105 active:scale-95 shadow-glow"
           }`}
         >
           {!revealed ? (
@@ -79,7 +80,7 @@ export default function ScratchCardModal({
               <h4 className="font-black text-xl tracking-tight mb-1">
                 TAP TO SCRATCH
               </h4>
-              <p className="text-xs font-semibold opacity-90 max-w-[180px]">
+              <p className="text-xs font-semibold opacity-90 max-w-[200px]">
                 {redemption.reward_title || "Mystery Sustainability Bonus"}
               </p>
               <div className="mt-6 px-4 py-1.5 rounded-full bg-white/50 backdrop-blur-sm text-xs font-bold text-amber-950 flex items-center gap-1.5 shadow-sm">
@@ -88,50 +89,78 @@ export default function ScratchCardModal({
               </div>
             </div>
           ) : (
-            /* Revealed Reward Card */
-            <div className="absolute inset-0 flex flex-col items-center justify-between p-6 text-white animate-in zoom-in duration-300">
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center mb-2 border border-white/20">
-                  <Award className="w-6 h-6 text-limeAccent" />
-                </div>
-                <span className="text-[11px] font-bold text-limeAccent uppercase tracking-widest">
-                  {redemption.merchant || "Eco Partner"}
-                </span>
-                <h4 className="font-extrabold text-lg text-white mt-1 leading-tight">
-                  {redemption.discount_text || redemption.reward_title}
-                </h4>
-              </div>
+            /* Revealed Reward Card with Authentic Photograph & Brand Badge */
+            (() => {
+              const visual = getRewardVisual(redemption);
+              return (
+                <div className="absolute inset-0 flex flex-col justify-between text-white animate-in zoom-in duration-300">
+                  {/* Photo Header of the Reward */}
+                  <div className="relative h-36 w-full overflow-hidden bg-forest-950">
+                    <img
+                      src={visual.src}
+                      alt={visual.alt}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-forest-950 via-transparent to-black/40" />
 
-              {/* Code Voucher Box */}
-              <div className="w-full bg-black/40 backdrop-blur-md rounded-2xl p-3 border border-white/15 my-2">
-                <span className="text-[10px] uppercase font-bold text-gray-300 block mb-1">
-                  Demo Promo Code
-                </span>
-                <div className="flex items-center justify-between px-2 py-1 bg-white/10 rounded-xl">
-                  <span className="font-mono font-black text-sm tracking-widest text-limeAccent">
-                    {voucherCode}
-                  </span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleCopy();
-                    }}
-                    className="p-1 rounded-lg hover:bg-white/20 text-white transition"
-                    title="Copy Code"
-                  >
-                    {copied ? (
-                      <Check className="w-4 h-4 text-emerald-400" />
-                    ) : (
-                      <Copy className="w-4 h-4 text-gray-200" />
-                    )}
-                  </button>
-                </div>
-              </div>
+                    {/* Brand Badge */}
+                    <div className="absolute top-3 left-3">
+                      <span className={`px-2.5 py-1 rounded-xl text-xs font-black shadow-md border ${visual.badgeBg} ${visual.badgeText} ${visual.borderGlow}`}>
+                        {visual.logoBadge}
+                      </span>
+                    </div>
 
-              <div className="text-[10px] text-forest-200/80 leading-snug">
-                Demonstration coupon code for academic evaluation. Not redeemable at commercial retail POS.
-              </div>
-            </div>
+                    <div className="absolute bottom-2 left-3 right-3 flex items-center justify-between">
+                      <span className="text-[11px] font-bold text-limeAccent uppercase tracking-widest bg-black/60 px-2 py-0.5 rounded-md backdrop-blur-xs">
+                        {redemption.merchant || visual.brand}
+                      </span>
+                      <span className="text-[10px] text-white/80 font-medium">
+                        Verified
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Body Content */}
+                  <div className="px-5 pb-5 pt-1 flex flex-col justify-between flex-1">
+                    <div>
+                      <h4 className="font-black text-base text-white mt-1 leading-snug">
+                        {redemption.discount_text || redemption.reward_title}
+                      </h4>
+                    </div>
+
+                    {/* Code Voucher Box */}
+                    <div className="w-full bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/15 my-2">
+                      <span className="text-[10px] uppercase font-bold text-gray-300 block mb-1">
+                        Voucher Promo Code
+                      </span>
+                      <div className="flex items-center justify-between px-2 py-1 bg-black/40 rounded-xl border border-white/10">
+                        <span className="font-mono font-black text-sm tracking-widest text-limeAccent">
+                          {voucherCode}
+                        </span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCopy();
+                          }}
+                          className="p-1 rounded-lg hover:bg-white/20 text-white transition cursor-pointer"
+                          title="Copy Code"
+                        >
+                          {copied ? (
+                            <Check className="w-4 h-4 text-emerald-400" />
+                          ) : (
+                            <Copy className="w-4 h-4 text-gray-200" />
+                          )}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="text-[10px] text-forest-200/80 leading-tight text-center">
+                      Demonstration coupon code for academic evaluation. Not redeemable at commercial retail POS.
+                    </div>
+                  </div>
+                </div>
+              );
+            })()
           )}
         </div>
 

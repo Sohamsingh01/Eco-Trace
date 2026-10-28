@@ -12,7 +12,10 @@ import {
   CheckCircle2,
   Users,
   ChevronRight,
+  Sparkles,
 } from "lucide-react";
+import CardTilt3D from "../components/common/CardTilt3D";
+import AnimatedCounter from "../components/common/AnimatedCounter";
 
 export default function LandingPage({ onGetStarted, onLogin }) {
   // Interactive mini calculator on landing page
@@ -117,14 +120,19 @@ export default function LandingPage({ onGetStarted, onLogin }) {
             </div>
           </div>
 
-          {/* Interactive Calculator Banner directly on Landing Page */}
-          <div className="mt-14 max-w-4xl mx-auto rounded-3xl bg-white border border-forest-100 shadow-2xl p-6 sm:p-8">
+          {/* Interactive Calculator Banner directly on Landing Page with 3D Tilt */}
+          <CardTilt3D
+            maxTilt={3}
+            scale={1.005}
+            className="mt-14 max-w-4xl mx-auto rounded-3xl bg-white border border-forest-100 shadow-2xl p-6 sm:p-8"
+          >
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-gray-100">
               <div>
-                <span className="text-xs font-extrabold uppercase text-emerald-700 tracking-wider">
+                <span className="text-xs font-extrabold uppercase text-emerald-700 tracking-wider flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
                   Interactive Live Simulator
                 </span>
-                <h3 className="text-xl font-bold text-charcoal-900 mt-0.5">
+                <h3 className="text-xl font-black text-charcoal-900 mt-0.5">
                   Estimate Your Daily Household Emissions
                 </h3>
               </div>
@@ -133,10 +141,11 @@ export default function LandingPage({ onGetStarted, onLogin }) {
                   Simulated Daily Footprint:
                 </span>
                 <span className="text-3xl font-black text-forest-900">
-                  {totalLandingCo2} <span className="text-sm font-semibold text-charcoal-500">kg CO₂</span>
+                  <AnimatedCounter value={parseFloat(totalLandingCo2)} decimals={2} />{" "}
+                  <span className="text-sm font-semibold text-charcoal-500">kg CO₂</span>
                 </span>
                 <span className="text-xs text-emerald-700 font-bold block">
-                  ≈ {totalLandingKwh} kWh equivalent energy
+                  ≈ <AnimatedCounter value={parseFloat(totalLandingKwh)} decimals={1} /> kWh equivalent energy
                 </span>
               </div>
             </div>
@@ -198,7 +207,7 @@ export default function LandingPage({ onGetStarted, onLogin }) {
                 </span>
               </div>
             </div>
-          </div>
+          </CardTilt3D>
         </div>
       </section>
 

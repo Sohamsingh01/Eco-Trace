@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
+import CardTilt3D from "../components/common/CardTilt3D";
 import {
   User,
   Home,
@@ -249,57 +250,90 @@ export default function ProfilePage() {
       {/* TAB 2: ACHIEVEMENTS & BADGES */}
       {activeTab === "achievements" && (
         <div className="bg-white rounded-3xl border border-forest-100 shadow-eco p-6 sm:p-8">
-          <div className="mb-6">
-            <h3 className="font-bold text-base text-forest-950">Achievements & Badges</h3>
-            <p className="text-xs text-charcoal-500 mt-0.5">
-              Unlock environmental milestones to earn bonus EcoCredits and showcase flair on the leaderboard.
-            </p>
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-extrabold uppercase text-emerald-700 tracking-wider">
+                  Environmental Honors
+                </span>
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              </div>
+              <h3 className="font-black text-lg text-forest-950 mt-0.5">Achievements & 3D Badges</h3>
+              <p className="text-xs text-charcoal-500 mt-0.5">
+                Unlock milestones to earn bonus EcoCredits and showcase flair on the leaderboard.
+              </p>
+            </div>
+            <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-forest-50 text-forest-900 border border-forest-100">
+              {achievements.filter((a) => a.is_unlocked).length} of {achievements.length} Unlocked
+            </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {achievements.map((ach) => (
-              <div
+              <CardTilt3D
                 key={ach.id}
-                className={`p-5 rounded-2xl border transition flex flex-col justify-between ${
+                maxTilt={6}
+                scale={1.02}
+                className={`p-6 rounded-3xl border transition-all duration-300 flex flex-col justify-between ${
                   ach.is_unlocked
-                    ? "bg-gradient-to-br from-forest-50 to-emerald-50 border-emerald-200 shadow-sm"
-                    : "bg-white border-gray-100 opacity-60"
+                    ? "bg-gradient-to-br from-forest-50/90 via-emerald-50/50 to-white border-emerald-200/90 shadow-eco hover:shadow-eco-lg"
+                    : "bg-white border-gray-100 opacity-65"
                 }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
+                    {/* 3D Enamel Badge Icon */}
                     <div
-                      className={`w-10 h-10 rounded-2xl flex items-center justify-center ${
+                      className={`w-12 h-12 rounded-2xl flex items-center justify-center relative transition-transform duration-300 group-hover:scale-110 ${
                         ach.is_unlocked
-                          ? "bg-forest-800 text-limeAccent shadow-sm"
-                          : "bg-gray-100 text-gray-400"
+                          ? "bg-gradient-to-tr from-forest-800 via-emerald-700 to-forest-900 text-limeAccent shadow-md border-2 border-emerald-400/40"
+                          : "bg-gray-100 text-gray-400 border border-gray-200"
                       }`}
                     >
-                      <Award className="w-5 h-5" />
+                      <Award className="w-6 h-6" />
+                      {ach.is_unlocked && (
+                        <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-limeAccent animate-ping"></span>
+                      )}
                     </div>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white border border-gray-100 text-forest-800">
+                    <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-white border border-gray-100 text-forest-900 shadow-sm flex items-center gap-1">
+                      <Coins className="w-3 h-3 text-amber-500" />
                       +{ach.credit_reward} Credits
                     </span>
                   </div>
 
-                  <h4 className="font-bold text-sm text-charcoal-900">{ach.title}</h4>
+                  <h4 className="font-extrabold text-base text-charcoal-900">{ach.title}</h4>
                   <p className="text-xs text-charcoal-500 mt-1 leading-relaxed">
                     {ach.description}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
-                  <span className="font-semibold text-charcoal-600">
-                    {ach.is_unlocked ? (
-                      <span className="text-emerald-700 flex items-center gap-1 font-bold">
-                        <CheckCircle2 className="w-3.5 h-3.5" /> Unlocked
+                <div className="mt-5 pt-3 border-t border-gray-100/80">
+                  {ach.is_unlocked ? (
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-emerald-700 flex items-center gap-1.5 font-bold">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        <span>Milestone Achieved</span>
                       </span>
-                    ) : (
-                      <span>In Progress ({ach.progress_percent}%)</span>
-                    )}
-                  </span>
+                      <span className="text-[10px] uppercase font-black tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                        Badge Active
+                      </span>
+                    </div>
+                  ) : (
+                    <div>
+                      <div className="flex items-center justify-between text-[11px] font-semibold text-charcoal-500 mb-1">
+                        <span>Progress</span>
+                        <span>{ach.progress_percent}%</span>
+                      </div>
+                      <div className="w-full h-1.5 rounded-full bg-gray-100 overflow-hidden">
+                        <div
+                          className="h-full bg-gradient-to-r from-emerald-500 to-limeAccent rounded-full transition-all duration-500"
+                          style={{ width: `${ach.progress_percent}%` }}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
+              </CardTilt3D>
             ))}
           </div>
         </div>

@@ -337,33 +337,33 @@ export default function LogActivityModal({
         </div>
 
         {/* INSTANT LIVE CALCULATION PREVIEW BOX */}
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-forest-50 to-emerald-50 border border-emerald-200 shadow-sm">
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-forest-50 via-emerald-50/70 to-forest-50 border border-emerald-200 shadow-sm transition-all duration-300">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-extrabold uppercase text-forest-900 tracking-wider flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
               Live Carbon & Energy Preview
             </span>
-            <span className="text-[10px] text-forest-700 font-semibold bg-emerald-100 px-2 py-0.5 rounded-full">
+            <span className="text-[10px] text-forest-800 font-bold bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
               {preview.calculation_method}
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="p-2.5 rounded-xl bg-white border border-emerald-100 shadow-xs">
+            <div className="p-3 rounded-xl bg-white/90 backdrop-blur-xs border border-emerald-100 shadow-xs">
               <span className="text-[10px] uppercase font-bold text-charcoal-400 block">
                 Estimated Energy
               </span>
-              <span className="text-xl font-black text-forest-900">
+              <span className="text-2xl font-black text-forest-900">
                 {preview.energy_kwh}
               </span>
               <span className="text-xs font-semibold text-charcoal-500 ml-1">kWh</span>
             </div>
 
-            <div className="p-2.5 rounded-xl bg-white border border-emerald-100 shadow-xs">
+            <div className="p-3 rounded-xl bg-white/90 backdrop-blur-xs border border-emerald-100 shadow-xs">
               <span className="text-[10px] uppercase font-bold text-charcoal-400 block">
                 Estimated Emissions
               </span>
-              <span className="text-xl font-black text-emerald-600">
+              <span className="text-2xl font-black text-emerald-600">
                 {preview.co2_kg}
               </span>
               <span className="text-xs font-semibold text-charcoal-500 ml-1">kg CO₂</span>
@@ -376,16 +376,26 @@ export default function LogActivityModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 rounded-xl text-xs font-semibold text-charcoal-600 hover:bg-gray-100 transition"
+            className="px-4 py-2.5 rounded-xl text-xs font-bold text-charcoal-600 hover:bg-gray-100 active:scale-95 transition"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="px-5 py-2.5 rounded-xl bg-forest-800 hover:bg-forest-900 text-white text-xs font-bold shadow-eco hover:shadow-eco-lg transition flex items-center gap-2"
+            className="px-6 py-2.5 rounded-xl bg-forest-800 hover:bg-forest-900 active:scale-95 text-white text-xs font-bold shadow-eco hover:shadow-eco-lg transition flex items-center gap-2"
           >
-            {loading ? "Recording..." : "Save Activity (+10 Credits)"}
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                Recording Activity...
+              </span>
+            ) : (
+              <>
+                <Sparkles className="w-3.5 h-3.5 text-limeAccent" />
+                <span>Save Activity (+10 Credits)</span>
+              </>
+            )}
           </button>
         </div>
       </form>
