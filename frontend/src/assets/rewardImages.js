@@ -76,6 +76,126 @@ export const REWARD_IMAGES = {
     logoBadge: "MYSTERY",
     tagline: "Gamified Bonus Pack",
   },
+  kfc: {
+    src: "/images/rewards/kfc_chicken.jpg",
+    alt: "KFC crispy golden fried chicken bucket and zinger burgers",
+    brand: "KFC India",
+    accentColor: "#E4002B",
+    badgeBg: "bg-red-700",
+    badgeText: "text-white",
+    borderGlow: "border-red-400",
+    logoLetter: "K",
+    logoBadge: "KFC",
+    tagline: "Meals & Fast Food",
+  },
+  souledStore: {
+    src: "/images/rewards/souled_store_merch.jpg",
+    alt: "The Souled Store official pop culture hoodies, graphic tees and fandom merchandise",
+    brand: "The Souled Store",
+    accentColor: "#ED1D24",
+    badgeBg: "bg-rose-700",
+    badgeText: "text-white",
+    borderGlow: "border-rose-400",
+    logoLetter: "S",
+    logoBadge: "SOULED STORE",
+    tagline: "Pop-Culture & Merch",
+  },
+  myntra: {
+    src: "/images/rewards/myntra_fashion.jpg",
+    alt: "Myntra trending fashion apparel, sneakers, clothing racks and lifestyle wear",
+    brand: "Myntra Fashion",
+    accentColor: "#FF3F6C",
+    badgeBg: "bg-pink-600",
+    badgeText: "text-white",
+    borderGlow: "border-pink-400",
+    logoLetter: "M",
+    logoBadge: "MYNTRA",
+    tagline: "Fashion & Lifestyle",
+  },
+  hnm: {
+    src: "/images/rewards/hnm_conscious.jpg",
+    alt: "H&M conscious sustainable organic cotton clothing and modern apparel",
+    brand: "H&M Conscious",
+    accentColor: "#CC0000",
+    badgeBg: "bg-red-800",
+    badgeText: "text-white",
+    borderGlow: "border-red-400",
+    logoLetter: "H&M",
+    logoBadge: "H&M",
+    tagline: "Sustainable Fashion",
+  },
+  starbucks: {
+    src: "/images/rewards/starbucks_coffee.jpg",
+    alt: "Starbucks iced and hot espresso coffee cups with green straw and reusable tumbler",
+    brand: "Starbucks Coffee",
+    accentColor: "#006241",
+    badgeBg: "bg-emerald-800",
+    badgeText: "text-amber-200",
+    borderGlow: "border-emerald-400",
+    logoLetter: "☕",
+    logoBadge: "STARBUCKS",
+    tagline: "Coffee & Reusable Mugs",
+  },
+  zara: {
+    src: "/images/rewards/zara_apparel.jpg",
+    alt: "Zara luxury minimalist runway fashion apparel and tailored clothing",
+    brand: "Zara Official",
+    accentColor: "#111827",
+    badgeBg: "bg-neutral-900",
+    badgeText: "text-white",
+    borderGlow: "border-neutral-500",
+    logoLetter: "Z",
+    logoBadge: "ZARA",
+    tagline: "Join Life & Runway",
+  },
+  pvrInox: {
+    src: "/images/rewards/pvr_cinema.jpg",
+    alt: "PVR INOX cinema movie theater with luxury recliner seating, IMAX screen and popcorn",
+    brand: "PVR INOX Cinemas",
+    accentColor: "#D97706",
+    badgeBg: "bg-amber-600",
+    badgeText: "text-white",
+    borderGlow: "border-amber-400",
+    logoLetter: "🎬",
+    logoBadge: "PVR INOX",
+    tagline: "Cinema & Movies",
+  },
+  hamleys: {
+    src: "/images/rewards/hamleys_toys.jpg",
+    alt: "Hamleys world famous toy store with teddy bears, wooden trains and colorful toys",
+    brand: "Hamleys Toys",
+    accentColor: "#C8102E",
+    badgeBg: "bg-red-700",
+    badgeText: "text-yellow-300",
+    borderGlow: "border-yellow-400",
+    logoLetter: "H",
+    logoBadge: "HAMLEYS",
+    tagline: "Finest Toy Store",
+  },
+  bookMyShow: {
+    src: "/images/rewards/bookmyshow_tickets.jpg",
+    alt: "BookMyShow live event stadium concert with lights, music show tickets and cinema seats",
+    brand: "BookMyShow",
+    accentColor: "#E23744",
+    badgeBg: "bg-rose-600",
+    badgeText: "text-white",
+    borderGlow: "border-rose-400",
+    logoLetter: "BMS",
+    logoBadge: "BOOKMYSHOW",
+    tagline: "Live Events & Concerts",
+  },
+  makeMyTrip: {
+    src: "/images/rewards/makemytrip_travel.jpg",
+    alt: "MakeMyTrip luxury eco resort travel destination, tropical beach and flight tickets",
+    brand: "MakeMyTrip Holidays",
+    accentColor: "#2563EB",
+    badgeBg: "bg-blue-600",
+    badgeText: "text-white",
+    borderGlow: "border-blue-400",
+    logoLetter: "MMT",
+    logoBadge: "MAKEMYTRIP",
+    tagline: "Eco-Stays & Flights",
+  },
 };
 
 /**
@@ -89,6 +209,36 @@ export function getRewardVisual(reward) {
 
   if (merchant.includes("nykaa") || title.includes("nykaa") || title.includes("beauty") || title.includes("cosmetic")) {
     return REWARD_IMAGES.nykaa;
+  }
+  if (merchant.includes("kfc") || title.includes("kfc") || title.includes("chicken bucket") || title.includes("zinger")) {
+    return REWARD_IMAGES.kfc;
+  }
+  if (merchant.includes("souled") || title.includes("souled") || title.includes("tss-eco") || title.includes("pop-culture")) {
+    return REWARD_IMAGES.souledStore;
+  }
+  if (merchant.includes("myntra") || title.includes("myntra") || title.includes("myn-eco")) {
+    return REWARD_IMAGES.myntra;
+  }
+  if (merchant.includes("h&m") || merchant.includes("hnm") || title.includes("h&m") || title.includes("conscious")) {
+    return REWARD_IMAGES.hnm;
+  }
+  if (merchant.includes("starbucks") || title.includes("starbucks") || title.includes("coffee") || title.includes("sbux")) {
+    return REWARD_IMAGES.starbucks;
+  }
+  if (merchant.includes("zara") || title.includes("zara")) {
+    return REWARD_IMAGES.zara;
+  }
+  if (merchant.includes("pvr") || merchant.includes("inox") || title.includes("pvr") || title.includes("inox") || title.includes("cinema")) {
+    return REWARD_IMAGES.pvrInox;
+  }
+  if (merchant.includes("hamleys") || title.includes("hamleys") || title.includes("toy")) {
+    return REWARD_IMAGES.hamleys;
+  }
+  if (merchant.includes("bookmyshow") || merchant.includes("bms") || title.includes("bookmyshow")) {
+    return REWARD_IMAGES.bookMyShow;
+  }
+  if (merchant.includes("makemytrip") || merchant.includes("mmt") || title.includes("makemytrip") || title.includes("travel")) {
+    return REWARD_IMAGES.makeMyTrip;
   }
   if (merchant.includes("mcdonald") || merchant.includes("mcd") || title.includes("mcdonald") || title.includes("burger") || title.includes("meal")) {
     return REWARD_IMAGES.mcdonalds;

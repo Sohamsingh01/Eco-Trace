@@ -56,135 +56,139 @@ export default function FeaturesPage({ onGetStarted, onLogin }) {
       description:
         "Staying under budget rewards users with +25 EcoCredits daily. Redeem earned credits in the marketplace for Google Pay style foil scratch cards unlocking partner discounts and swag.",
       highlights: [
-        "Partner brand vouchers (Nykaa, McDonald's, Amazon)",
+        "Partner brand vouchers (Nykaa, McDonald's, Amazon, KFC, Starbucks, Zara, PVR, etc.)",
         "Interactive foil scratch card modal with confetti celebration",
-        "1-click voucher promo code copying",
+        "Encrypted voucher codes with copy-to-clipboard functionality",
       ],
     },
     {
-      id: "fair-leaderboards",
+      id: "gamification-leaderboard",
       icon: Trophy,
       badge: "Module 04",
-      title: "Fair Per-Capita Leaderboards",
+      title: "Fair Normalized Leaderboards",
       description:
-        "Our proprietary normalization algorithm divides household footprint by member count, allowing 5-person joint families to compete fairly against 1-person apartments.",
+        "Compete on community leaderboards with EcoScores normalized for dwelling square footage and family size. Larger households are evaluated fairly on efficiency rather than penalizing total volume.",
       highlights: [
-        "Per-capita normalized EcoScore (0–1000 scale)",
-        "Active streak multipliers (🔥 3-day, 7-day bonuses)",
-        "Metallic gold, silver, and bronze podium finishes",
+        "Gold, Silver, Bronze 3D podium badges",
+        "Weekly, monthly, and global competitive leagues",
+        "Interactive 3D island ecosystem evolving with score",
       ],
     },
     {
-      id: "environmental-analytics",
+      id: "historical-analytics",
       icon: BarChart3,
       badge: "Module 05",
-      title: "Environmental Analytics",
+      title: "Historical Carbon Analytics",
       description:
-        "Deep temporal insights with interactive Recharts diagrams. Track 7-day emissions, appliance distribution donuts, and fuel source breakdowns with custom 3D glassmorphic tooltips.",
+        "Audit trends with dual-axis telemetry graphs, appliance consumption shares, and CSV exports for home audits or university project evaluation.",
       highlights: [
-        "Appliance share donut and category bar graphs",
-        "Daily vs moving average trend analysis",
-        "Zero data fabrication — reflects actual logged telemetry",
+        "Filter by 7 days, 30 days, or full year",
+        "Category breakdown donut charts",
+        "One-click CSV telemetry export with timestamp verification",
       ],
     },
     {
-      id: "3d-visuals",
+      id: "biophilic-3d-world",
       icon: Globe,
       badge: "Module 06",
-      title: "Interactive 3D Visual Experience",
+      title: "Interactive 3D Nature Visualizations",
       description:
-        "High-performance Three.js Earth with atmospheric Fresnel halo and floating leaves, alongside 'My Eco World' — an evolving 3D miniature island that flourishes with your EcoScore.",
+        "Interactive Three.js and WebGL components illustrate environmental progress: spinning Earth podiums, evolving low-poly islands, and tactile 3D card tilt micro-interactions.",
       highlights: [
-        "Three.js canvas with procedural terrain and leaf particles",
-        "Evolving 3D miniature island across 3 progress stages",
-        "Interactive cursor perspective tilt & specular glare (CardTilt3D)",
+        "Three.js canvas with procedural tree distribution",
+        "Interactive 3D tilt perspective responding to cursor",
+        "Zero-lag lightweight procedural rendering",
       ],
     },
   ];
 
   const faqs = [
     {
-      q: "Do I need to install any physical smart meters or IoT hardware?",
-      a: "No! EcoTrace is 100% free software telemetry. You do not need expensive hardware meters (which often cost ₹8,000+). Simply record appliance usage intervals or habits, and our engine calculates precision emissions using official grid standards.",
+      question: "How does EcoTrace obtain its emission factors?",
+      answer:
+        "EcoTrace implements the official Central Electricity Authority (CEA) Version 19.0 national grid emission baseline of 0.82 kg CO₂/kWh for electrical draws. Cooking fuel calculations follow the IPCC 2006 guidelines for domestic LPG combustion stoichiometry (2.983 kg CO₂ per kg of fuel).",
     },
     {
-      q: "How accurate are the carbon emission calculations?",
-      a: "EcoTrace uses the official Central Electricity Authority (CEA) of India Baseline Database (Version 19.0) emission factor of 0.82 kg CO₂/kWh for grid electricity, and IPCC stoichiometric combustion factors (2.983 kg CO₂/kg) for LPG gas cooking, making it significantly more accurate than generic online calculators.",
+      question: "Is any external hardware or smart plug required?",
+      answer:
+        "No external hardware is needed. EcoTrace provides a pre-configured catalog of standard Indian household appliances (ACs, BLDC fans, geysers, microwaves, televisions) with calibrated wattage ratings. Users can also define custom appliances with their own specific wattage ratings.",
     },
     {
-      q: "How does the Fair Per-Capita EcoScore work?",
-      a: "Total household carbon is divided by the number of residents. This per-capita figure is benchmarked against regional targets to generate an EcoScore between 0 and 1000, ensuring multi-generational families compete fairly with single-occupant homes.",
+      question: "How does the fairness algorithm prevent penalizing larger families?",
+      answer:
+        "Standard carbon trackers show raw totals, meaning a 4-person family always appears 'worse' than a single resident. EcoTrace applies per-capita normalization and square-footage scaling to calculate a normalized EcoScore (0-100), ensuring fair competition based on conservation habits.",
     },
     {
-      q: "What can I do with the EcoCredits I earn?",
-      a: "When your household stays within budget, you earn +25 EcoCredits every day. These can be redeemed in the Rewards section for Google Pay style scratch cards that reveal partner brand vouchers (Nykaa, McDonald's, Amazon) and official Eco Warrior credentials.",
-    },
-    {
-      q: "Can apartment complexes and housing societies use EcoTrace?",
-      a: "Yes! EcoTrace supports community leaderboards where residents of an apartment complex or campus can track emissions collectively and compete in friendly green challenges.",
-    },
-    {
-      q: "Is my household energy and appliance data private?",
-      a: "Absolutely. All activity records are stored securely in local database tables and are never sold or monetized to advertisers.",
+      question: "Can I export data for engineering reports or college evaluation?",
+      answer:
+        "Yes! The Analytics tab includes a one-click CSV export engine that packages timestamped activity logs, wattage values, fuel types, calculated energy (kWh), and resulting emissions into standard spreadsheet format.",
     },
   ];
 
   return (
-    <div className="space-y-24 pb-24 text-white">
+    <div className="space-y-24 pb-24 text-charcoal-900">
       {/* 1. HERO HEADER */}
       <section className="pt-8 lg:pt-14 text-center max-w-3xl mx-auto px-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-4">
-          <Layers className="w-4 h-4" />
-          <span>Full Platform Capabilities & Architecture</span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold mb-4">
+          <Layers className="w-4 h-4 text-emerald-600" />
+          <span>Complete Technical Capabilities</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-          The Complete Architecture for{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-lime-300">
-            Household Decarbonization
+        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+          Everything You Need to Turn Carbon Into{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-700">
+            A Daily Habit
           </span>
         </h1>
 
-        <p className="mt-4 text-sm sm:text-base text-gray-300 font-normal leading-relaxed">
-          From multi-source appliance telemetry to gamified reward redemption and per-capita
-          community leaderboards, explore the six integrated modules powering EcoTrace.
+        <p className="mt-4 text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
+          From verified scientific emission equations to Google Pay style scratch cards and 3D biophilic
+          islands, explore the six core pillars powering the EcoTrace architecture.
         </p>
       </section>
 
-      {/* 2. THE 6 CORE MODULES GRID */}
+      {/* 2. THE SIX CORE FEATURES GRID */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuresList.map((f) => {
-            const Icon = f.icon;
+          {featuresList.map((feature) => {
+            const Icon = feature.icon;
             return (
               <CardTilt3D
-                key={f.id}
+                key={feature.id}
                 maxTilt={4}
-                className="rounded-3xl bg-[#092215]/85 border border-emerald-500/30 p-8 shadow-xl flex flex-col justify-between group hover:border-emerald-400/60 transition-all"
+                className="rounded-3xl bg-white border border-slate-200/90 p-8 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-emerald-500/40 transition-all group"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-charcoal-950 font-black shadow-md group-hover:scale-105 transition-transform">
-                      <Icon className="w-6 h-6 fill-current" />
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-black shadow-xs group-hover:scale-105 transition-transform">
+                      <Icon className="w-6 h-6" />
                     </div>
-                    <span className="text-[10px] uppercase font-black tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-full">
-                      {f.badge}
+                    <span className="text-[10px] uppercase font-black tracking-widest text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                      {feature.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-black text-white mt-1">{f.title}</h3>
-                  <p className="text-xs text-gray-300 mt-2 leading-relaxed font-normal">
-                    {f.description}
+                  <h3 className="text-xl font-black text-slate-900 pt-1">
+                    {feature.title}
+                  </h3>
+
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    {feature.description}
                   </p>
 
-                  <div className="mt-5 space-y-2 pt-4 border-t border-emerald-900/40">
-                    {f.highlights.map((h, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-gray-200">
-                        <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0 stroke-[3]" />
+                  <div className="pt-2 space-y-2 border-t border-slate-100">
+                    {feature.highlights.map((h, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs text-slate-700">
+                        <Check className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0 stroke-[3]" />
                         <span>{h}</span>
                       </div>
                     ))}
                   </div>
+                </div>
+
+                <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] text-emerald-700 font-bold flex items-center gap-1 group-hover:translate-x-1 transition-transform cursor-pointer">
+                  <span>Explore module specs</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </div>
               </CardTilt3D>
             );
@@ -192,75 +196,14 @@ export default function FeaturesPage({ onGetStarted, onLogin }) {
         </div>
       </section>
 
-      {/* 3. TECHNOLOGY STACK & ARCHITECTURE SPECIFICATIONS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-[#07190F] border border-emerald-500/30 p-8 sm:p-12 shadow-2xl space-y-8">
-          <div className="max-w-2xl text-left">
-            <span className="text-xs font-black uppercase text-emerald-400 tracking-widest block">
-              Under The Hood
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">
-              Technology Stack & Implementation Specs
-            </h2>
-            <p className="text-xs sm:text-sm text-gray-300 mt-2 font-normal">
-              Built using modern high-performance frameworks and reliable scientific APIs.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-[#092215] border border-emerald-500/20 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
-                <Code2 className="w-5 h-5" />
-              </div>
-              <h4 className="text-base font-extrabold text-white">Frontend Experience</h4>
-              <ul className="text-xs text-gray-300 space-y-1.5 font-normal">
-                <li>• React 19 + Vite v8</li>
-                <li>• Three.js WebGL 3D Engine</li>
-                <li>• Tailwind CSS + 3D Tilt Glare</li>
-                <li>• Recharts Interactive SVG Charts</li>
-                <li>• Canvas Confetti Celebrations</li>
-              </ul>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#092215] border border-emerald-500/20 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <h4 className="text-base font-extrabold text-white">Backend API Server</h4>
-              <ul className="text-xs text-gray-300 space-y-1.5 font-normal">
-                <li>• Python 3.14 + FastAPI</li>
-                <li>• Pydantic v2 Schema Validation</li>
-                <li>• SQLAlchemy ORM Core</li>
-                <li>• JWT Auth & bcrypt Hashing</li>
-                <li>• RESTful API with Swagger UI</li>
-              </ul>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-[#092215] border border-emerald-500/20 space-y-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
-                <Database className="w-5 h-5" />
-              </div>
-              <h4 className="text-base font-extrabold text-white">Data & Standards</h4>
-              <ul className="text-xs text-gray-300 space-y-1.5 font-normal">
-                <li>• SQLite & PostgreSQL Schema</li>
-                <li>• CEA India CO₂ Grid Factor (0.82)</li>
-                <li>• IPCC Stoichiometric LPG Model (2.983)</li>
-                <li>• Normalized Per-Capita EcoScore</li>
-                <li>• 100% Offline Capable Runtime</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. FREQUENTLY ASKED QUESTIONS ACCORDION */}
+      {/* 3. SCIENTIFIC FAQ ACCORDION */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <span className="text-xs font-black uppercase text-emerald-400 tracking-widest block">
-            Common Questions
+        <div className="text-center mb-12">
+          <span className="text-xs font-black uppercase text-emerald-700 tracking-widest block mb-1">
+            Frequently Answered Questions
           </span>
-          <h2 className="text-3xl font-black text-white mt-1">
-            Frequently Asked Questions
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight">
+            Scientific & Technical Inquiries
           </h2>
         </div>
 
@@ -270,22 +213,22 @@ export default function FeaturesPage({ onGetStarted, onLogin }) {
             return (
               <div
                 key={idx}
-                className="rounded-2xl bg-[#092215]/90 border border-emerald-500/20 overflow-hidden transition"
+                className="rounded-2xl bg-white border border-slate-200/90 overflow-hidden shadow-xs transition-all"
               >
                 <button
-                  onClick={() => setActiveFaq(isOpen ? null : idx)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 font-extrabold text-sm text-white hover:text-emerald-300 transition cursor-pointer"
+                  onClick={() => setActiveFaq(isOpen ? -1 : idx)}
+                  className="w-full text-left p-5 flex items-center justify-between gap-4 font-bold text-sm text-slate-900 hover:text-emerald-700 transition"
                 >
-                  <span>{faq.q}</span>
+                  <span>{faq.question}</span>
                   <ChevronDown
-                    className={`w-4 h-4 text-emerald-400 transition-transform ${
-                      isOpen ? "rotate-180" : ""
+                    className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${
+                      isOpen ? "rotate-180 text-emerald-600" : ""
                     }`}
                   />
                 </button>
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs text-gray-300 leading-relaxed font-normal border-t border-emerald-950">
-                    {faq.a}
+                  <div className="px-5 pb-5 text-xs text-slate-600 leading-relaxed font-normal border-t border-slate-100 pt-3">
+                    {faq.answer}
                   </div>
                 )}
               </div>
@@ -294,27 +237,27 @@ export default function FeaturesPage({ onGetStarted, onLogin }) {
         </div>
       </section>
 
-      {/* 5. CALL TO ACTION FOOTER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="p-10 rounded-3xl bg-gradient-to-r from-emerald-950 via-[#0B2517] to-emerald-950 border border-emerald-500/40">
-          <h3 className="text-2xl sm:text-3xl font-black text-white">
-            Ready to track your household footprint?
-          </h3>
-          <p className="text-xs text-gray-300 mt-2 max-w-xl mx-auto">
-            Experience all features with pre-populated demo data or create your free account today.
+      {/* 4. CALL TO ACTION BANNER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-slate-50 border border-slate-200 p-8 sm:p-12 text-center shadow-sm">
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-2">
+            Build Better Habits With Precision Telemetry
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto mb-6">
+            Get started in 60 seconds with our one-click demo account or create a customized household profile.
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={onGetStarted}
-              className="px-7 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-lime-400 text-charcoal-950 font-black text-xs shadow-lg hover:shadow-glow transition cursor-pointer"
+              className="px-7 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-md shadow-emerald-600/25 transition cursor-pointer"
             >
-              Get Started Free
+              Sign Up Free
             </button>
             <button
               onClick={onLogin}
-              className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition cursor-pointer"
+              className="px-6 py-3 rounded-full bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs border border-slate-200 transition cursor-pointer"
             >
-              Try Demo Account
+              Log In to Demo Account
             </button>
           </div>
         </div>
@@ -322,4 +265,3 @@ export default function FeaturesPage({ onGetStarted, onLogin }) {
     </div>
   );
 }
-

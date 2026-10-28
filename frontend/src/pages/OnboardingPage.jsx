@@ -58,9 +58,9 @@ export default function OnboardingPage({ onComplete }) {
         const initialMap = {};
         all.forEach((app) => {
           if (
-            app.name.includes("Fan") ||
-            app.name.includes("Refrigerator") ||
+            app.name.includes("Ceiling Fan") ||
             app.name.includes("LED") ||
+            app.name.includes("Refrigerator") ||
             app.name.includes("Air Conditioner")
           ) {
             initialMap[app.id] = {
@@ -69,13 +69,13 @@ export default function OnboardingPage({ onComplete }) {
               category: app.category,
               fuel_type: app.fuel_type,
               power_watts: app.default_power_watts,
-              quantity: app.name.includes("Fan") || app.name.includes("LED") ? 3 : 1,
+              quantity: app.name.includes("Ceiling Fan") ? 3 : app.name.includes("LED") ? 6 : 1,
             };
           }
         });
         setSelectedAppliances(initialMap);
       } catch (err) {
-        console.error("Failed to load catalog presets:", err);
+        console.error("Failed to load catalog:", err);
       }
     }
     loadCatalog();
@@ -179,34 +179,34 @@ export default function OnboardingPage({ onComplete }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#06140B] text-white py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center relative overflow-hidden selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[#FAFCF9] text-charcoal-900 py-10 px-4 sm:px-6 lg:px-8 flex flex-col items-center relative overflow-hidden selection:bg-emerald-500 selection:text-white">
       {/* Ambient Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-emerald-500/12 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-emerald-500/10 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-0 right-10 w-[500px] h-[500px] bg-lime-500/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Top Branding */}
       <div className="flex items-center gap-2.5 mb-6 relative z-10 group">
-        <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-lime-400 flex items-center justify-center text-charcoal-950 shadow-lg shadow-emerald-500/25 group-hover:scale-105 transition-all">
-          <Leaf className="w-5 h-5 fill-charcoal-950/20" />
+        <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-lime-400 flex items-center justify-center text-charcoal-950 shadow-md group-hover:scale-105 transition-all">
+          <Leaf className="w-5 h-5 fill-current" />
         </div>
-        <span className="font-black text-2xl text-white tracking-tight flex items-center gap-1.5">
+        <span className="font-black text-2xl text-slate-900 tracking-tight flex items-center gap-1.5">
           EcoTrace
-          <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
         </span>
       </div>
 
-      <div className="max-w-2xl w-full bg-[#07180F]/90 backdrop-blur-2xl rounded-3xl border border-emerald-500/25 shadow-2xl p-6 sm:p-8 relative z-10">
+      <div className="max-w-2xl w-full bg-white rounded-3xl border border-slate-200/90 shadow-xl shadow-slate-200/50 p-6 sm:p-8 relative z-10 text-slate-900">
         {/* Progress Step Indicator */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-2 text-xs font-bold uppercase tracking-wider text-emerald-100/50">
-            <span className={step >= 1 ? "text-emerald-400 font-black" : ""}>1. Profile</span>
-            <span className={step >= 2 ? "text-emerald-400 font-black" : ""}>2. Home</span>
-            <span className={step >= 3 ? "text-emerald-400 font-black" : ""}>3. Appliances</span>
-            <span className={step >= 4 ? "text-emerald-400 font-black" : ""}>4. Carbon Target</span>
+          <div className="flex items-center justify-between mb-2 text-xs font-bold uppercase tracking-wider text-slate-400">
+            <span className={step >= 1 ? "text-emerald-700 font-black" : ""}>1. Profile</span>
+            <span className={step >= 2 ? "text-emerald-700 font-black" : ""}>2. Home</span>
+            <span className={step >= 3 ? "text-emerald-700 font-black" : ""}>3. Appliances</span>
+            <span className={step >= 4 ? "text-emerald-700 font-black" : ""}>4. Carbon Target</span>
           </div>
-          <div className="w-full h-2 bg-[#040e07] rounded-full overflow-hidden flex border border-emerald-500/20">
+          <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden flex border border-slate-200">
             <div
-              className="h-full bg-gradient-to-r from-emerald-500 to-lime-400 transition-all duration-300 rounded-full shadow-sm shadow-emerald-500/50"
+              className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 transition-all duration-300 rounded-full shadow-xs"
               style={{ width: `${(step / 4) * 100}%` }}
             ></div>
           </div>
@@ -216,47 +216,47 @@ export default function OnboardingPage({ onComplete }) {
         {step === 1 && (
           <div className="space-y-5 animate-in fade-in duration-200">
             <div>
-              <h2 className="text-2xl font-black text-white tracking-tight">
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">
                 Welcome to EcoTrace! Let's get acquainted.
               </h2>
-              <p className="text-xs text-emerald-100/70 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Tell us a little about yourself and the people who share your home.
               </p>
             </div>
 
             <div className="space-y-4 pt-2">
               <div>
-                <label className="block text-xs font-bold text-emerald-200/90 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
                   Full Name
                 </label>
                 <input
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#040e07] border border-emerald-500/30 text-xs font-medium text-white placeholder-emerald-100/30 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-emerald-200/90 mb-1.5">
+                <label className="block text-xs font-bold text-slate-700 mb-1.5">
                   Username
                 </label>
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#040e07] border border-emerald-500/30 text-xs font-medium text-white placeholder-emerald-100/30 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
                   required
                 />
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="text-xs font-bold text-emerald-200/90">
+                  <label className="text-xs font-bold text-slate-700">
                     Number of Household Members
                   </label>
-                  <span className="text-xs font-black text-lime-400">
+                  <span className="text-xs font-black text-emerald-700">
                     {members} {members === 1 ? "Person" : "People"}
                   </span>
                 </div>
@@ -266,9 +266,9 @@ export default function OnboardingPage({ onComplete }) {
                   max="10"
                   value={members}
                   onChange={(e) => setMembers(Number(e.target.value))}
-                  className="w-full accent-emerald-400 cursor-pointer"
+                  className="w-full accent-emerald-600 cursor-pointer"
                 />
-                <span className="text-[11px] text-emerald-100/60 block mt-1">
+                <span className="text-[11px] text-slate-500 block mt-1">
                   Used to fairly normalize your EcoScore and benchmark targets.
                 </span>
               </div>
@@ -278,7 +278,7 @@ export default function OnboardingPage({ onComplete }) {
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-lime-400 active:scale-[0.98] text-charcoal-950 text-xs font-black transition flex items-center gap-2 shadow-lg shadow-emerald-500/25"
+                className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white text-xs font-black transition flex items-center gap-2 shadow-md shadow-emerald-600/25"
               >
                 <span>Continue to Home Details</span>
                 <ChevronRight className="w-4 h-4" />
@@ -291,17 +291,17 @@ export default function OnboardingPage({ onComplete }) {
         {step === 2 && (
           <div className="space-y-5 animate-in fade-in duration-200">
             <div>
-              <h2 className="text-2xl font-black text-white tracking-tight">
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">
                 Household Architecture & Occupancy
               </h2>
-              <p className="text-xs text-emerald-100/70 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Your home size and location dictate realistic thermal and baseline power requirements.
               </p>
             </div>
 
             <div className="space-y-4 pt-2">
               <div>
-                <label className="block text-xs font-bold text-emerald-200/90 mb-2">
+                <label className="block text-xs font-bold text-slate-700 mb-2">
                   Dwelling Type
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -312,8 +312,8 @@ export default function OnboardingPage({ onComplete }) {
                       onClick={() => setHomeType(type)}
                       className={`p-3 rounded-xl text-xs font-bold border transition text-center ${
                         homeType === type
-                          ? "bg-emerald-500 text-charcoal-950 border-emerald-400 shadow-md font-black"
-                          : "bg-[#040e07] text-white border-emerald-500/20 hover:border-emerald-400/50 hover:bg-emerald-950/40"
+                          ? "bg-emerald-600 text-white border-emerald-600 shadow-md font-black"
+                          : "bg-slate-50 text-slate-700 border-slate-200 hover:border-emerald-500/50 hover:bg-white"
                       }`}
                     >
                       {type}
@@ -324,7 +324,7 @@ export default function OnboardingPage({ onComplete }) {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-emerald-200/90 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     Approx. Floor Area (Sq. Ft.)
                   </label>
                   <input
@@ -334,13 +334,13 @@ export default function OnboardingPage({ onComplete }) {
                     step="50"
                     value={areaSqft}
                     onChange={(e) => setAreaSqft(Number(e.target.value))}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#040e07] border border-emerald-500/30 text-xs font-medium text-white focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-emerald-200/90 mb-1.5">
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
                     City / State
                   </label>
                   <input
@@ -348,7 +348,7 @@ export default function OnboardingPage({ onComplete }) {
                     value={cityState}
                     onChange={(e) => setCityState(e.target.value)}
                     placeholder="e.g. Bangalore, Karnataka"
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#040e07] border border-emerald-500/30 text-xs font-medium text-white placeholder-emerald-100/30 focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-900 placeholder-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-2 focus:ring-emerald-500/20 focus:outline-none"
                     required
                   />
                 </div>
@@ -356,10 +356,10 @@ export default function OnboardingPage({ onComplete }) {
 
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="text-xs font-bold text-emerald-200/90">
+                  <label className="text-xs font-bold text-slate-700">
                     Average Daily Hours Spent at Home
                   </label>
-                  <span className="text-xs font-black text-lime-400">
+                  <span className="text-xs font-black text-emerald-700">
                     {avgHours} Hours / Day
                   </span>
                 </div>
@@ -369,7 +369,7 @@ export default function OnboardingPage({ onComplete }) {
                   max="24"
                   value={avgHours}
                   onChange={(e) => setAvgHours(Number(e.target.value))}
-                  className="w-full accent-emerald-400 cursor-pointer"
+                  className="w-full accent-emerald-600 cursor-pointer"
                 />
               </div>
             </div>
@@ -378,7 +378,7 @@ export default function OnboardingPage({ onComplete }) {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="px-4 py-2.5 rounded-xl border border-emerald-500/30 text-xs font-semibold text-emerald-200 hover:text-white hover:bg-emerald-950/40 transition flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition flex items-center gap-1.5"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -386,7 +386,7 @@ export default function OnboardingPage({ onComplete }) {
               <button
                 type="button"
                 onClick={() => setStep(3)}
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-lime-400 active:scale-[0.98] text-charcoal-950 text-xs font-black transition flex items-center gap-2 shadow-lg shadow-emerald-500/25"
+                className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white text-xs font-black transition flex items-center gap-2 shadow-md shadow-emerald-600/25"
               >
                 <span>Select Appliances</span>
                 <ChevronRight className="w-4 h-4" />
@@ -399,10 +399,10 @@ export default function OnboardingPage({ onComplete }) {
         {step === 3 && (
           <div className="space-y-5 animate-in fade-in duration-200">
             <div>
-              <h2 className="text-2xl font-black text-white tracking-tight">
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight">
                 Select Your Household Appliances
               </h2>
-              <p className="text-xs text-emerald-100/70 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Choose the appliances currently operating in your household inventory.
               </p>
             </div>
@@ -417,8 +417,8 @@ export default function OnboardingPage({ onComplete }) {
                     key={app.id}
                     className={`p-3.5 rounded-2xl border transition-all ${
                       isSelected
-                        ? "bg-emerald-950/50 border-emerald-400/80 shadow-md"
-                        : "bg-[#040e07] border-emerald-500/20 hover:border-emerald-500/50 hover:bg-emerald-950/20"
+                        ? "bg-emerald-50 border-emerald-400 shadow-xs"
+                        : "bg-slate-50 border-slate-200 hover:border-slate-300 hover:bg-white"
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -429,17 +429,17 @@ export default function OnboardingPage({ onComplete }) {
                         <div
                           className={`w-5 h-5 rounded-md flex items-center justify-center border transition ${
                             isSelected
-                              ? "bg-emerald-500 border-emerald-400 text-charcoal-950 font-bold"
-                              : "border-emerald-500/40 bg-black/40"
+                              ? "bg-emerald-600 border-emerald-600 text-white font-bold"
+                              : "border-slate-300 bg-white"
                           }`}
                         >
                           {isSelected && <Check className="w-3.5 h-3.5" />}
                         </div>
                         <div>
-                          <span className="font-bold text-xs text-white block">
+                          <span className="font-bold text-xs text-slate-900 block">
                             {app.name}
                           </span>
-                          <span className="text-[10px] text-emerald-200/60">
+                          <span className="text-[10px] text-slate-500">
                             {app.category} • {app.fuel_type === "gas" ? "LPG Fuel" : `${app.default_power_watts} Watts`}
                           </span>
                         </div>
@@ -448,27 +448,27 @@ export default function OnboardingPage({ onComplete }) {
                       {isSelected && (
                         <div className="flex items-center gap-3">
                           <div className="flex items-center gap-1.5">
-                            <span className="text-[10px] text-emerald-200/70 font-semibold">Qty:</span>
+                            <span className="text-[10px] text-slate-600 font-semibold">Qty:</span>
                             <input
                               type="number"
                               min="1"
                               max="20"
                               value={item.quantity}
                               onChange={(e) => updateQuantity(app.id, parseInt(e.target.value) || 1)}
-                              className="w-12 px-2 py-1 rounded-lg bg-[#06140B] border border-emerald-500/40 text-xs text-center font-bold text-white focus:outline-none focus:border-emerald-400"
+                              className="w-12 px-2 py-1 rounded-lg bg-white border border-slate-300 text-xs text-center font-bold text-slate-900 focus:outline-none focus:border-emerald-500"
                             />
                           </div>
 
                           {item.fuel_type !== "gas" && (
                             <div className="flex items-center gap-1.5">
-                              <span className="text-[10px] text-emerald-200/70 font-semibold">Watts:</span>
+                              <span className="text-[10px] text-slate-600 font-semibold">Watts:</span>
                               <input
                                 type="number"
                                 min="1"
                                 max="10000"
                                 value={item.power_watts}
                                 onChange={(e) => updatePower(app.id, parseFloat(e.target.value) || 0)}
-                                className="w-16 px-2 py-1 rounded-lg bg-[#06140B] border border-emerald-500/40 text-xs text-center font-bold text-white focus:outline-none focus:border-emerald-400"
+                                className="w-16 px-2 py-1 rounded-lg bg-white border border-slate-300 text-xs text-center font-bold text-slate-900 focus:outline-none focus:border-emerald-500"
                               />
                             </div>
                           )}
@@ -484,7 +484,7 @@ export default function OnboardingPage({ onComplete }) {
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="px-4 py-2.5 rounded-xl border border-emerald-500/30 text-xs font-semibold text-emerald-200 hover:text-white hover:bg-emerald-950/40 transition flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition flex items-center gap-1.5"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -492,7 +492,7 @@ export default function OnboardingPage({ onComplete }) {
               <button
                 type="button"
                 onClick={goToStep4}
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-lime-400 active:scale-[0.98] text-charcoal-950 text-xs font-black transition flex items-center gap-2 shadow-lg shadow-emerald-500/25"
+                className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white text-xs font-black transition flex items-center gap-2 shadow-md shadow-emerald-600/25"
               >
                 <span>Calculate Target Budget</span>
                 <ChevronRight className="w-4 h-4" />
@@ -505,39 +505,39 @@ export default function OnboardingPage({ onComplete }) {
         {step === 4 && (
           <div className="space-y-5 animate-in fade-in duration-200">
             <div>
-              <span className="text-xs font-extrabold uppercase text-emerald-400 tracking-wider">
+              <span className="text-xs font-extrabold uppercase text-emerald-700 tracking-wider">
                 Step 4 of 4
               </span>
-              <h2 className="text-2xl font-black text-white tracking-tight mt-0.5">
+              <h2 className="text-2xl font-black text-slate-900 tracking-tight mt-0.5">
                 Your Personalized Carbon Target
               </h2>
-              <p className="text-xs text-emerald-100/70 mt-1">
+              <p className="text-xs text-slate-500 mt-1">
                 Estimated benchmark modeled from household size, inventory, and occupancy hours.
               </p>
             </div>
 
             {/* Benchmark Showcase Card */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-emerald-950/60 to-emerald-900/40 border border-emerald-500/30 text-center shadow-xl">
-              <span className="text-xs uppercase font-extrabold text-emerald-300 tracking-wider">
+            <div className="p-6 rounded-3xl bg-emerald-50/70 border border-emerald-200 text-center shadow-xs">
+              <span className="text-xs uppercase font-extrabold text-emerald-800 tracking-wider">
                 Recommended Daily Limit
               </span>
               <div className="my-2">
-                <span className="text-5xl font-black text-white tracking-tight">
+                <span className="text-5xl font-black text-slate-900 tracking-tight">
                   {userTargetKg}
                 </span>
-                <span className="text-sm font-bold text-emerald-300 ml-1.5">
+                <span className="text-sm font-bold text-emerald-700 ml-1.5">
                   kg CO₂ / day
                 </span>
               </div>
-              <span className="text-xs font-bold text-lime-300 bg-emerald-950/80 border border-emerald-500/30 px-3.5 py-1 rounded-full inline-block">
+              <span className="text-xs font-bold text-emerald-800 bg-white border border-emerald-200 px-3.5 py-1 rounded-full inline-block shadow-xs">
                 ≈ {(userTargetKg / members).toFixed(2)} kg CO₂ per person
               </span>
 
               {/* Slider for adjustment */}
-              <div className="mt-6 pt-4 border-t border-emerald-500/20 text-left">
-                <div className="flex items-center justify-between text-xs font-bold text-emerald-100 mb-2">
+              <div className="mt-6 pt-4 border-t border-emerald-200 text-left">
+                <div className="flex items-center justify-between text-xs font-bold text-slate-800 mb-2">
                   <span>Adjust Your Daily Target</span>
-                  <span className="text-lime-300 font-black">{userTargetKg} kg</span>
+                  <span className="text-emerald-700 font-black">{userTargetKg} kg</span>
                 </div>
                 <input
                   type="range"
@@ -546,9 +546,9 @@ export default function OnboardingPage({ onComplete }) {
                   step="0.5"
                   value={userTargetKg}
                   onChange={(e) => setUserTargetKg(parseFloat(e.target.value))}
-                  className="w-full accent-emerald-400 cursor-pointer"
+                  className="w-full accent-emerald-600 cursor-pointer"
                 />
-                <p className="text-[11px] text-emerald-100/60 mt-2 leading-relaxed">
+                <p className="text-[11px] text-slate-500 mt-2 leading-relaxed">
                   *Disclaimer: This target is an estimated conservation benchmark, not an immutable scientific universal ceiling. Remaining below your budget awards +25 EcoCredits daily.
                 </p>
               </div>
@@ -558,7 +558,7 @@ export default function OnboardingPage({ onComplete }) {
               <button
                 type="button"
                 onClick={() => setStep(3)}
-                className="px-4 py-2.5 rounded-xl border border-emerald-500/30 text-xs font-semibold text-emerald-200 hover:text-white hover:bg-emerald-950/40 transition flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-xl border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-100 transition flex items-center gap-1.5"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>Back</span>
@@ -567,9 +567,9 @@ export default function OnboardingPage({ onComplete }) {
                 type="button"
                 onClick={handleSubmitAll}
                 disabled={loading}
-                className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-lime-400 active:scale-[0.98] text-charcoal-950 text-xs font-black transition flex items-center gap-2 shadow-lg shadow-emerald-500/25"
+                className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white text-xs font-black transition flex items-center gap-2 shadow-md shadow-emerald-600/25"
               >
-                <Sparkles className="w-4 h-4 text-charcoal-950" />
+                <Sparkles className="w-4 h-4 text-white" />
                 <span>{loading ? "Saving Profile..." : "Complete Setup (+50 Credits)"}</span>
               </button>
             </div>

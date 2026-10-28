@@ -33,8 +33,8 @@ export const ToastProvider = ({ children }) => {
             bg = "bg-red-50 border-red-200 text-red-900 shadow-lg";
             icon = <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />;
           } else if (toast.type === "award") {
-            bg = "bg-forest-900 border-limeAccent text-white shadow-glow-accent";
-            icon = <Sparkles className="w-5 h-5 text-limeAccent shrink-0 animate-pulse" />;
+            bg = "bg-emerald-900 border-emerald-400 text-white shadow-lg";
+            icon = <Sparkles className="w-5 h-5 text-lime-300 shrink-0 animate-pulse" />;
           } else if (toast.type === "info") {
             bg = "bg-blue-50 border-blue-200 text-blue-900 shadow-lg";
             icon = <Info className="w-5 h-5 text-blue-500 shrink-0" />;

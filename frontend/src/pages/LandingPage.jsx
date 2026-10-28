@@ -39,11 +39,11 @@ export default function LandingPage({ onGetStarted, onLogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#06140B] text-white flex flex-col font-sans selection:bg-emerald-500 selection:text-black overflow-x-hidden relative">
+    <div className="min-h-screen bg-[#FAFCF9] text-charcoal-900 flex flex-col font-sans selection:bg-emerald-500 selection:text-white overflow-x-hidden relative">
       {/* Ambient Radial Lighting Orbs */}
       <div className="fixed top-0 right-0 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[140px] pointer-events-none -z-10" />
-      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[150px] pointer-events-none -z-10" />
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-emerald-950/20 rounded-full blur-[180px] pointer-events-none -z-10" />
+      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-teal-500/10 rounded-full blur-[150px] pointer-events-none -z-10" />
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lime-400/5 rounded-full blur-[180px] pointer-events-none -z-10" />
 
       {/* Global Public Navbar with Active Pill Highlighting */}
       <PublicNavbar

@@ -129,7 +129,7 @@ export default function LogActivityModal({
         particleCount: 50,
         spread: 50,
         origin: { y: 0.7 },
-        colors: ["#22C55E", "#BEF264", "#166534"],
+        colors: ["#16a34a", "#84cc16", "#059669"],
       });
 
       showToast(
@@ -152,10 +152,10 @@ export default function LogActivityModal({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Log Household Activity">
-      <form onSubmit={handleSubmit} className="space-y-4 text-white">
+      <form onSubmit={handleSubmit} className="space-y-4 text-slate-900">
         {/* Preset Selector */}
         <div>
-          <label className="block text-xs font-bold text-emerald-200/90 mb-1">
+          <label className="block text-xs font-bold text-slate-700 mb-1">
             Choose from Appliance Catalog Preset
           </label>
           <select
@@ -164,7 +164,7 @@ export default function LogActivityModal({
               const found = appliancesCatalog.find((a) => a.id === e.target.value);
               if (found) handleSelectAppliance(found);
             }}
-            className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-500/30 text-xs font-bold focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
+            className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-semibold focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none bg-slate-50 text-slate-900"
           >
             {appliancesCatalog.map((app) => (
               <option key={app.id} value={app.id}>
@@ -177,26 +177,26 @@ export default function LogActivityModal({
         {/* Appliance Name and Category */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-bold text-emerald-200/90 mb-1">
+            <label className="block text-xs font-bold text-slate-700 mb-1">
               Appliance Name
             </label>
             <input
               type="text"
               value={applianceName}
               onChange={(e) => setApplianceName(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-medium focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none bg-slate-50 text-slate-900"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-emerald-200/90 mb-1">
+            <label className="block text-xs font-bold text-slate-700 mb-1">
               Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-medium focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none bg-slate-50 text-slate-900"
             >
               <option value="Cooling">Cooling</option>
               <option value="Heating">Heating</option>
@@ -213,17 +213,17 @@ export default function LogActivityModal({
         {/* Fuel Type & Power */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-bold text-emerald-200/90 mb-1">
+            <label className="block text-xs font-bold text-slate-700 mb-1">
               Energy Source
             </label>
-            <div className="flex rounded-xl p-1 bg-[#040e07] border border-emerald-500/30">
+            <div className="flex rounded-xl p-1 bg-slate-100 border border-slate-200">
               <button
                 type="button"
                 onClick={() => setFuelType("electric")}
                 className={`flex-1 py-1.5 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${
                   fuelType === "electric"
-                    ? "bg-emerald-500 text-charcoal-950 font-black shadow-sm"
-                    : "text-emerald-300/70 hover:text-white"
+                    ? "bg-emerald-600 text-white font-black shadow-sm"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 <Zap className="w-3.5 h-3.5 text-yellow-300" />
@@ -234,8 +234,8 @@ export default function LogActivityModal({
                 onClick={() => setFuelType("gas")}
                 className={`flex-1 py-1.5 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${
                   fuelType === "gas"
-                    ? "bg-orange-500 text-charcoal-950 font-black shadow-sm"
-                    : "text-emerald-300/70 hover:text-white"
+                    ? "bg-orange-600 text-white font-black shadow-sm"
+                    : "text-slate-600 hover:text-slate-900"
                 }`}
               >
                 <Flame className="w-3.5 h-3.5 text-orange-200" />
@@ -246,7 +246,7 @@ export default function LogActivityModal({
 
           {fuelType === "electric" ? (
             <div>
-              <label className="block text-xs font-bold text-emerald-200/90 mb-1">
+              <label className="block text-xs font-bold text-slate-700 mb-1">
                 Power Rating (Watts)
               </label>
               <input
@@ -255,13 +255,13 @@ export default function LogActivityModal({
                 max="10000"
                 value={powerWatts}
                 onChange={(e) => setPowerWatts(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
+                className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-medium focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none bg-slate-50 text-slate-900"
                 required
               />
             </div>
           ) : (
             <div>
-              <label className="block text-xs font-bold text-emerald-200/90 mb-1">
+              <label className="block text-xs font-bold text-slate-700 mb-1">
                 Burners Used
               </label>
               <input
@@ -270,7 +270,7 @@ export default function LogActivityModal({
                 max="6"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
+                className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-medium focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none bg-slate-50 text-slate-900"
               />
             </div>
           )}
@@ -280,10 +280,10 @@ export default function LogActivityModal({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-bold text-emerald-200/90">
+              <label className="text-xs font-bold text-slate-700">
                 Duration (Minutes)
               </label>
-              <span className="text-[11px] font-black text-lime-300">
+              <span className="text-[11px] font-black text-emerald-700">
                 {(durationMinutes / 60).toFixed(1)} hrs
               </span>
             </div>
@@ -293,7 +293,7 @@ export default function LogActivityModal({
               max="1440"
               value={durationMinutes}
               onChange={(e) => setDurationMinutes(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-medium focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none bg-slate-50 text-slate-900"
               required
             />
             {/* Quick minute buttons */}
@@ -305,8 +305,8 @@ export default function LogActivityModal({
                   onClick={() => setDurationMinutes(mins)}
                   className={`text-[10px] px-2 py-0.5 rounded-md font-bold transition ${
                     durationMinutes === mins
-                      ? "bg-emerald-500 text-charcoal-950 font-black"
-                      : "bg-[#040e07] border border-emerald-500/20 text-emerald-300 hover:border-emerald-400"
+                      ? "bg-emerald-600 text-white font-black"
+                      : "bg-slate-100 border border-slate-200 text-slate-700 hover:border-emerald-400"
                   }`}
                 >
                   {mins >= 60 ? `${mins / 60}h` : `${mins}m`}
@@ -316,13 +316,13 @@ export default function LogActivityModal({
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-emerald-200/90 mb-1">
+            <label className="block text-xs font-bold text-slate-700 mb-1">
               Operating Mode
             </label>
             <select
               value={usageMode}
               onChange={(e) => setUsageMode(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
+              className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-medium focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none bg-slate-50 text-slate-900"
             >
               <option value="Eco">Eco / Low Power (0.75x)</option>
               <option value="Low">Low (0.70x)</option>
@@ -334,7 +334,7 @@ export default function LogActivityModal({
 
         {/* Optional Notes */}
         <div>
-          <label className="block text-xs font-bold text-emerald-200/90 mb-1">
+          <label className="block text-xs font-bold text-slate-700 mb-1">
             Optional Notes
           </label>
           <input
@@ -342,41 +342,41 @@ export default function LogActivityModal({
             placeholder="e.g. Master bedroom AC at 24°C"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white placeholder-emerald-100/30"
+            className="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-medium focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none bg-slate-50 text-slate-900 placeholder-slate-400"
           />
         </div>
 
         {/* INSTANT LIVE CALCULATION PREVIEW BOX */}
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/60 to-emerald-900/40 border border-emerald-500/30 shadow-md transition-all duration-300">
+        <div className="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 shadow-sm transition-all duration-300">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-extrabold uppercase text-emerald-300 tracking-wider flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-lime-400 animate-pulse" />
+            <span className="text-xs font-extrabold uppercase text-emerald-800 tracking-wider flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
               Live Carbon & Energy Preview
             </span>
-            <span className="text-[10px] text-lime-300 font-bold bg-[#040e07] px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+            <span className="text-[10px] text-emerald-800 font-bold bg-white px-2.5 py-0.5 rounded-full border border-emerald-200 shadow-xs">
               {preview.calculation_method}
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="p-3 rounded-xl bg-[#040e07] border border-emerald-500/30 shadow-xs">
-              <span className="text-[10px] uppercase font-bold text-emerald-200/70 block">
+            <div className="p-3 rounded-xl bg-white border border-emerald-100 shadow-xs">
+              <span className="text-[10px] uppercase font-bold text-slate-500 block">
                 Estimated Energy
               </span>
-              <span className="text-2xl font-black text-white">
+              <span className="text-2xl font-black text-slate-900">
                 {preview.energy_kwh}
               </span>
-              <span className="text-xs font-bold text-emerald-400 ml-1">kWh</span>
+              <span className="text-xs font-bold text-emerald-700 ml-1">kWh</span>
             </div>
 
-            <div className="p-3 rounded-xl bg-[#040e07] border border-emerald-500/30 shadow-xs">
-              <span className="text-[10px] uppercase font-bold text-emerald-200/70 block">
+            <div className="p-3 rounded-xl bg-white border border-emerald-100 shadow-xs">
+              <span className="text-[10px] uppercase font-bold text-slate-500 block">
                 Estimated Emissions
               </span>
-              <span className="text-2xl font-black text-lime-300">
+              <span className="text-2xl font-black text-emerald-700">
                 {preview.co2_kg}
               </span>
-              <span className="text-xs font-bold text-emerald-400 ml-1">kg CO₂</span>
+              <span className="text-xs font-bold text-emerald-800 ml-1">kg CO₂</span>
             </div>
           </div>
         </div>
@@ -386,23 +386,23 @@ export default function LogActivityModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl text-xs font-bold text-gray-400 hover:text-white hover:bg-white/10 active:scale-95 transition"
+            className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-800 hover:bg-slate-100 active:scale-95 transition"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-lime-400 active:scale-95 text-charcoal-950 text-xs font-black shadow-lg shadow-emerald-500/25 transition flex items-center gap-2"
+            className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white text-xs font-black shadow-sm transition flex items-center gap-2"
           >
             {loading ? (
               <span className="flex items-center gap-2">
-                <span className="w-3.5 h-3.5 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin"></span>
+                <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                 Recording Activity...
               </span>
             ) : (
               <>
-                <Sparkles className="w-3.5 h-3.5 text-charcoal-950" />
+                <Sparkles className="w-3.5 h-3.5 text-white" />
                 <span>Save Activity (+10 Credits)</span>
               </>
             )}

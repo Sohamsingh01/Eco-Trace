@@ -30,22 +30,22 @@ export default function DashboardPreviewPage({ onGetStarted, onLogin }) {
   const [demoStreak, setDemoStreak] = useState(5);
 
   return (
-    <div className="space-y-20 pb-24 text-white">
+    <div className="space-y-20 pb-24 text-charcoal-900">
       {/* 1. HERO HEADER */}
       <section className="pt-8 lg:pt-14 text-center max-w-3xl mx-auto px-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-4">
-          <Sparkles className="w-4 h-4 text-limeAccent" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold mb-4">
+          <Sparkles className="w-4 h-4 text-emerald-600" />
           <span>Interactive Telemetry Preview</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
           A Dashboard Built for Action,{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-lime-300">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-700">
             Not Just Observation
           </span>
         </h1>
 
-        <p className="mt-4 text-sm sm:text-base text-gray-300 font-normal leading-relaxed">
+        <p className="mt-4 text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
           Test-drive the actual interactive widgets below. Adjust the sliders to see how
           the circular carbon budget ring shifts threshold colors and how the 3D miniature
           island ecosystem evolves with your EcoScore.
@@ -54,14 +54,14 @@ export default function DashboardPreviewPage({ onGetStarted, onLogin }) {
         <div className="mt-6 flex flex-wrap justify-center gap-4">
           <button
             onClick={onLogin}
-            className="px-6 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-lime-400 text-charcoal-950 font-black text-xs shadow-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition flex items-center gap-2 cursor-pointer"
+            className="px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-black text-xs shadow-md shadow-emerald-600/25 transition flex items-center gap-2 cursor-pointer"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>Launch Full Live Demo Account</span>
           </button>
           <button
             onClick={onGetStarted}
-            className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition cursor-pointer"
+            className="px-6 py-3 rounded-full bg-white hover:bg-slate-50 text-slate-800 font-bold text-xs border border-slate-300 transition cursor-pointer shadow-xs"
           >
             Create Your Household Account
           </button>
@@ -75,20 +75,20 @@ export default function DashboardPreviewPage({ onGetStarted, onLogin }) {
           <div className="lg:col-span-6 space-y-6">
             <CardTilt3D
               maxTilt={4}
-              className="rounded-3xl bg-[#092215]/90 border border-emerald-500/30 p-8 shadow-2xl backdrop-blur-xl"
+              className="rounded-3xl bg-white border border-slate-200/90 p-8 shadow-sm backdrop-blur-xl"
             >
-              <div className="flex items-center justify-between pb-4 border-b border-emerald-900/40">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-200">
                 <div>
-                  <span className="text-[10px] font-black uppercase text-emerald-400 tracking-wider block">
+                  <span className="text-[10px] font-black uppercase text-emerald-700 tracking-wider block">
                     Interactive Widget Demo 1
                   </span>
-                  <h3 className="text-lg font-black text-white mt-0.5">
+                  <h3 className="text-lg font-black text-slate-900 mt-0.5">
                     Daily Carbon Budget Ring
                   </h3>
                 </div>
                 <button
                   onClick={() => setConsumedCo2(7.2)}
-                  className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 transition"
+                  className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition"
                   title="Reset to 7.2 kg"
                 >
                   <RotateCcw className="w-4 h-4" />
@@ -98,18 +98,17 @@ export default function DashboardPreviewPage({ onGetStarted, onLogin }) {
               {/* The Live Budget Progress Ring Component */}
               <div className="py-6 flex justify-center">
                 <BudgetProgressRing
-                  consumed={consumedCo2}
-                  target={targetBudget}
-                  size={240}
-                  strokeWidth={20}
+                  currentKg={consumedCo2}
+                  targetKg={targetBudget}
+                  isVerified={false}
                 />
               </div>
 
               {/* Dynamic Interactive Slider */}
-              <div className="p-4 rounded-2xl bg-[#06170E] border border-emerald-500/20 space-y-2">
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <div className="flex items-center justify-between text-xs font-bold">
-                  <span className="text-gray-300">Simulate Today's Consumed Carbon:</span>
-                  <span className="text-emerald-400 font-extrabold text-sm">
+                  <span className="text-slate-600">Simulate Today's Consumed Carbon:</span>
+                  <span className="text-emerald-700 font-extrabold text-sm">
                     {consumedCo2.toFixed(1)} kg CO₂
                   </span>
                 </div>
@@ -120,175 +119,96 @@ export default function DashboardPreviewPage({ onGetStarted, onLogin }) {
                   step="0.2"
                   value={consumedCo2}
                   onChange={(e) => setConsumedCo2(parseFloat(e.target.value))}
-                  className="w-full accent-emerald-400 cursor-pointer"
+                  className="w-full accent-emerald-600 cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-gray-400 font-medium">
-                  <span>1.0 kg (Ultra Clean)</span>
-                  <span className="text-emerald-300 font-bold">12.5 kg (Budget Limit)</span>
-                  <span className="text-red-400">16.0 kg (Exceeded)</span>
+                <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium">
+                  <span>1.0 kg (Ultra Low)</span>
+                  <span className="text-emerald-700 font-bold">Target: {targetBudget} kg</span>
+                  <span>16.0 kg (High Alert)</span>
                 </div>
               </div>
-
-              <p className="text-[11px] text-gray-400 mt-4 leading-relaxed">
-                Notice how the circular ring dynamically transitions from <strong>Emerald Glow</strong> (below 85%),
-                to <strong>Amber Warning</strong> (above 85%), and <strong>Coral Alert</strong> when exceeding daily budget limits.
-              </p>
             </CardTilt3D>
           </div>
 
-          {/* Right Column: Evolving 3D Miniature Island ("My Eco World") */}
+          {/* Right Column: 3D MyEcoWorld Interactive Ecosystem Island */}
           <div className="lg:col-span-6 space-y-6">
             <CardTilt3D
               maxTilt={4}
-              className="rounded-3xl bg-[#092215]/90 border border-emerald-500/30 p-8 shadow-2xl backdrop-blur-xl"
+              className="rounded-3xl bg-white border border-slate-200/90 p-8 shadow-sm backdrop-blur-xl"
             >
-              <div className="flex items-center justify-between pb-4 border-b border-emerald-900/40">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-200">
                 <div>
-                  <span className="text-[10px] font-black uppercase text-emerald-400 tracking-wider block">
+                  <span className="text-[10px] font-black uppercase text-emerald-700 tracking-wider block">
                     Interactive Widget Demo 2
                   </span>
-                  <h3 className="text-lg font-black text-white mt-0.5">
-                    "My Eco World" 3D Island
+                  <h3 className="text-lg font-black text-slate-900 mt-0.5">
+                    3D Biophilic Island Evolution
                   </h3>
                 </div>
-                <div className="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/40 text-[10px] font-extrabold text-emerald-300">
-                  {demoEcoScore < 400
-                    ? "Stage 1: Seedling Sanctuary"
-                    : demoEcoScore <= 700
-                    ? "Stage 2: Growing Oasis"
-                    : "Stage 3: Flourishing Bio-Haven"}
+                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                  <Award className="w-3.5 h-3.5" />
+                  <span>Interactive Three.js Canvas</span>
                 </div>
               </div>
 
-              {/* The Live 3D Island Component */}
-              <div className="py-2">
+              {/* 3D MyEcoWorld Canvas */}
+              <div className="my-4 rounded-2xl overflow-hidden border border-slate-200 bg-slate-50 flex justify-center items-center">
                 <MyEcoWorld3D
                   ecoScore={demoEcoScore}
-                  streak={demoStreak}
-                  size="compact"
+                  streakDays={demoStreak}
+                  className="w-full h-64"
                 />
               </div>
 
-              {/* Controls to Test Evolution Stages */}
-              <div className="p-4 rounded-2xl bg-[#06170E] border border-emerald-500/20 space-y-3">
+              {/* Interactive EcoScore Slider */}
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
                 <div className="flex items-center justify-between text-xs font-bold">
-                  <span className="text-gray-300">Test EcoScore Evolution:</span>
-                  <span className="text-emerald-400 font-extrabold text-sm">
-                    {demoEcoScore} / 1000
+                  <span className="text-slate-600">Simulate Cumulative EcoScore:</span>
+                  <span className="text-emerald-700 font-extrabold text-sm">
+                    {demoEcoScore} Points
                   </span>
                 </div>
                 <input
                   type="range"
-                  min="200"
-                  max="950"
+                  min="50"
+                  max="1200"
                   step="25"
                   value={demoEcoScore}
                   onChange={(e) => setDemoEcoScore(parseInt(e.target.value))}
-                  className="w-full accent-emerald-400 cursor-pointer"
+                  className="w-full accent-emerald-600 cursor-pointer"
                 />
-
-                <div className="flex items-center justify-between text-xs font-bold pt-2 border-t border-emerald-900/30">
-                  <span className="text-gray-300">Tracking Streak:</span>
-                  <span className="text-lime-300 font-extrabold">
-                    🔥 {demoStreak} Days Active
-                  </span>
+                <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium">
+                  <span>50 pts (Sparse Sprout)</span>
+                  <span>600 pts (Flourishing Canopy)</span>
+                  <span>1200+ pts (Full Ecosystem)</span>
                 </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="14"
-                  value={demoStreak}
-                  onChange={(e) => setDemoStreak(parseInt(e.target.value))}
-                  className="w-full accent-lime-400 cursor-pointer"
-                />
               </div>
-
-              <p className="text-[11px] text-gray-400 mt-4 leading-relaxed">
-                As your household remains within emission limits, the 3D miniature ecosystem grows:
-                sprouting oak trees, animated wind turbines, solar panels, and water streams!
-              </p>
             </CardTilt3D>
           </div>
         </div>
       </section>
 
-      {/* 3. INTERACTIVE 3D METRIC CARDS ROW */}
+      {/* 3. CALL TO ACTION STRIP */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-left mb-6">
-          <span className="text-xs font-black uppercase text-emerald-400 tracking-widest block">
-            Core Metric Telemetry
-          </span>
-          <h3 className="text-2xl font-black text-white mt-1">
-            Real-Time Stat Cards with 3D Tilt & Specular Sheen
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <StatCard
-            title="Today's CO₂ Footprint"
-            value="3.91"
-            unit="kg CO₂"
-            iconName="Leaf"
-            trend="-14%"
-            trendDirection="down"
-            subtitle="7.59 kg below daily budget"
-            highlight={true}
-          />
-
-          <StatCard
-            title="Electricity Consumption"
-            value="4.77"
-            unit="kWh"
-            iconName="Zap"
-            trend="-8%"
-            trendDirection="down"
-            subtitle="₹35.78 estimated energy cost"
-          />
-
-          <StatCard
-            title="Remaining Budget"
-            value="8.59"
-            unit="kg CO₂"
-            iconName="Target"
-            trend="68%"
-            trendDirection="up"
-            subtitle="Budget resets at midnight"
-          />
-
-          <StatCard
-            title="EcoCredits Balance"
-            value="295"
-            unit="Credits"
-            iconName="Coins"
-            trend="+25"
-            trendDirection="up"
-            subtitle="Ready to redeem coupons"
-          />
-        </div>
-      </section>
-
-      {/* 4. LAUNCH DEMO CTA */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="p-10 rounded-3xl bg-gradient-to-r from-emerald-950 via-[#0B2517] to-emerald-950 border border-emerald-500/40">
-          <h3 className="text-2xl sm:text-3xl font-black text-white">
-            Ready to explore your personal household telemetry?
-          </h3>
-          <p className="text-xs text-gray-300 mt-2 max-w-xl mx-auto">
-            Log in to the pre-loaded demonstration account or create your personalized
-            household profile in less than two minutes.
+        <div className="rounded-3xl bg-slate-50 border border-slate-200 p-8 sm:p-12 text-center shadow-sm">
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight mb-2">
+            Ready to Track Your Real Appliance Footprint?
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto mb-6">
+            Get instant CEA emission calculations, track appliance power consumption, and redeem gift vouchers.
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
-            <button
-              onClick={onLogin}
-              className="px-7 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-lime-400 text-charcoal-950 font-black text-xs shadow-lg hover:shadow-glow transition cursor-pointer"
-            >
-              Open Full Demo Dashboard
-            </button>
+          <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={onGetStarted}
-              className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition cursor-pointer"
+              className="px-7 py-3 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-md shadow-emerald-600/25 transition cursor-pointer"
             >
               Sign Up Free
+            </button>
+            <button
+              onClick={onLogin}
+              className="px-6 py-3 rounded-full bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs border border-slate-200 transition cursor-pointer"
+            >
+              Demo Sign In
             </button>
           </div>
         </div>
@@ -296,4 +216,3 @@ export default function DashboardPreviewPage({ onGetStarted, onLogin }) {
     </div>
   );
 }
-

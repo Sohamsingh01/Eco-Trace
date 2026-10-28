@@ -58,19 +58,21 @@ export default function SimulatorPage({ onGetStarted, onLogin }) {
   const gasCo2 = (gasMinutes / 60) * 0.15 * 2.983;
   const totalDailyCo2 = electricCo2 + gasCo2;
 
-  // Monthly & Yearly projections
-  const monthlyCo2 = totalDailyCo2 * 30;
-  const annualCo2Tons = (totalDailyCo2 * 365) / 1000;
-
-  // Estimated Monthly Electricity Bill (avg ₹7.50 / kWh slab)
+  // Monthly projections
   const monthlyKwh = totalDailyKwh * 30;
-  const monthlyBillRupees = Math.round(monthlyKwh * 7.5);
+  const monthlyCo2 = totalDailyCo2 * 30;
+  // Avg urban domestic tariff: ~₹7.50 per kWh
+  const estimatedMonthlyBillInr = Math.round(monthlyKwh * 7.5);
 
-  // Trees needed to offset annually (1 mature tree absorbs ~22 kg CO2 / year)
-  const treesNeeded = Math.ceil((totalDailyCo2 * 365) / 22);
+  // Trees needed to sequester monthly output (~21 kg CO2/year per mature tree => 1.75 kg/month)
+  const treesNeededMonthly = Math.round(monthlyCo2 / 1.75);
 
-  // Potential EcoCredits (if under 12.5 kg target: 25 credits/day + 10 logging)
-  const potentialCreditsPerMonth = totalDailyCo2 <= 12.5 ? 30 * 35 : 30 * 10;
+  // Potential savings if AC reduced by 1 hour and geyser reduced by 10 mins
+  const optimizedDailyKwh =
+    totalDailyKwh - (acWatts * 1) / 1000 - (geyserWatts * (10 / 60)) / 1000;
+  const potentialMonthlySavedInr = Math.round(
+    (totalDailyKwh - Math.max(0, optimizedDailyKwh)) * 30 * 7.5
+  );
 
   const handleReset = () => {
     setAcType("3star");
@@ -86,22 +88,22 @@ export default function SimulatorPage({ onGetStarted, onLogin }) {
   };
 
   return (
-    <div className="space-y-16 pb-24 text-white">
+    <div className="space-y-20 pb-24 text-charcoal-900">
       {/* 1. HERO HEADER */}
       <section className="pt-8 lg:pt-14 text-center max-w-3xl mx-auto px-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-4">
-          <Sparkles className="w-4 h-4 text-limeAccent" />
-          <span>Interactive Appliance Telemetry</span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold mb-4">
+          <Sparkles className="w-4 h-4 text-emerald-600" />
+          <span>Interactive CEA India & IPCC Carbon Emission Modeling</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-          Simulate Your Appliances.{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-lime-300">
+        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
+          Live Household Simulator:{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-700">
             Cut Your Carbon & Electric Bill.
           </span>
         </h1>
 
-        <p className="mt-4 text-sm sm:text-base text-gray-300 font-normal leading-relaxed">
+        <p className="mt-4 text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
           Adjust your daily appliance usage by room below. Watch your emissions, kilowatt-hours,
           and estimated monthly electricity bill in ₹ update instantaneously.
         </p>
@@ -113,20 +115,20 @@ export default function SimulatorPage({ onGetStarted, onLogin }) {
           {/* Left Column: Appliance Controls by Room (8 Cols) */}
           <div className="lg:col-span-8 space-y-6">
             {/* Living Room Card */}
-            <div className="rounded-3xl bg-[#092215]/85 border border-emerald-500/30 p-6 sm:p-8 shadow-xl space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-emerald-900/40">
+            <div className="rounded-3xl bg-white border border-slate-200/90 p-6 sm:p-8 shadow-sm space-y-6">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-200">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">
                     <Zap className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="font-black text-base text-white">Living Room Appliances</h3>
-                    <span className="text-xs text-gray-400">Cooling, ventilation, and entertainment</span>
+                    <h3 className="font-black text-base text-slate-900">Living Room Appliances</h3>
+                    <span className="text-xs text-slate-500">Cooling, ventilation, and entertainment</span>
                   </div>
                 </div>
                 <button
                   onClick={handleReset}
-                  className="text-xs text-gray-400 hover:text-emerald-300 flex items-center gap-1.5 transition"
+                  className="text-xs text-slate-500 hover:text-emerald-700 flex items-center gap-1.5 transition"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>Reset Defaults</span>
@@ -136,359 +138,280 @@ export default function SimulatorPage({ onGetStarted, onLogin }) {
               {/* Air Conditioner */}
               <div className="space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <span className="text-xs font-bold text-gray-200">
+                  <span className="text-xs font-bold text-slate-700">
                     Air Conditioner Model & Star Rating:
                   </span>
-                  <div className="flex items-center gap-1.5 bg-[#06170E] p-1 rounded-xl border border-emerald-500/20 text-xs">
-                    <button
-                      onClick={() => setAcType("5star")}
-                      className={`px-2.5 py-1 rounded-lg transition ${
-                        acType === "5star"
-                          ? "bg-emerald-500 text-charcoal-950 font-black"
-                          : "text-gray-400 hover:text-white"
-                      }`}
-                    >
-                      5-Star Inverter (1100W)
-                    </button>
-                    <button
-                      onClick={() => setAcType("3star")}
-                      className={`px-2.5 py-1 rounded-lg transition ${
-                        acType === "3star"
-                          ? "bg-emerald-500 text-charcoal-950 font-black"
-                          : "text-gray-400 hover:text-white"
-                      }`}
-                    >
-                      3-Star (1500W)
-                    </button>
-                    <button
-                      onClick={() => setAcType("1star")}
-                      className={`px-2.5 py-1 rounded-lg transition ${
-                        acType === "1star"
-                          ? "bg-emerald-500 text-charcoal-950 font-black"
-                          : "text-gray-400 hover:text-white"
-                      }`}
-                    >
-                      1-Star / Window (2000W)
-                    </button>
+                  <div className="flex items-center gap-2">
+                    {[
+                      { id: "5star", label: "5-Star (1.1kW)" },
+                      { id: "3star", label: "3-Star (1.5kW)" },
+                      { id: "1star", label: "Non-Inverter (2.0kW)" },
+                    ].map((m) => (
+                      <button
+                        key={m.id}
+                        onClick={() => setAcType(m.id)}
+                        className={`px-3 py-1 rounded-xl text-xs font-bold transition ${
+                          acType === m.id
+                            ? "bg-emerald-600 text-white font-black"
+                            : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                        }`}
+                      >
+                        {m.label}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#06170E]/80 border border-emerald-500/20">
-                  <div className="flex items-center justify-between text-xs font-bold text-gray-200 mb-2">
-                    <span>AC Runtime:</span>
-                    <span className="text-emerald-400 font-extrabold">{acHours} Hours/Day</span>
+                <div className="space-y-1">
+                  <div className="flex items-center justify-between text-xs text-slate-600">
+                    <span>AC Daily Runtime:</span>
+                    <span className="font-bold text-slate-900">{acHours} Hours / Day</span>
                   </div>
                   <input
                     type="range"
                     min="0"
                     max="14"
+                    step="1"
                     value={acHours}
-                    onChange={(e) => setAcHours(Number(e.target.value))}
-                    className="w-full accent-emerald-400 cursor-pointer"
+                    onChange={(e) => setAcHours(parseInt(e.target.value))}
+                    className="w-full accent-emerald-600 cursor-pointer"
                   />
-                  <div className="flex justify-between text-[10px] text-gray-400 mt-1">
-                    <span>Off (0h)</span>
-                    <span>Sub-total: {acKwh.toFixed(1)} kWh/day ({(acKwh * 0.82).toFixed(2)} kg CO₂)</span>
-                    <span>14h</span>
-                  </div>
                 </div>
               </div>
 
-              {/* Ceiling Fans & TV Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-[#06170E]/80 border border-emerald-500/20">
-                  <div className="flex items-center justify-between text-xs font-bold text-gray-200 mb-2">
-                    <span className="flex items-center gap-1.5">
-                      <Fan className="w-3.5 h-3.5 text-emerald-400" />
-                      Ceiling Fans ({fanCount} Fans)
-                    </span>
-                    <span className="text-emerald-400 font-extrabold">{fanHours} hrs/day</span>
+              {/* Ceiling Fans */}
+              <div className="space-y-3 pt-3 border-t border-slate-100">
+                <div className="flex items-center justify-between text-xs text-slate-600">
+                  <span className="font-bold text-slate-700">Number of Active Ceiling Fans:</span>
+                  <span className="font-bold text-slate-900">{fanCount} Fans (75W each)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {[1, 2, 3, 4, 5, 6].map((n) => (
+                    <button
+                      key={n}
+                      onClick={() => setFanCount(n)}
+                      className={`w-9 h-9 rounded-xl font-bold text-xs transition ${
+                        fanCount === n
+                          ? "bg-emerald-600 text-white font-black"
+                          : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      }`}
+                    >
+                      {n}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="space-y-1 pt-1">
+                  <div className="flex items-center justify-between text-xs text-slate-600">
+                    <span>Average Fan Runtime per day:</span>
+                    <span className="font-bold text-slate-900">{fanHours} Hours / Day</span>
                   </div>
                   <input
                     type="range"
                     min="1"
-                    max="6"
-                    value={fanCount}
-                    onChange={(e) => setFanCount(Number(e.target.value))}
-                    className="w-full accent-emerald-400 cursor-pointer"
+                    max="20"
+                    step="1"
+                    value={fanHours}
+                    onChange={(e) => setFanHours(parseInt(e.target.value))}
+                    className="w-full accent-emerald-600 cursor-pointer"
                   />
-                  <span className="text-[10px] text-gray-400 block mt-1">
-                    {fanCount}x fans @ 75W = {fanKwh.toFixed(1)} kWh/day
-                  </span>
                 </div>
+              </div>
 
-                <div className="p-4 rounded-2xl bg-[#06170E]/80 border border-emerald-500/20">
-                  <div className="flex items-center justify-between text-xs font-bold text-gray-200 mb-2">
-                    <span className="flex items-center gap-1.5">
-                      <Tv className="w-3.5 h-3.5 text-emerald-400" />
-                      Smart Television (55-inch 4K)
-                    </span>
-                    <span className="text-emerald-400 font-extrabold">{tvHours} hrs/day</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="10"
-                    value={tvHours}
-                    onChange={(e) => setTvHours(Number(e.target.value))}
-                    className="w-full accent-emerald-400 cursor-pointer"
-                  />
-                  <span className="text-[10px] text-gray-400 block mt-1">
-                    120W power draw = {tvKwh.toFixed(1)} kWh/day
-                  </span>
+              {/* Smart Television */}
+              <div className="space-y-2 pt-3 border-t border-slate-100">
+                <div className="flex items-center justify-between text-xs text-slate-600">
+                  <span className="font-bold text-slate-700">55" 4K Smart TV & Audio System:</span>
+                  <span className="font-bold text-slate-900">{tvHours} Hours / Day (120W)</span>
                 </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="12"
+                  step="1"
+                  value={tvHours}
+                  onChange={(e) => setTvHours(parseInt(e.target.value))}
+                  className="w-full accent-emerald-600 cursor-pointer"
+                />
               </div>
             </div>
 
-            {/* Kitchen & Cooking Card */}
-            <div className="rounded-3xl bg-[#092215]/85 border border-emerald-500/30 p-6 sm:p-8 shadow-xl space-y-6">
-              <div className="flex items-center gap-3 pb-4 border-b border-emerald-900/40">
-                <div className="w-10 h-10 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold">
+            {/* Kitchen & Heating Card */}
+            <div className="rounded-3xl bg-white border border-slate-200/90 p-6 sm:p-8 shadow-sm space-y-6">
+              <div className="flex items-center gap-3 pb-4 border-b border-slate-200">
+                <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center font-bold">
                   <Flame className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-black text-base text-white">Kitchen & Cooking Fuel</h3>
-                  <span className="text-xs text-gray-400">Gas stove, induction cooktop, and refrigeration</span>
+                  <h3 className="font-black text-base text-slate-900">Kitchen & Water Heating</h3>
+                  <span className="text-xs text-slate-500">LPG gas stove, electric geyser, refrigerator</span>
                 </div>
               </div>
 
-              {/* LPG Gas Stove */}
-              <div className="p-4 rounded-2xl bg-[#06170E]/80 border border-emerald-500/20">
-                <div className="flex items-center justify-between text-xs font-bold text-gray-200 mb-2">
-                  <span className="flex items-center gap-1.5">
-                    <Flame className="w-3.5 h-3.5 text-orange-400" />
-                    LPG Gas Burner Active Time:
-                  </span>
-                  <span className="text-orange-400 font-extrabold">{gasMinutes} Mins/Day</span>
+              {/* Gas Stove */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-xs text-slate-600">
+                  <span className="font-bold text-slate-700">LPG Double-Burner Stove Usage:</span>
+                  <span className="font-bold text-amber-700">{gasMinutes} Minutes / Day (IPCC Fuel Chemistry)</span>
                 </div>
                 <input
                   type="range"
                   min="0"
                   max="120"
-                  step="10"
+                  step="5"
                   value={gasMinutes}
-                  onChange={(e) => setGasMinutes(Number(e.target.value))}
-                  className="w-full accent-orange-400 cursor-pointer"
+                  onChange={(e) => setGasMinutes(parseInt(e.target.value))}
+                  className="w-full accent-amber-500 cursor-pointer"
                 />
-                <span className="text-[10px] text-gray-400 block mt-1">
-                  Burner flow: 0.15 kg/hr • Stoichiometric emissions: {gasCo2.toFixed(2)} kg CO₂
-                </span>
               </div>
 
-              {/* Refrigerator & Induction */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-[#06170E]/80 border border-emerald-500/20">
-                  <span className="text-xs font-bold text-gray-200 block mb-2">
-                    Refrigerator Type:
-                  </span>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setFridgeType("inverter")}
-                      className={`flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition ${
-                        fridgeType === "inverter"
-                          ? "bg-emerald-500 text-charcoal-950 font-black"
-                          : "bg-white/5 text-gray-400"
-                      }`}
-                    >
-                      Inverter 5-Star (0.9 kWh)
-                    </button>
-                    <button
-                      onClick={() => setFridgeType("standard")}
-                      className={`flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition ${
-                        fridgeType === "standard"
-                          ? "bg-emerald-500 text-charcoal-950 font-black"
-                          : "bg-white/5 text-gray-400"
-                      }`}
-                    >
-                      Standard (1.8 kWh)
-                    </button>
-                  </div>
+              {/* Water Geyser */}
+              <div className="space-y-2 pt-3 border-t border-slate-100">
+                <div className="flex items-center justify-between text-xs text-slate-600">
+                  <span className="font-bold text-slate-700">Electric Storage Geyser (2000W):</span>
+                  <span className="font-bold text-slate-900">{geyserMinutes} Minutes / Day</span>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-[#06170E]/80 border border-emerald-500/20">
-                  <div className="flex items-center justify-between text-xs font-bold text-gray-200 mb-2">
-                    <span>Induction Cooktop (1800W):</span>
-                    <span className="text-emerald-400 font-extrabold">{inductionHours} hrs</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="3"
-                    step="0.5"
-                    value={inductionHours}
-                    onChange={(e) => setInductionHours(Number(e.target.value))}
-                    className="w-full accent-emerald-400 cursor-pointer"
-                  />
-                  <span className="text-[10px] text-gray-400 block mt-1">
-                    84% thermal transfer efficiency
-                  </span>
-                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="90"
+                  step="5"
+                  value={geyserMinutes}
+                  onChange={(e) => setGeyserMinutes(parseInt(e.target.value))}
+                  className="w-full accent-emerald-600 cursor-pointer"
+                />
               </div>
-            </div>
 
-            {/* Bathroom & Utility Card */}
-            <div className="rounded-3xl bg-[#092215]/85 border border-emerald-500/30 p-6 sm:p-8 shadow-xl space-y-4">
-              <div className="flex items-center gap-3 pb-3 border-b border-emerald-900/40">
-                <div className="w-10 h-10 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center font-bold">
-                  <Droplets className="w-5 h-5" />
-                </div>
+              {/* Refrigerator */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-slate-100">
                 <div>
-                  <h3 className="font-black text-base text-white">Bathroom & Utility</h3>
-                  <span className="text-xs text-gray-400">Water heating and domestic lighting</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 rounded-2xl bg-[#06170E]/80 border border-emerald-500/20">
-                  <div className="flex items-center justify-between text-xs font-bold text-gray-200 mb-2">
-                    <span>Electric Geyser (2000W):</span>
-                    <span className="text-teal-400 font-extrabold">{geyserMinutes} mins</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="0"
-                    max="90"
-                    step="15"
-                    value={geyserMinutes}
-                    onChange={(e) => setGeyserMinutes(Number(e.target.value))}
-                    className="w-full accent-teal-400 cursor-pointer"
-                  />
-                  <span className="text-[10px] text-gray-400 block mt-1">
-                    {geyserKwh.toFixed(1)} kWh/day = {(geyserKwh * 0.82).toFixed(2)} kg CO₂
+                  <span className="text-xs font-bold text-slate-700 block">
+                    Double Door Refrigerator:
+                  </span>
+                  <span className="text-[11px] text-slate-500">
+                    24/7 continuous thermodynamic cycling
                   </span>
                 </div>
-
-                <div className="p-4 rounded-2xl bg-[#06170E]/80 border border-emerald-500/20">
-                  <div className="flex items-center justify-between text-xs font-bold text-gray-200 mb-2">
-                    <span>LED Lights Active (9W):</span>
-                    <span className="text-teal-400 font-extrabold">{ledBulbs} bulbs</span>
-                  </div>
-                  <input
-                    type="range"
-                    min="2"
-                    max="16"
-                    value={ledBulbs}
-                    onChange={(e) => setLedBulbs(Number(e.target.value))}
-                    className="w-full accent-teal-400 cursor-pointer"
-                  />
-                  <span className="text-[10px] text-gray-400 block mt-1">
-                    LED lighting saves ~85% energy vs incandescent
-                  </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setFridgeType("inverter")}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                      fridgeType === "inverter"
+                        ? "bg-emerald-600 text-white font-black"
+                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    }`}
+                  >
+                    Inverter (0.9 kWh/day)
+                  </button>
+                  <button
+                    onClick={() => setFridgeType("standard")}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                      fridgeType === "standard"
+                        ? "bg-emerald-600 text-white font-black"
+                        : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    }`}
+                  >
+                    Standard (1.8 kWh/day)
+                  </button>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Live Real-Time Analytics & Bill Projections (4 Cols Sticky) */}
-          <div className="lg:col-span-4 space-y-6 sticky top-28">
+          {/* Right Column: Live Instant Telemetry Output (4 Cols - Sticky) */}
+          <div className="lg:col-span-4 sticky top-28 space-y-6">
             <CardTilt3D
               maxTilt={4}
-              className="rounded-3xl bg-gradient-to-b from-[#0C291B] to-[#07180F] border border-emerald-500/40 p-6 sm:p-7 shadow-2xl backdrop-blur-xl space-y-6"
+              className="rounded-3xl bg-white border border-slate-200/90 p-6 sm:p-7 shadow-xl space-y-5"
             >
-              <div>
-                <span className="text-[10px] uppercase font-black tracking-widest text-emerald-400 block">
-                  Simulated Output
-                </span>
-                <h3 className="text-xl font-black text-white mt-0.5">
-                  Your Household Telemetry
-                </h3>
+              <div className="pb-4 border-b border-slate-200 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] font-black uppercase text-emerald-700 tracking-wider block">
+                    Simulated Telemetry
+                  </span>
+                  <h3 className="text-lg font-black text-slate-900 mt-0.5">
+                    Projected Household Impact
+                  </h3>
+                </div>
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
               </div>
 
-              {/* Main Metric: Daily Footprint */}
-              <div className="p-5 rounded-2xl bg-[#06140B] border border-emerald-500/30">
-                <span className="text-xs text-gray-400 font-semibold block">
-                  Simulated Daily Footprint
+              {/* Primary Daily Carbon Output */}
+              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-center">
+                <span className="text-[10px] uppercase font-bold text-emerald-800 tracking-wider block">
+                  Simulated Daily Emissions
                 </span>
-                <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-4xl font-black text-white">
-                    <AnimatedCounter value={totalDailyCo2} decimals={2} />
-                  </span>
-                  <span className="text-sm font-bold text-emerald-400">kg CO₂/day</span>
+                <div className="text-4xl font-black text-slate-900 my-1">
+                  <AnimatedCounter value={totalDailyCo2} decimals={2} />
+                  <span className="text-base font-bold text-emerald-700 ml-1">kg CO₂</span>
                 </div>
-                <div className="mt-2 text-xs text-gray-300 flex items-center justify-between border-t border-emerald-950 pt-2">
-                  <span>Target Budget: 12.5 kg</span>
-                  <span
-                    className={`font-extrabold ${
-                      totalDailyCo2 <= 12.5 ? "text-emerald-400" : "text-red-400"
-                    }`}
-                  >
-                    {totalDailyCo2 <= 12.5 ? "✓ Clean (Within Target)" : "⚠ Exceeds Target"}
-                  </span>
-                </div>
+                <span className="text-[11px] text-slate-500">
+                  ≈ {totalDailyKwh.toFixed(1)} kWh equivalent electrical draw
+                </span>
               </div>
 
-              {/* Key Projections Grid */}
-              <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">
-                    Daily Electricity
-                  </span>
-                  <span className="text-lg font-black text-white mt-0.5 block">
-                    {totalDailyKwh.toFixed(1)} kWh
-                  </span>
-                  <span className="text-[10px] text-gray-400">@ 0.82 kg/kWh</span>
+              {/* Monthly Cost & Tree Sequestration Metrics */}
+              <div className="space-y-3">
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+                      ₹
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">
+                        Estimated Power Bill
+                      </span>
+                      <span className="text-base font-black text-slate-900">
+                        ₹{estimatedMonthlyBillInr.toLocaleString()} / mo
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-semibold">@ ₹7.50/unit</span>
                 </div>
 
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">
-                    Est. Monthly Bill
-                  </span>
-                  <span className="text-lg font-black text-lime-300 mt-0.5 block">
-                    ₹{monthlyBillRupees.toLocaleString()}
-                  </span>
-                  <span className="text-[10px] text-gray-400">~₹7.50/unit</span>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">
-                    Annual Carbon Load
-                  </span>
-                  <span className="text-lg font-black text-emerald-400 mt-0.5 block">
-                    {annualCo2Tons.toFixed(2)} t
-                  </span>
-                  <span className="text-[10px] text-gray-400">Tons CO₂/year</span>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-white/5 border border-white/10">
-                  <span className="text-[10px] uppercase font-bold text-gray-400 block">
-                    Trees to Offset
-                  </span>
-                  <span className="text-lg font-black text-teal-300 mt-0.5 block">
-                    🌳 {treesNeeded}
-                  </span>
-                  <span className="text-[10px] text-gray-400">Mature trees/yr</span>
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center">
+                      <TreePine className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-slate-500 block">
+                        Trees Required to Offset
+                      </span>
+                      <span className="text-base font-black text-slate-900">
+                        {treesNeededMonthly} Mature Trees
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-[10px] text-slate-400 font-semibold">Annualized</span>
                 </div>
               </div>
 
-              {/* Targeted Recommendation Box */}
-              <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-400/30 text-xs text-gray-200 space-y-1.5">
-                <span className="font-extrabold text-emerald-300 flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Targeted Efficiency Insight:
+              {/* Optimization Tip Box */}
+              <div className="p-4 rounded-2xl bg-limeAccent-light border border-lime-300 text-slate-900 text-xs space-y-1">
+                <span className="font-extrabold flex items-center gap-1.5 text-emerald-900">
+                  <Sparkles className="w-3.5 h-3.5 text-emerald-700" />
+                  Quick Savings Opportunity
                 </span>
-                <p className="text-[11px] text-gray-300 leading-relaxed font-normal">
-                  {acHours > 5
-                    ? "Setting your AC thermostat to 24°C rather than 20°C reduces cooling load by up to 24%, saving ~₹550 on your monthly bill."
-                    : geyserMinutes > 45
-                    ? "Installing an aerated low-flow showerhead reduces water heating electricity consumption by 30%."
-                    : "Maintaining this consumption profile earns you approximately " + potentialCreditsPerMonth + " EcoCredits every month!"}
+                <p className="text-[11px] text-slate-700 leading-relaxed font-normal">
+                  Cutting 1 hour of AC and 10 minutes of Geyser saves ~₹{potentialMonthlySavedInr} on your monthly bill and cuts {(potentialMonthlySavedInr / 7.5 * 0.82).toFixed(1)} kg CO₂.
                 </p>
               </div>
 
-              {/* Call to Action Button */}
-              <div className="space-y-2.5 pt-2">
+              {/* Action Buttons */}
+              <div className="pt-2 space-y-2">
                 <button
                   onClick={onGetStarted}
-                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-lime-400 text-charcoal-950 font-black text-xs shadow-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] transition flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-md shadow-emerald-600/25 transition cursor-pointer flex items-center justify-center gap-2"
                 >
-                  Save Profile to Free Account
-                  <ArrowRight className="w-4 h-4 stroke-[2.5]" />
+                  <span>Start Tracking Your Actual Appliances</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
                 <button
                   onClick={onLogin}
-                  className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs border border-white/15 transition cursor-pointer text-center"
+                  className="w-full py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition cursor-pointer text-center"
                 >
-                  Log into Demo Account
+                  Log In to Demo Account
                 </button>
               </div>
             </CardTilt3D>
@@ -498,4 +421,3 @@ export default function SimulatorPage({ onGetStarted, onLogin }) {
     </div>
   );
 }
-

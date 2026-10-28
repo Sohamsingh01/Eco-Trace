@@ -191,6 +191,116 @@ DEFAULT_REWARDS = [
         "icon_name": "HelpCircle",
         "terms": "Scratch to reveal a randomized bonus multiplier reward. Demonstration gamified prize.",
         "sample_code_prefix": "BONUS"
+    },
+    {
+        "title": "KFC ₹150 Off Voucher",
+        "merchant": "KFC India",
+        "category": "Food",
+        "discount_text": "₹150 Off on orders above ₹499",
+        "required_credits": 220,
+        "badge_color": "red",
+        "icon_name": "Utensils",
+        "terms": "Valid on all chicken buckets, zinger burgers, and rice bowls. Redeemable via KFC app or counter.",
+        "sample_code_prefix": "KFC-ECO"
+    },
+    {
+        "title": "The Souled Store 20% Off",
+        "merchant": "The Souled Store",
+        "category": "Shopping",
+        "discount_text": "Flat 20% Off on Pop-Culture Merch",
+        "required_credits": 180,
+        "badge_color": "red",
+        "icon_name": "ShoppingBag",
+        "terms": "Valid on eco-cotton graphic tees, oversized hoodies, and fandom merchandise. No minimum cart.",
+        "sample_code_prefix": "TSS-ECO"
+    },
+    {
+        "title": "Myntra ₹300 Fashion Voucher",
+        "merchant": "Myntra Fashion",
+        "category": "Shopping",
+        "discount_text": "Flat ₹300 Off on orders above ₹1,499",
+        "required_credits": 280,
+        "badge_color": "pink",
+        "icon_name": "ShoppingBag",
+        "terms": "Applicable across top apparel brands, sneakers, and sustainable collections on the Myntra app.",
+        "sample_code_prefix": "MYN-ECO"
+    },
+    {
+        "title": "H&M ₹250 Conscious Coupon",
+        "merchant": "H&M Conscious",
+        "category": "Shopping",
+        "discount_text": "₹250 Off on Conscious Choice Line",
+        "required_credits": 240,
+        "badge_color": "red",
+        "icon_name": "ShoppingBag",
+        "terms": "Exclusive discount on garments made with at least 50% recycled or sustainable organic materials.",
+        "sample_code_prefix": "HNM-ECO"
+    },
+    {
+        "title": "Starbucks Free Beverage Upgrade",
+        "merchant": "Starbucks Coffee",
+        "category": "Food",
+        "discount_text": "Free Size Upgrade + 10% Off on Tumblers",
+        "required_credits": 160,
+        "badge_color": "emerald",
+        "icon_name": "Coffee",
+        "terms": "Valid on all handcrafted beverages when you bring your personal reusable mug or tumbler.",
+        "sample_code_prefix": "SBUX-ECO"
+    },
+    {
+        "title": "Zara ₹500 Privilege Voucher",
+        "merchant": "Zara Official",
+        "category": "Shopping",
+        "discount_text": "Flat ₹500 Off on Minimum Purchase ₹2,990",
+        "required_credits": 350,
+        "badge_color": "neutral",
+        "icon_name": "ShoppingBag",
+        "terms": "Valid in-store and online on all new arrivals, tailoring, and Join Life eco-certified collections.",
+        "sample_code_prefix": "ZARA-ECO"
+    },
+    {
+        "title": "PVR INOX 1+1 Cinema Ticket",
+        "merchant": "PVR INOX Cinemas",
+        "category": "Entertainment",
+        "discount_text": "Buy 1 Get 1 Ticket Free on Weekdays",
+        "required_credits": 200,
+        "badge_color": "amber",
+        "icon_name": "Film",
+        "terms": "Valid on all 2D and 3D theatrical screenings Monday through Thursday at any PVR or INOX screen.",
+        "sample_code_prefix": "PVR-ECO"
+    },
+    {
+        "title": "Hamleys ₹300 Toy Voucher",
+        "merchant": "Hamleys Toys",
+        "category": "Shopping",
+        "discount_text": "₹300 Off on Wooden & STEM Toys",
+        "required_credits": 190,
+        "badge_color": "red",
+        "icon_name": "Gift",
+        "terms": "Valid on wooden educational toys, plushies, and STEM learning games for minimum purchase ₹1,299.",
+        "sample_code_prefix": "HML-ECO"
+    },
+    {
+        "title": "BookMyShow ₹150 Live Voucher",
+        "merchant": "BookMyShow",
+        "category": "Entertainment",
+        "discount_text": "₹150 Instant Discount on Concerts & Movies",
+        "required_credits": 175,
+        "badge_color": "rose",
+        "icon_name": "Ticket",
+        "terms": "Valid on live concerts, comedy shows, plays, and movie bookings with minimum booking of 2 tickets.",
+        "sample_code_prefix": "BMS-ECO"
+    },
+    {
+        "title": "MakeMyTrip ₹1,000 Travel Off",
+        "merchant": "MakeMyTrip Holidays",
+        "category": "Travel",
+        "discount_text": "Flat ₹1,000 Off on Eco-Resorts & Flights",
+        "required_credits": 450,
+        "badge_color": "blue",
+        "icon_name": "Plane",
+        "terms": "Redeemable on certified green hotels, domestic flights, and eco-homestays across India.",
+        "sample_code_prefix": "MMT-ECO"
     }
 ]
 
@@ -351,9 +461,10 @@ def init_db_and_seed(db: Session):
             db.add(app)
         db.commit()
 
-    # 2. Seed Rewards
-    if db.query(Reward).count() == 0:
-        for rew in DEFAULT_REWARDS:
+    # 2. Seed Rewards (idempotent: check each reward by merchant)
+    existing_merchants = {r.merchant for r in db.query(Reward.merchant).all()}
+    for rew in DEFAULT_REWARDS:
+        if rew["merchant"] not in existing_merchants:
             r = Reward(
                 id=str(uuid.uuid4()),
                 title=rew["title"],
@@ -368,7 +479,7 @@ def init_db_and_seed(db: Session):
                 is_active=True
             )
             db.add(r)
-        db.commit()
+    db.commit()
 
     # 3. Seed Achievements
     if db.query(Achievement).count() == 0:

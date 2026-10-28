@@ -222,7 +222,7 @@ export default function DashboardPage({ onNavigateTab }) {
           {/* Center / Right: Interactive 3D Earth Globe Visual */}
           <div className="shrink-0 flex items-center justify-center w-56 h-56 sm:w-64 sm:h-64 relative">
             <EcoGlobe3D className="w-full h-full" />
-            <div className="absolute -bottom-2 text-[10px] font-black text-limeAccent bg-forest-950/90 backdrop-blur-md border border-emerald-400/30 px-3.5 py-1 rounded-full shadow-lg tracking-wider uppercase">
+            <div className="absolute -bottom-2 text-[10px] font-black text-emerald-800 bg-white/95 backdrop-blur-md border border-emerald-200 px-3.5 py-1 rounded-full shadow-sm tracking-wider uppercase">
               Live Planetary Footprint
             </div>
           </div>
@@ -231,10 +231,10 @@ export default function DashboardPage({ onNavigateTab }) {
           <div className="flex lg:flex-col items-center justify-end gap-2.5 w-full lg:w-auto">
             <button
               onClick={() => setIsLogModalOpen(true)}
-              className="group flex-1 lg:flex-none px-6 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 active:scale-[0.98] text-forest-950 text-xs font-black shadow-glow hover:shadow-[0_0_25px_rgba(34,197,94,0.5)] transition-all flex items-center justify-center gap-2.5"
+              className="group flex-1 lg:flex-none px-6 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white text-xs font-black shadow-md shadow-emerald-600/25 transition-all flex items-center justify-center gap-2.5 cursor-pointer"
             >
-              <div className="p-1 rounded-lg bg-forest-950/20 group-hover:bg-forest-950/30 transition-colors">
-                <Plus className="w-4 h-4 text-forest-950 group-hover:rotate-90 transition-transform duration-300" />
+              <div className="p-1 rounded-lg bg-white/20 group-hover:bg-white/30 transition-colors">
+                <Plus className="w-4 h-4 text-white group-hover:rotate-90 transition-transform duration-300" />
               </div>
               <span className="tracking-wide">Log Activity</span>
             </button>
@@ -325,18 +325,18 @@ export default function DashboardPage({ onNavigateTab }) {
       {/* 4. "My Eco World" 3D Miniature Ecosystem + Large Photographic Feature Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* "My Eco World" 3D Miniature Island (4 cols) */}
-        <div className="lg:col-span-4 bg-[#07180F]/90 backdrop-blur-xl rounded-3xl border border-emerald-500/25 shadow-xl p-6 flex flex-col justify-between text-white hover:border-emerald-400/50 transition-all">
+        <div className="lg:col-span-4 bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 flex flex-col justify-between text-slate-900 hover:border-emerald-500/40 transition-all">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-xl bg-emerald-950/70 border border-emerald-500/30 text-emerald-300">
-                <Globe2 className="w-4 h-4 text-emerald-400" />
+              <span className="p-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700">
+                <Globe2 className="w-4 h-4 text-emerald-600" />
               </span>
               <div>
-                <h3 className="font-extrabold text-base text-white">My Eco World</h3>
-                <p className="text-[11px] text-emerald-200/60">Interactive 3D Miniature Habitat</p>
+                <h3 className="font-extrabold text-base text-slate-900">My Eco World</h3>
+                <p className="text-[11px] text-slate-500">Interactive 3D Miniature Habitat</p>
               </div>
             </div>
-            <span className="text-[10px] font-black uppercase text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+            <span className="text-[10px] font-black uppercase text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
               Living Habitat
             </span>
           </div>

@@ -64,22 +64,22 @@ export default function WhyUsPage({ onGetStarted, onLogin }) {
   const currentBenchmark = homeBenchmarks[selectedHomeType];
 
   return (
-    <div className="space-y-20 pb-24 text-white">
+    <div className="space-y-20 pb-24 text-charcoal-900">
       {/* 1. HERO HEADER */}
       <section className="pt-8 lg:pt-14 text-center max-w-3xl mx-auto px-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-4">
-          <ShieldCheck className="w-4 h-4" />
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold mb-4">
+          <ShieldCheck className="w-4 h-4 text-emerald-600" />
           <span>Scientific Rigor & Mathematical Transparency</span>
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+        <h1 className="text-4xl sm:text-5xl font-black tracking-tight text-slate-900 leading-tight">
           Why Household Carbon Tracking Demands{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-lime-300">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-700">
             True Engineering Precision
           </span>
         </h1>
 
-        <p className="mt-4 text-sm sm:text-base text-gray-300 font-normal leading-relaxed">
+        <p className="mt-4 text-sm sm:text-base text-slate-600 font-normal leading-relaxed">
           Most generic carbon calculators use arbitrary global averages that miscalculate
           household impact by up to 45%. EcoTrace is engineered on localized regional grid
           emission factors, stoichiometric fuel chemistry, and fair per-capita normalization.
@@ -92,19 +92,19 @@ export default function WhyUsPage({ onGetStarted, onLogin }) {
           {/* Pillar 1 */}
           <CardTilt3D
             maxTilt={4}
-            className="rounded-3xl bg-[#092215]/85 border border-emerald-500/30 p-8 shadow-xl flex flex-col justify-between"
+            className="rounded-3xl bg-white border border-slate-200/90 p-8 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-emerald-500/40 transition-all"
           >
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-charcoal-950 font-black shadow-md">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-white font-black shadow-md">
                 <Zap className="w-6 h-6 fill-current" />
               </div>
-              <span className="text-[10px] uppercase font-black tracking-widest text-emerald-400 block">
+              <span className="text-[10px] uppercase font-black tracking-widest text-emerald-700 block">
                 Regional Factor: 0.82 kg/kWh
               </span>
-              <h3 className="text-xl font-black text-white">
+              <h3 className="text-xl font-black text-slate-900">
                 CEA National Grid Baseline
               </h3>
-              <p className="text-xs text-gray-300 leading-relaxed font-normal">
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
                 India's electricity grid is heavily driven by thermal generation. Using Western
                 factors (0.35–0.42 kg/kWh) grossly understates emissions. EcoTrace adheres to the
                 official <strong>Central Electricity Authority (CEA) Version 19.0</strong> baseline
@@ -112,7 +112,7 @@ export default function WhyUsPage({ onGetStarted, onLogin }) {
               </p>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-emerald-900/40 text-[11px] text-emerald-300 font-semibold flex items-center gap-1.5">
+            <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] text-emerald-800 font-semibold flex items-center gap-1.5">
               <span>Source: Ministry of Power, Govt. of India</span>
             </div>
           </CardTilt3D>
@@ -120,292 +120,235 @@ export default function WhyUsPage({ onGetStarted, onLogin }) {
           {/* Pillar 2 */}
           <CardTilt3D
             maxTilt={4}
-            className="rounded-3xl bg-[#092215]/85 border border-emerald-500/30 p-8 shadow-xl flex flex-col justify-between"
+            className="rounded-3xl bg-white border border-slate-200/90 p-8 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-emerald-500/40 transition-all"
           >
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-charcoal-950 font-black shadow-md">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-white font-black shadow-md">
                 <Flame className="w-6 h-6 fill-current" />
               </div>
-              <span className="text-[10px] uppercase font-black tracking-widest text-orange-400 block">
-                Fuel Factor: 2.983 kg CO₂/kg
+              <span className="text-[10px] uppercase font-black tracking-widest text-amber-700 block">
+                Stoichiometry: 2.983 kg CO₂/kg
               </span>
-              <h3 className="text-xl font-black text-white">
-                Stoichiometric LPG Gas Physics
+              <h3 className="text-xl font-black text-slate-900">
+                LPG Combustion Physics
               </h3>
-              <p className="text-xs text-gray-300 leading-relaxed font-normal">
-                Cooking gas cannot be modeled with electric wattage. EcoTrace models domestic LPG
-                burners at a calibrated consumption of <strong>0.15 kg LPG/hr</strong>, multiplying by
-                the stoichiometric hydrocarbon combustion factor of <strong>2.983 kg CO₂ per kg</strong>.
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                Liquefied Petroleum Gas (LPG) consists of propane (C₃H₈) and butane (C₄H₁₀).
+                Rather than treating cooking gas as arbitrary hours, EcoTrace calculates exact mass
+                consumption (0.15 kg/hr per burner) and applies the stoichiometric constant
+                of <strong>2.983 kg CO₂ per kg of fuel burned</strong>.
               </p>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-emerald-900/40 text-[11px] text-orange-300 font-semibold flex items-center gap-1.5">
-              <span>Source: IPCC Greenhouse Gas Inventories</span>
+            <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] text-amber-800 font-semibold flex items-center gap-1.5">
+              <span>Source: IPCC 2006 Guidelines for National GHG Inventories</span>
             </div>
           </CardTilt3D>
 
           {/* Pillar 3 */}
           <CardTilt3D
             maxTilt={4}
-            className="rounded-3xl bg-[#092215]/85 border border-emerald-500/30 p-8 shadow-xl flex flex-col justify-between"
+            className="rounded-3xl bg-white border border-slate-200/90 p-8 shadow-sm flex flex-col justify-between hover:shadow-md hover:border-emerald-500/40 transition-all"
           >
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-lime-400 to-emerald-400 flex items-center justify-center text-charcoal-950 font-black shadow-md">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-lime-500 to-emerald-500 flex items-center justify-center text-white font-black shadow-md">
                 <Scale className="w-6 h-6" />
               </div>
-              <span className="text-[10px] uppercase font-black tracking-widest text-lime-300 block">
-                Normalization: Per Capita
+              <span className="text-[10px] uppercase font-black tracking-widest text-emerald-700 block">
+                Fairness Normalization Engine
               </span>
-              <h3 className="text-xl font-black text-white">
-                Fair Household Normalization
+              <h3 className="text-xl font-black text-slate-900">
+                Fair Per-Capita Rankings
               </h3>
-              <p className="text-xs text-gray-300 leading-relaxed font-normal">
-                A family of five naturally consumes more electricity than a single individual.
-                EcoTrace normalizes daily carbon budgets per capita so large families are never
-                penalized on leaderboard rankings.
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                A family of 5 living in a 3-BHK naturally consumes more power than a bachelor
+                in a studio. EcoTrace normalizes carbon budgets by dwelling area (sq ft) and household
+                occupancy so community leaderboards compare <em>conservation efficiency</em> fairly.
               </p>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-emerald-900/40 text-[11px] text-lime-300 font-semibold flex items-center gap-1.5">
-              <span>Fair Gamified EcoScore System</span>
+            <div className="mt-6 pt-4 border-t border-slate-100 text-[11px] text-emerald-800 font-semibold flex items-center gap-1.5">
+              <span>Fairness algorithm prevents family penalization</span>
             </div>
           </CardTilt3D>
         </div>
       </section>
 
-      {/* 3. INTERACTIVE HOUSEHOLD BENCHMARK COMPARATOR */}
+      {/* 3. INTERACTIVE HOUSEHOLD BENCHMARK EXPLORER */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-[#07190F] border border-emerald-500/30 p-8 sm:p-12 shadow-2xl relative overflow-hidden">
-          <div className="max-w-2xl text-left mb-8">
-            <span className="text-xs font-black uppercase text-emerald-400 tracking-widest block">
-              Interactive Benchmark Tool
+        <div className="rounded-3xl bg-slate-50/80 border border-slate-200 p-8 sm:p-12 shadow-sm">
+          <div className="max-w-3xl mb-8">
+            <span className="text-xs font-black uppercase text-emerald-800 tracking-widest block mb-1">
+              Interactive Standard Profiles
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">
-              Where Does Your Household Stand?
+            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              Compare Typical Urban Dwelling Baselines
             </h2>
-            <p className="text-xs sm:text-sm text-gray-300 mt-2 font-normal">
-              Select your dwelling type to view calibrated daily electricity and carbon baselines.
+            <p className="text-xs sm:text-sm text-slate-600 mt-2 font-normal">
+              Click through different home configurations below to inspect their expected electrical draw,
+              daily carbon output, and recommended EcoTrace target budget.
             </p>
           </div>
 
-          {/* Home Type Selector Buttons */}
+          {/* Home Type Switcher Tabs */}
           <div className="flex flex-wrap gap-2.5 mb-8">
             {[
-              { id: "1bhk", label: "1-BHK Studio", icon: Building2 },
-              { id: "2bhk", label: "2-BHK Apartment", icon: Building2 },
-              { id: "3bhk", label: "3-BHK Family Home", icon: Home },
-              { id: "villa", label: "Duplex / Villa", icon: Home },
-            ].map((t) => {
-              const isSelected = selectedHomeType === t.id;
-              const Icon = t.icon;
+              { id: "1bhk", label: "1-BHK Studio", icon: Home },
+              { id: "2bhk", label: "2-BHK Urban Flat", icon: Building2 },
+              { id: "3bhk", label: "3-BHK Residence", icon: Building2 },
+              { id: "villa", label: "Villa / Duplex", icon: Home },
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isSel = selectedHomeType === tab.id;
               return (
                 <button
-                  key={t.id}
-                  onClick={() => setSelectedHomeType(t.id)}
-                  className={`px-5 py-3 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
-                    isSelected
-                      ? "bg-gradient-to-r from-emerald-500 to-lime-400 text-charcoal-950 font-black shadow-lg scale-102"
-                      : "bg-[#0B2517] hover:bg-[#103320] text-gray-300 border border-emerald-500/20"
+                  key={tab.id}
+                  onClick={() => setSelectedHomeType(tab.id)}
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer ${
+                    isSel
+                      ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/20 font-black scale-102"
+                      : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200"
                   }`}
                 >
                   <Icon className="w-4 h-4" />
-                  <span>{t.label}</span>
+                  <span>{tab.label}</span>
                 </button>
               );
             })}
           </div>
 
-          {/* Selected Benchmark Metrics Display */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 rounded-2xl bg-[#0B2517]/90 border border-emerald-500/30">
-            <div>
-              <span className="text-[11px] uppercase font-bold text-gray-400 block">
-                Typical Occupancy
+          {/* Benchmark Card Presentation */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/90 shadow-sm">
+            <div className="lg:col-span-7 space-y-4">
+              <span className="text-[10px] uppercase font-bold text-slate-500 tracking-wider block">
+                Selected Dwelling Architecture
               </span>
-              <span className="text-xl font-black text-white mt-1 block">
-                {currentBenchmark.occupants}
-              </span>
-              <span className="text-[10px] text-emerald-400 font-semibold block mt-1">
-                Baseline standard
-              </span>
+              <h3 className="text-2xl font-black text-slate-900">
+                {currentBenchmark.title}
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                Typical appliance suite: {currentBenchmark.applianceProfile}.
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] uppercase font-bold text-slate-500 block">
+                    Occupancy
+                  </span>
+                  <span className="text-sm font-black text-slate-900 mt-0.5 block">
+                    {currentBenchmark.occupants}
+                  </span>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] uppercase font-bold text-slate-500 block">
+                    Daily Electricity
+                  </span>
+                  <span className="text-sm font-black text-emerald-700 mt-0.5 block">
+                    {currentBenchmark.dailyKwh}
+                  </span>
+                </div>
+
+                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                  <span className="text-[10px] uppercase font-bold text-slate-500 block">
+                    Monthly Footprint
+                  </span>
+                  <span className="text-sm font-black text-amber-700 mt-0.5 block">
+                    {currentBenchmark.monthlyCo2}
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <span className="text-[11px] uppercase font-bold text-gray-400 block">
-                Avg Daily Electricity
-              </span>
-              <span className="text-xl font-black text-white mt-1 block">
-                {currentBenchmark.dailyKwh}
-              </span>
-              <span className="text-[10px] text-gray-300 font-medium block mt-1">
-                ≈ {currentBenchmark.dailyCo2}
-              </span>
-            </div>
-
-            <div>
-              <span className="text-[11px] uppercase font-bold text-gray-400 block">
-                Monthly Carbon Load
-              </span>
-              <span className="text-xl font-black text-emerald-400 mt-1 block">
-                {currentBenchmark.monthlyCo2}
-              </span>
-              <span className="text-[10px] text-gray-300 font-medium block mt-1">
-                CO₂ equivalent
-              </span>
-            </div>
-
-            <div>
-              <span className="text-[11px] uppercase font-bold text-gray-400 block">
+            <div className="lg:col-span-5 flex flex-col justify-center items-center p-6 rounded-3xl bg-emerald-50/60 border border-emerald-200 text-center">
+              <span className="text-xs font-bold text-emerald-800 uppercase tracking-widest block mb-1">
                 EcoTrace Target
               </span>
-              <span className="text-xl font-black text-lime-300 mt-1 block">
+              <span className="text-4xl font-black text-emerald-900 tracking-tight my-1">
                 {currentBenchmark.suggestedTarget}
               </span>
-              <span className="text-[10px] text-emerald-400 font-semibold block mt-1">
-                Earns max EcoCredits
+              <span className="text-[11px] text-emerald-700/80 max-w-[220px]">
+                Recommended threshold to unlock daily bonus EcoCredits and climb community leaderboards.
               </span>
             </div>
-          </div>
-
-          <div className="mt-6 p-4 rounded-xl bg-black/30 border border-white/10 text-xs text-gray-300 flex items-center justify-between flex-wrap gap-2">
-            <span>
-              <strong>Sample Appliance Suite:</strong> {currentBenchmark.applianceProfile}
-            </span>
-            <button
-              onClick={onGetStarted}
-              className="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1 cursor-pointer"
-            >
-              <span>Personalize in Free Account</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
           </div>
         </div>
       </section>
 
-      {/* 4. COMPARISON MATRIX TABLE */}
+      {/* 4. THE ECOTRACE DIFFERENCE TABLE */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-black uppercase text-emerald-400 tracking-widest block">
-            Competitive Benchmarking
+          <span className="text-xs font-black uppercase text-emerald-700 tracking-widest block mb-1">
+            Feature Comparison
           </span>
-          <h2 className="text-3xl font-black text-white mt-1">
-            How EcoTrace Compares
+          <h2 className="text-3xl font-black text-slate-900 tracking-tight">
+            How EcoTrace Compares to Conventional Carbon Trackers
           </h2>
-          <p className="text-xs text-gray-300 mt-2 font-normal">
-            Why software telemetry outperforms both basic questionnaires and expensive hardware meters.
-          </p>
         </div>
 
-        <div className="overflow-x-auto rounded-3xl border border-emerald-500/30 bg-[#092215]/80 shadow-2xl">
-          <table className="w-full text-left text-xs border-collapse">
+        <div className="overflow-x-auto rounded-3xl border border-slate-200 shadow-sm bg-white">
+          <table className="w-full text-left text-xs text-slate-700">
             <thead>
-              <tr className="border-b border-emerald-900/60 bg-[#0A2617]">
-                <th className="p-5 text-gray-300 font-bold">Key Capability</th>
-                <th className="p-5 text-emerald-400 font-black text-sm bg-emerald-500/10 border-x border-emerald-500/30">
-                  EcoTrace
-                </th>
-                <th className="p-5 text-gray-400 font-semibold">Generic Online Calculators</th>
-                <th className="p-5 text-gray-400 font-semibold">Hardware Smart Meters</th>
+              <tr className="border-b border-slate-200 bg-slate-50/80 text-slate-700 font-extrabold uppercase tracking-wider">
+                <th className="py-4 px-6">Methodological Capability</th>
+                <th className="py-4 px-6 text-emerald-800 font-black">EcoTrace Engine</th>
+                <th className="py-4 px-6 text-slate-400">Generic Online Calculators</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-emerald-950/60">
-              <tr className="hover:bg-white/5 transition">
-                <td className="p-5 font-bold text-white">
-                  Localized CEA Grid Factor (0.82 kg/kWh)
+            <tbody className="divide-y divide-slate-100">
+              <tr className="hover:bg-slate-50 transition">
+                <td className="py-4 px-6 font-bold text-slate-900">
+                  Regional Grid Factor
                 </td>
-                <td className="p-5 bg-emerald-500/5 border-x border-emerald-500/20 font-bold text-emerald-400 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Yes (Certified)</span>
+                <td className="py-4 px-6 text-emerald-700 font-extrabold flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  Official CEA India (0.82 kg/kWh)
                 </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <XCircle className="w-4 h-4 text-red-400" />
-                  <span>No (Global Average)</span>
-                </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-amber-400" />
-                  <span>Varies by manufacturer</span>
+                <td className="py-4 px-6 text-slate-400 flex items-center gap-2">
+                  <XCircle className="w-4 h-4 text-rose-500" />
+                  Arbitrary global US/EU average (0.38 kg/kWh)
                 </td>
               </tr>
 
-              <tr className="hover:bg-white/5 transition">
-                <td className="p-5 font-bold text-white">
-                  Separate Stoichiometric LPG Gas Physics
+              <tr className="hover:bg-slate-50 transition">
+                <td className="py-4 px-6 font-bold text-slate-900">
+                  Cooking Fuel Physics
                 </td>
-                <td className="p-5 bg-emerald-500/5 border-x border-emerald-500/20 font-bold text-emerald-400 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Yes (2.983 kg/kg)</span>
+                <td className="py-4 px-6 text-emerald-700 font-extrabold flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  IPCC stoichiometric butane/propane mass chemistry
                 </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <XCircle className="w-4 h-4 text-red-400" />
-                  <span>Rarely included</span>
-                </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <XCircle className="w-4 h-4 text-red-400" />
-                  <span>No (Electric only)</span>
+                <td className="py-4 px-6 text-slate-400 flex items-center gap-2">
+                  <XCircle className="w-4 h-4 text-rose-500" />
+                  Ignored or combined into generic electricity
                 </td>
               </tr>
 
-              <tr className="hover:bg-white/5 transition">
-                <td className="p-5 font-bold text-white">
-                  Hardware Sensor Cost
+              <tr className="hover:bg-slate-50 transition">
+                <td className="py-4 px-6 font-bold text-slate-900">
+                  Fairness Normalization
                 </td>
-                <td className="p-5 bg-emerald-500/5 border-x border-emerald-500/20 font-black text-lime-300">
-                  ₹0 (100% Free Software)
+                <td className="py-4 px-6 text-emerald-700 font-extrabold flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  Dwelling sq ft & household member count scaling
                 </td>
-                <td className="p-5 text-gray-300">₹0 (Survey only)</td>
-                <td className="p-5 text-red-400 font-semibold">₹6,000 – ₹15,000+ per home</td>
-              </tr>
-
-              <tr className="hover:bg-white/5 transition">
-                <td className="p-5 font-bold text-white">
-                  Per-Capita Household Normalization
-                </td>
-                <td className="p-5 bg-emerald-500/5 border-x border-emerald-500/20 font-bold text-emerald-400 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Yes (Fair Leaderboard)</span>
-                </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <XCircle className="w-4 h-4 text-red-400" />
-                  <span>Unadjusted gross</span>
-                </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <XCircle className="w-4 h-4 text-red-400" />
-                  <span>Building total only</span>
+                <td className="py-4 px-6 text-slate-400 flex items-center gap-2">
+                  <XCircle className="w-4 h-4 text-rose-500" />
+                  Raw unnormalized totals (punishes larger families)
                 </td>
               </tr>
 
-              <tr className="hover:bg-white/5 transition">
-                <td className="p-5 font-bold text-white">
-                  Gamified Rewards & Brand Vouchers
+              <tr className="hover:bg-slate-50 transition">
+                <td className="py-4 px-6 font-bold text-slate-900">
+                  Incentives & Gamification
                 </td>
-                <td className="p-5 bg-emerald-500/5 border-x border-emerald-500/20 font-bold text-emerald-400 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Yes (GPay Scratch Cards)</span>
+                <td className="py-4 px-6 text-emerald-700 font-extrabold flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  Redeemable brand vouchers + 3D foil scratch cards
                 </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <XCircle className="w-4 h-4 text-red-400" />
-                  <span>None</span>
-                </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <XCircle className="w-4 h-4 text-red-400" />
-                  <span>None</span>
-                </td>
-              </tr>
-
-              <tr className="hover:bg-white/5 transition">
-                <td className="p-5 font-bold text-white">
-                  Data Privacy & Local Storage
-                </td>
-                <td className="p-5 bg-emerald-500/5 border-x border-emerald-500/20 font-bold text-emerald-400 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  <span>Private / Never Sold</span>
-                </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-amber-400" />
-                  <span>Data monetization common</span>
-                </td>
-                <td className="p-5 text-gray-400 flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-amber-400" />
-                  <span>Proprietary cloud locks</span>
+                <td className="py-4 px-6 text-slate-400 flex items-center gap-2">
+                  <XCircle className="w-4 h-4 text-rose-500" />
+                  Passive static charts with zero tangible rewards
                 </td>
               </tr>
             </tbody>
@@ -413,28 +356,27 @@ export default function WhyUsPage({ onGetStarted, onLogin }) {
         </div>
       </section>
 
-      {/* 5. CALL TO ACTION FOOTER BANNER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="p-10 rounded-3xl bg-gradient-to-r from-emerald-950 via-[#0B2517] to-emerald-950 border border-emerald-500/40">
-          <h3 className="text-2xl sm:text-3xl font-black text-white">
-            Experience the Scientific Difference
-          </h3>
-          <p className="text-xs text-gray-300 mt-2 max-w-xl mx-auto">
-            Take two minutes to setup your household appliances and verify your actual
-            daily carbon footprint against the CEA India benchmark.
+      {/* 5. BOTTOM CTA BANNER */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-gradient-to-r from-emerald-800 via-forest-800 to-emerald-900 p-8 sm:p-12 text-center text-white shadow-xl">
+          <h2 className="text-3xl font-black tracking-tight mb-2">
+            Experience Transparent Environmental Tracking
+          </h2>
+          <p className="text-xs sm:text-sm text-emerald-100 max-w-lg mx-auto mb-6">
+            Log in to test our live demo account or create your free household profile in under 60 seconds.
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap justify-center gap-4">
             <button
               onClick={onGetStarted}
-              className="px-7 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-lime-400 text-charcoal-950 font-black text-xs shadow-lg hover:shadow-glow transition cursor-pointer"
+              className="px-7 py-3 rounded-full bg-white text-emerald-900 hover:bg-slate-50 font-black text-xs shadow-md transition cursor-pointer"
             >
-              Start Free Tracking
+              Get Started Free
             </button>
             <button
               onClick={onLogin}
               className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/20 transition cursor-pointer"
             >
-              Launch Demo Account
+              Sign In to Account
             </button>
           </div>
         </div>
@@ -442,4 +384,3 @@ export default function WhyUsPage({ onGetStarted, onLogin }) {
     </div>
   );
 }
-

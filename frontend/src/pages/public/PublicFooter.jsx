@@ -3,9 +3,9 @@ import { Leaf } from "lucide-react";
 
 export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
   return (
-    <footer className="mt-auto bg-[#040C07] text-white py-16 border-t border-emerald-950/80 relative z-10">
+    <footer className="mt-auto bg-slate-50 text-slate-800 py-16 border-t border-slate-200 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-emerald-950">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-200">
           {/* Brand Info (col-span-2) */}
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
@@ -13,28 +13,28 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
                 <Leaf className="w-5 h-5 fill-current" />
               </div>
               <div>
-                <span className="font-extrabold text-xl text-white block leading-tight">
+                <span className="font-extrabold text-xl text-slate-900 block leading-tight">
                   EcoTrace
                 </span>
-                <span className="text-[10px] text-emerald-400 font-bold uppercase tracking-wider block">
+                <span className="text-[10px] text-emerald-700 font-bold uppercase tracking-wider block">
                   Smart Carbon Tracker
                 </span>
               </div>
             </div>
 
-            <p className="text-xs text-gray-400 leading-relaxed max-w-sm">
+            <p className="text-xs text-slate-600 leading-relaxed max-w-sm">
               EcoTrace provides precision household carbon accounting and electricity telemetry,
               incentivizing daily conservation habits through real-world rewards and fair per-capita
               community rankings.
             </p>
 
             {/* Social Links */}
-            <div className="flex items-center gap-3 pt-2 text-gray-400">
+            <div className="flex items-center gap-3 pt-2 text-slate-500">
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 hover:text-emerald-400 flex items-center justify-center transition"
+                className="w-8 h-8 rounded-lg bg-slate-200/60 hover:bg-slate-200 hover:text-emerald-700 flex items-center justify-center transition"
                 aria-label="LinkedIn"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 hover:text-emerald-400 flex items-center justify-center transition"
+                className="w-8 h-8 rounded-lg bg-slate-200/60 hover:bg-slate-200 hover:text-emerald-700 flex items-center justify-center transition"
                 aria-label="X / Twitter"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 hover:text-emerald-400 flex items-center justify-center transition"
+                className="w-8 h-8 rounded-lg bg-slate-200/60 hover:bg-slate-200 hover:text-emerald-700 flex items-center justify-center transition"
                 aria-label="Instagram"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -67,7 +67,7 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
                 href="https://github.com/Sohamsingh01/Eco-Trace.git"
                 target="_blank"
                 rel="noreferrer"
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 hover:text-emerald-400 flex items-center justify-center transition"
+                className="w-8 h-8 rounded-lg bg-slate-200/60 hover:bg-slate-200 hover:text-emerald-700 flex items-center justify-center transition"
                 aria-label="GitHub Repository"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -79,14 +79,14 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
 
           {/* Navigation Column 1: Platform */}
           <div>
-            <h4 className="text-xs font-black uppercase text-emerald-400 tracking-wider mb-4">
+            <h4 className="text-xs font-black uppercase text-emerald-800 tracking-wider mb-4">
               Explore
             </h4>
-            <ul className="space-y-2.5 text-xs text-gray-400">
+            <ul className="space-y-2.5 text-xs text-slate-600">
               <li>
                 <button
                   onClick={() => onNavigate("home")}
-                  className="hover:text-emerald-300 transition cursor-pointer"
+                  className="hover:text-emerald-700 transition cursor-pointer"
                 >
                   Overview & 3D Hero
                 </button>
@@ -94,7 +94,7 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
               <li>
                 <button
                   onClick={() => onNavigate("why-us")}
-                  className="hover:text-emerald-300 transition cursor-pointer"
+                  className="hover:text-emerald-700 transition cursor-pointer"
                 >
                   Why Us & Science
                 </button>
@@ -102,54 +102,65 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
               <li>
                 <button
                   onClick={() => onNavigate("dashboard")}
-                  className="hover:text-emerald-300 transition cursor-pointer"
+                  className="hover:text-emerald-700 transition cursor-pointer"
                 >
-                  Interactive Dashboard
+                  Dashboard Preview
                 </button>
               </li>
               <li>
                 <button
                   onClick={() => onNavigate("simulator")}
-                  className="hover:text-emerald-300 transition cursor-pointer"
+                  className="hover:text-emerald-700 transition cursor-pointer"
                 >
-                  Appliance Simulator
+                  Live Household Simulator
                 </button>
               </li>
               <li>
                 <button
                   onClick={() => onNavigate("features")}
-                  className="hover:text-emerald-300 transition cursor-pointer"
+                  className="hover:text-emerald-700 transition cursor-pointer"
                 >
-                  Features & Architecture
+                  Platform Modules
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Navigation Column 2: Science & Specs */}
+          {/* Navigation Column 2: Science & Standards */}
           <div>
-            <h4 className="text-xs font-black uppercase text-emerald-400 tracking-wider mb-4">
-              Scientific Standards
+            <h4 className="text-xs font-black uppercase text-emerald-800 tracking-wider mb-4">
+              Science & Standards
             </h4>
-            <ul className="space-y-2.5 text-xs text-gray-400">
-              <li>CEA India Factor: 0.82 kg/kWh</li>
-              <li>IPCC LPG Factor: 2.983 kg/kg</li>
-              <li>Per-Capita Normalization</li>
-              <li>Dynamic Threshold Alerts</li>
-              <li>Offline SQLite / PostgreSQL</li>
+            <ul className="space-y-2.5 text-xs text-slate-600">
+              <li>
+                <span className="text-slate-700 font-semibold block">CEA Baseline 0.82 kg/kWh</span>
+                <span className="text-[10px] text-slate-400">Official Indian grid factor</span>
+              </li>
+              <li>
+                <span className="text-slate-700 font-semibold block">IPCC Gas Stoichiometry</span>
+                <span className="text-[10px] text-slate-400">2.983 kg CO₂ per kg LPG</span>
+              </li>
+              <li>
+                <span className="text-slate-700 font-semibold block">Per-Capita Normalization</span>
+                <span className="text-[10px] text-slate-400">Square footage & member weights</span>
+              </li>
+              <li>
+                <span className="text-slate-700 font-semibold block">Audit Verification Engine</span>
+                <span className="text-[10px] text-slate-400">Cryptographic receipt hashes</span>
+              </li>
             </ul>
           </div>
 
           {/* Navigation Column 3: Get Started */}
           <div>
-            <h4 className="text-xs font-black uppercase text-emerald-400 tracking-wider mb-4">
+            <h4 className="text-xs font-black uppercase text-emerald-800 tracking-wider mb-4">
               Get Started
             </h4>
-            <ul className="space-y-2.5 text-xs text-gray-400">
+            <ul className="space-y-2.5 text-xs text-slate-600">
               <li>
                 <button
                   onClick={onLogin}
-                  className="hover:text-emerald-300 transition cursor-pointer text-left"
+                  className="hover:text-emerald-700 transition cursor-pointer text-left"
                 >
                   Try Demo Account
                 </button>
@@ -157,7 +168,7 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
               <li>
                 <button
                   onClick={onGetStarted}
-                  className="hover:text-emerald-300 transition cursor-pointer text-left"
+                  className="hover:text-emerald-700 transition cursor-pointer text-left"
                 >
                   Create Free Account
                 </button>
@@ -165,7 +176,7 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
               <li>
                 <button
                   onClick={() => onNavigate("contact")}
-                  className="hover:text-emerald-300 transition cursor-pointer text-left"
+                  className="hover:text-emerald-700 transition cursor-pointer text-left"
                 >
                   Request Society Pilot
                 </button>
@@ -175,11 +186,11 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
         </div>
 
         {/* Bottom Credits & Academic Verification */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
             © 2026 EcoTrace. Engineering Capstone Project. Open Source under MIT License.
           </div>
-          <div className="text-[11px] text-gray-400 flex items-center gap-2">
+          <div className="text-[11px] text-slate-400 flex items-center gap-2">
             <span>Validated Against CEA India Baseline Emission Database</span>
             <span>•</span>
             <span>IPCC GHG Protocol</span>
@@ -189,4 +200,3 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
     </footer>
   );
 }
-
