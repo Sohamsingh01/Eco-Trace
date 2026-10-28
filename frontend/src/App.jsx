@@ -15,6 +15,47 @@ import LeaderboardPage from "./pages/LeaderboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import SpecsPage from "./pages/SpecsPage";
 
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("ErrorBoundary caught an error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="p-8 max-w-xl mx-auto my-12 bg-white rounded-3xl border border-rose-200 shadow-xl text-center space-y-4">
+          <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto border border-rose-200">
+            <span className="text-xl font-bold">⚠️</span>
+          </div>
+          <h2 className="text-xl font-black text-slate-900">Dashboard View Refresh</h2>
+          <p className="text-xs text-slate-600">
+            A temporary component issue occurred during rendering. Your account data and EcoCredits are completely intact.
+          </p>
+          <button
+            onClick={() => {
+              this.setState({ hasError: false, error: null });
+              window.location.reload();
+            }}
+            className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs shadow-sm transition"
+          >
+            Reload Dashboard
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 export default function App() {
   const { user, loading, isAuthenticated } = useAuth();
   
@@ -91,15 +132,17 @@ export default function App() {
         />
 
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full">
-          {activeTab === "dashboard" && (
-            <DashboardPage onNavigateTab={(tab) => setActiveTab(tab)} />
-          )}
-          {activeTab === "tracker" && <ActivityPage />}
-          {activeTab === "analytics" && <AnalyticsPage />}
-          {activeTab === "rewards" && <RewardsPage />}
-          {activeTab === "leaderboard" && <LeaderboardPage />}
-          {activeTab === "profile" && <ProfilePage />}
-          {activeTab === "specs" && <SpecsPage />}
+          <ErrorBoundary>
+            {activeTab === "dashboard" && (
+              <DashboardPage onNavigateTab={(tab) => setActiveTab(tab)} />
+            )}
+            {activeTab === "tracker" && <ActivityPage />}
+            {activeTab === "analytics" && <AnalyticsPage />}
+            {activeTab === "rewards" && <RewardsPage />}
+            {activeTab === "leaderboard" && <LeaderboardPage />}
+            {activeTab === "profile" && <ProfilePage />}
+            {activeTab === "specs" && <SpecsPage />}
+          </ErrorBoundary>
         </main>
       </div>
     </div>

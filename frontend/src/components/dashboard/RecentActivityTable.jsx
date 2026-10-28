@@ -65,10 +65,10 @@ export default function RecentActivityTable({
                     {item.duration_minutes} min ({item.usage_mode || "Medium"})
                   </td>
                   <td className="py-3 text-right font-medium text-slate-700">
-                    {item.calculated_energy_kwh} kWh
+                    {item.calculated_energy_kwh ?? item.energy_kwh ?? 0} kWh
                   </td>
                   <td className="py-3 text-right font-black text-emerald-700">
-                    {item.calculated_co2_kg} kg
+                    {item.calculated_co2_kg ?? item.co2_kg ?? 0} kg
                   </td>
                   <td className="py-3 text-right pr-1">
                     <button

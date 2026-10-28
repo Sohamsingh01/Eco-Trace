@@ -12,6 +12,13 @@ export const NATURE_IMAGES = {
     category: "Biodiversity & Forests",
     caption: "Intact tropical forest canopies sequester over 2.4 billion metric tons of carbon annually.",
   },
+  denseForest: {
+    src: "/images/forest_hero.jpg",
+    alt: "Deep emerald forest canopy and lush woodland wilderness",
+    title: "Pristine Rainforest",
+    category: "Biodiversity & Forests",
+    caption: "Old-growth broadleaf forests sequester gigatons of carbon while stabilizing regional microclimates.",
+  },
   renewableEnergy: {
     src: "/images/renewable_energy.jpg",
     alt: "Clean wind turbines and crystalline solar arrays in a green alpine mountain valley",
