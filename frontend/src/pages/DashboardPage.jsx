@@ -325,18 +325,18 @@ export default function DashboardPage({ onNavigateTab }) {
       {/* 4. "My Eco World" 3D Miniature Ecosystem + Large Photographic Feature Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* "My Eco World" 3D Miniature Island (4 cols) */}
-        <div className="lg:col-span-4 bg-white rounded-3xl border border-forest-100 shadow-eco p-6 flex flex-col justify-between">
+        <div className="lg:col-span-4 bg-[#07180F]/90 backdrop-blur-xl rounded-3xl border border-emerald-500/25 shadow-xl p-6 flex flex-col justify-between text-white hover:border-emerald-400/50 transition-all">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-xl bg-forest-100 text-forest-800">
-                <Globe2 className="w-4 h-4 text-emerald-700" />
+              <span className="p-1.5 rounded-xl bg-emerald-950/70 border border-emerald-500/30 text-emerald-300">
+                <Globe2 className="w-4 h-4 text-emerald-400" />
               </span>
               <div>
-                <h3 className="font-extrabold text-base text-forest-950">My Eco World</h3>
-                <p className="text-[11px] text-charcoal-400">Interactive 3D Miniature Habitat</p>
+                <h3 className="font-extrabold text-base text-white">My Eco World</h3>
+                <p className="text-[11px] text-emerald-200/60">Interactive 3D Miniature Habitat</p>
               </div>
             </div>
-            <span className="text-[10px] font-black uppercase text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
+            <span className="text-[10px] font-black uppercase text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
               Living Habitat
             </span>
           </div>

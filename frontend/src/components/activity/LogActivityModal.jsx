@@ -62,76 +62,86 @@ export default function LogActivityModal({
   }, [presetAppliance]);
 
   const handleSelectAppliance = (app) => {
-    setSelectedApplianceId(app.id || "");
+    setSelectedApplianceId(app.id);
     setApplianceName(app.name);
     setCategory(app.category);
-    setFuelType(app.fuel_type || "electric");
-    setPowerWatts(app.default_power_watts ?? app.power_watts ?? 100);
+    setFuelType(app.fuel_type);
+    setPowerWatts(app.default_power_watts || 100);
   };
 
-  // Trigger live calculation preview whenever inputs change
+  // Instant calculation preview computation on every input modification
   useEffect(() => {
-    let active = true;
-    async function updatePreview() {
-      try {
-        const res = await api.estimateEmissions({
-          fuel_type: fuelType,
-          power_watts: parseFloat(powerWatts) || 0,
-          quantity: parseInt(quantity) || 1,
-          duration_minutes: parseFloat(durationMinutes) || 0,
-          usage_mode: usageMode,
-        });
-        if (active) {
-          setPreview(res);
-        }
-      } catch (err) {
-        console.error("Estimate error:", err);
-      }
+    const hours = (parseFloat(durationMinutes) || 0) / 60;
+    const qty = parseInt(quantity) || 1;
+    let modeMult = 1.0;
+    if (usageMode === "Eco") modeMult = 0.75;
+    if (usageMode === "Low") modeMult = 0.70;
+    if (usageMode === "High") modeMult = 1.30;
+
+    let kwh = 0;
+    let co2 = 0;
+    let method = "Grid Electricity (CEA 0.82 kg/kWh)";
+
+    if (fuelType === "gas") {
+      const lpgKg = qty * hours * 0.15 * modeMult;
+      co2 = lpgKg * 2.983;
+      kwh = lpgKg * 13.8;
+      method = "LPG Stoichiometry (2.983 kg CO₂/kg)";
+    } else {
+      const watts = parseFloat(powerWatts) || 0;
+      kwh = (watts * hours * qty * modeMult) / 1000;
+      co2 = kwh * 0.82;
+      method = "Grid Electricity (CEA 0.82 kg/kWh)";
     }
-    updatePreview();
-    return () => {
-      active = false;
-    };
-  }, [fuelType, powerWatts, quantity, durationMinutes, usageMode]);
+
+    setPreview({
+      energy_kwh: Number(kwh.toFixed(3)),
+      co2_kg: Number(co2.toFixed(3)),
+      calculation_method: method,
+    });
+  }, [powerWatts, durationMinutes, quantity, usageMode, fuelType]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!applianceName.trim()) {
-      showToast("Appliance name is required.", "error");
+    if (!applianceName.trim() || durationMinutes <= 0) {
+      showToast("Please enter a valid appliance name and duration.", "error");
       return;
     }
 
     try {
       setLoading(true);
-      const res = await api.logActivity({
-        appliance_id: selectedApplianceId || null,
-        appliance_name: applianceName,
+      const payload = {
+        appliance_name: applianceName.trim(),
         category,
         fuel_type: fuelType,
+        power_watts: fuelType === "gas" ? 0 : parseFloat(powerWatts),
+        duration_minutes: parseInt(durationMinutes),
         quantity: parseInt(quantity) || 1,
-        power_watts: parseFloat(powerWatts) || 0,
-        duration_minutes: parseFloat(durationMinutes) || 1,
         usage_mode: usageMode,
         notes: notes.trim() || null,
-      });
+        activity_date: new Date().toISOString().split("T")[0],
+      };
 
-      // Confetti celebratory burst for earning EcoCredits!
+      const result = await api.logActivity(payload);
+
+      // Micro celebration
       confetti({
         particleCount: 50,
-        spread: 60,
-        origin: { y: 0.8 },
-        colors: ["#22C55E", "#166534", "#BEF264"],
+        spread: 50,
+        origin: { y: 0.7 },
+        colors: ["#22C55E", "#BEF264", "#166534"],
       });
 
-      showToast(`+10 EcoCredits earned! Logged ${applianceName}.`, "award");
+      showToast(
+        `Activity logged! +10 EcoCredits earned. Calculated ${result.calculated_co2_kg} kg CO₂.`,
+        "success"
+      );
 
-      if (res.new_balance) {
-        updateLocalUser({ eco_credits: res.new_balance });
+      if (result.user_eco_credits) {
+        updateLocalUser({ eco_credits: result.user_eco_credits });
       }
 
-      if (onActivityLogged) {
-        onActivityLogged(res);
-      }
+      if (onActivityLogged) onActivityLogged(result);
       onClose();
     } catch (err) {
       showToast(err.message || "Failed to log activity.", "error");
@@ -142,11 +152,11 @@ export default function LogActivityModal({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Log Household Activity">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Preset appliance picker */}
+      <form onSubmit={handleSubmit} className="space-y-4 text-white">
+        {/* Preset Selector */}
         <div>
-          <label className="block text-xs font-bold text-charcoal-700 uppercase tracking-wider mb-1.5">
-            Select Preset or Enter Appliance
+          <label className="block text-xs font-bold text-emerald-200/90 mb-1">
+            Choose from Appliance Catalog Preset
           </label>
           <select
             value={selectedApplianceId}
@@ -154,7 +164,7 @@ export default function LogActivityModal({
               const found = appliancesCatalog.find((a) => a.id === e.target.value);
               if (found) handleSelectAppliance(found);
             }}
-            className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-xs font-semibold focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
+            className="w-full px-3.5 py-2.5 rounded-xl border border-emerald-500/30 text-xs font-bold focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
           >
             {appliancesCatalog.map((app) => (
               <option key={app.id} value={app.id}>
@@ -167,26 +177,26 @@ export default function LogActivityModal({
         {/* Appliance Name and Category */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+            <label className="block text-xs font-bold text-emerald-200/90 mb-1">
               Appliance Name
             </label>
             <input
               type="text"
               value={applianceName}
               onChange={(e) => setApplianceName(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+            <label className="block text-xs font-bold text-emerald-200/90 mb-1">
               Category
             </label>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
+              className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
             >
               <option value="Cooling">Cooling</option>
               <option value="Heating">Heating</option>
@@ -203,20 +213,20 @@ export default function LogActivityModal({
         {/* Fuel Type & Power */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+            <label className="block text-xs font-bold text-emerald-200/90 mb-1">
               Energy Source
             </label>
-            <div className="flex rounded-xl p-1 bg-gray-100 border border-gray-200">
+            <div className="flex rounded-xl p-1 bg-[#040e07] border border-emerald-500/30">
               <button
                 type="button"
                 onClick={() => setFuelType("electric")}
                 className={`flex-1 py-1.5 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${
                   fuelType === "electric"
-                    ? "bg-white text-forest-900 shadow-sm"
-                    : "text-charcoal-500"
+                    ? "bg-emerald-500 text-charcoal-950 font-black shadow-sm"
+                    : "text-emerald-300/70 hover:text-white"
                 }`}
               >
-                <Zap className="w-3.5 h-3.5 text-amber-500" />
+                <Zap className="w-3.5 h-3.5 text-yellow-300" />
                 Electric
               </button>
               <button
@@ -224,11 +234,11 @@ export default function LogActivityModal({
                 onClick={() => setFuelType("gas")}
                 className={`flex-1 py-1.5 text-xs font-bold rounded-lg flex items-center justify-center gap-1.5 transition ${
                   fuelType === "gas"
-                    ? "bg-white text-forest-900 shadow-sm"
-                    : "text-charcoal-500"
+                    ? "bg-orange-500 text-charcoal-950 font-black shadow-sm"
+                    : "text-emerald-300/70 hover:text-white"
                 }`}
               >
-                <Flame className="w-3.5 h-3.5 text-orange-500" />
+                <Flame className="w-3.5 h-3.5 text-orange-200" />
                 LPG Gas
               </button>
             </div>
@@ -236,7 +246,7 @@ export default function LogActivityModal({
 
           {fuelType === "electric" ? (
             <div>
-              <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+              <label className="block text-xs font-bold text-emerald-200/90 mb-1">
                 Power Rating (Watts)
               </label>
               <input
@@ -245,13 +255,13 @@ export default function LogActivityModal({
                 max="10000"
                 value={powerWatts}
                 onChange={(e) => setPowerWatts(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
                 required
               />
             </div>
           ) : (
             <div>
-              <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+              <label className="block text-xs font-bold text-emerald-200/90 mb-1">
                 Burners Used
               </label>
               <input
@@ -260,7 +270,7 @@ export default function LogActivityModal({
                 max="6"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
               />
             </div>
           )}
@@ -270,10 +280,10 @@ export default function LogActivityModal({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-semibold text-charcoal-700">
+              <label className="text-xs font-bold text-emerald-200/90">
                 Duration (Minutes)
               </label>
-              <span className="text-[11px] font-bold text-forest-800">
+              <span className="text-[11px] font-black text-lime-300">
                 {(durationMinutes / 60).toFixed(1)} hrs
               </span>
             </div>
@@ -283,7 +293,7 @@ export default function LogActivityModal({
               max="1440"
               value={durationMinutes}
               onChange={(e) => setDurationMinutes(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+              className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
               required
             />
             {/* Quick minute buttons */}
@@ -293,10 +303,10 @@ export default function LogActivityModal({
                   key={mins}
                   type="button"
                   onClick={() => setDurationMinutes(mins)}
-                  className={`text-[10px] px-2 py-0.5 rounded-md font-semibold transition ${
+                  className={`text-[10px] px-2 py-0.5 rounded-md font-bold transition ${
                     durationMinutes === mins
-                      ? "bg-forest-800 text-white"
-                      : "bg-gray-100 text-charcoal-600 hover:bg-gray-200"
+                      ? "bg-emerald-500 text-charcoal-950 font-black"
+                      : "bg-[#040e07] border border-emerald-500/20 text-emerald-300 hover:border-emerald-400"
                   }`}
                 >
                   {mins >= 60 ? `${mins / 60}h` : `${mins}m`}
@@ -306,13 +316,13 @@ export default function LogActivityModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+            <label className="block text-xs font-bold text-emerald-200/90 mb-1">
               Operating Mode
             </label>
             <select
               value={usageMode}
               onChange={(e) => setUsageMode(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white"
+              className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white"
             >
               <option value="Eco">Eco / Low Power (0.75x)</option>
               <option value="Low">Low (0.70x)</option>
@@ -324,7 +334,7 @@ export default function LogActivityModal({
 
         {/* Optional Notes */}
         <div>
-          <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+          <label className="block text-xs font-bold text-emerald-200/90 mb-1">
             Optional Notes
           </label>
           <input
@@ -332,41 +342,41 @@ export default function LogActivityModal({
             placeholder="e.g. Master bedroom AC at 24°C"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+            className="w-full px-3.5 py-2 rounded-xl border border-emerald-500/30 text-xs font-medium focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none bg-[#040e07] text-white placeholder-emerald-100/30"
           />
         </div>
 
         {/* INSTANT LIVE CALCULATION PREVIEW BOX */}
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-forest-50 via-emerald-50/70 to-forest-50 border border-emerald-200 shadow-sm transition-all duration-300">
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/60 to-emerald-900/40 border border-emerald-500/30 shadow-md transition-all duration-300">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-extrabold uppercase text-forest-900 tracking-wider flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+            <span className="text-xs font-extrabold uppercase text-emerald-300 tracking-wider flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-lime-400 animate-pulse" />
               Live Carbon & Energy Preview
             </span>
-            <span className="text-[10px] text-forest-800 font-bold bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-200">
+            <span className="text-[10px] text-lime-300 font-bold bg-[#040e07] px-2.5 py-0.5 rounded-full border border-emerald-500/30">
               {preview.calculation_method}
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="p-3 rounded-xl bg-white/90 backdrop-blur-xs border border-emerald-100 shadow-xs">
-              <span className="text-[10px] uppercase font-bold text-charcoal-400 block">
+            <div className="p-3 rounded-xl bg-[#040e07] border border-emerald-500/30 shadow-xs">
+              <span className="text-[10px] uppercase font-bold text-emerald-200/70 block">
                 Estimated Energy
               </span>
-              <span className="text-2xl font-black text-forest-900">
+              <span className="text-2xl font-black text-white">
                 {preview.energy_kwh}
               </span>
-              <span className="text-xs font-semibold text-charcoal-500 ml-1">kWh</span>
+              <span className="text-xs font-bold text-emerald-400 ml-1">kWh</span>
             </div>
 
-            <div className="p-3 rounded-xl bg-white/90 backdrop-blur-xs border border-emerald-100 shadow-xs">
-              <span className="text-[10px] uppercase font-bold text-charcoal-400 block">
+            <div className="p-3 rounded-xl bg-[#040e07] border border-emerald-500/30 shadow-xs">
+              <span className="text-[10px] uppercase font-bold text-emerald-200/70 block">
                 Estimated Emissions
               </span>
-              <span className="text-2xl font-black text-emerald-600">
+              <span className="text-2xl font-black text-lime-300">
                 {preview.co2_kg}
               </span>
-              <span className="text-xs font-semibold text-charcoal-500 ml-1">kg CO₂</span>
+              <span className="text-xs font-bold text-emerald-400 ml-1">kg CO₂</span>
             </div>
           </div>
         </div>
@@ -376,23 +386,23 @@ export default function LogActivityModal({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-xl text-xs font-bold text-charcoal-600 hover:bg-gray-100 active:scale-95 transition"
+            className="px-4 py-2.5 rounded-xl text-xs font-bold text-gray-400 hover:text-white hover:bg-white/10 active:scale-95 transition"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="px-6 py-2.5 rounded-xl bg-forest-800 hover:bg-forest-900 active:scale-95 text-white text-xs font-bold shadow-eco hover:shadow-eco-lg transition flex items-center gap-2"
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-lime-400 active:scale-95 text-charcoal-950 text-xs font-black shadow-lg shadow-emerald-500/25 transition flex items-center gap-2"
           >
             {loading ? (
               <span className="flex items-center gap-2">
-                <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                <span className="w-3.5 h-3.5 border-2 border-charcoal-950 border-t-transparent rounded-full animate-spin"></span>
                 Recording Activity...
               </span>
             ) : (
               <>
-                <Sparkles className="w-3.5 h-3.5 text-limeAccent" />
+                <Sparkles className="w-3.5 h-3.5 text-charcoal-950" />
                 <span>Save Activity (+10 Credits)</span>
               </>
             )}

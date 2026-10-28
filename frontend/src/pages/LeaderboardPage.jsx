@@ -34,22 +34,22 @@ export default function LeaderboardPage() {
   const { podium = [], rankings = [], current_user_rank = 1 } = data || {};
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6 pb-12 relative z-10 text-white">
       {/* Header and Timeframe Filter */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white p-6 rounded-3xl border border-forest-100 shadow-eco">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-[#07180F]/90 backdrop-blur-xl p-6 sm:p-7 rounded-3xl border border-emerald-500/25 shadow-xl shadow-black/50 hover:border-emerald-400/50 transition-all">
         <div>
-          <span className="text-xs font-extrabold uppercase text-emerald-700 tracking-wider">
+          <span className="text-xs font-extrabold uppercase text-emerald-400 tracking-wider">
             Competitive League
           </span>
-          <h1 className="text-2xl font-black text-charcoal-900 tracking-tight mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight mt-0.5">
             Sustainability Leaderboard
           </h1>
-          <p className="text-xs text-charcoal-500 mt-1">
+          <p className="text-xs text-emerald-200/60 mt-1 max-w-xl">
             Household-normalized EcoScores rewarding budget discipline and continuous daily tracking.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 p-1 rounded-2xl bg-forest-50 border border-forest-100">
+        <div className="flex items-center gap-2 p-1 rounded-2xl bg-[#040e07] border border-emerald-500/25 shadow-inner">
           {[
             { id: "weekly", label: "This Week" },
             { id: "monthly", label: "This Month" },
@@ -60,8 +60,8 @@ export default function LeaderboardPage() {
               onClick={() => setTimeframe(tab.id)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition ${
                 timeframe === tab.id
-                  ? "bg-forest-800 text-white shadow-sm"
-                  : "text-charcoal-600 hover:text-forest-900"
+                  ? "bg-emerald-500 text-charcoal-950 font-black shadow-md scale-[1.02]"
+                  : "text-emerald-200/70 hover:text-white hover:bg-emerald-950/40"
               }`}
             >
               {tab.label}
@@ -71,15 +71,15 @@ export default function LeaderboardPage() {
       </div>
 
       {/* Fairness Explanation Alert */}
-      <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 flex items-start gap-3">
-        <Info className="w-5 h-5 text-emerald-700 shrink-0 mt-0.5" />
-        <div className="text-xs text-emerald-900 leading-relaxed">
-          <span className="font-bold block mb-0.5">
+      <div className="p-4 rounded-2xl bg-[#040e07]/90 border border-emerald-500/30 flex items-start gap-3 shadow-md">
+        <Info className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+        <div className="text-xs text-emerald-100/90 leading-relaxed">
+          <span className="font-black text-white block mb-0.5">
             How EcoScore is fairly normalized:
           </span>
           Rather than measuring absolute raw emissions (which inherently penalizes multi-generational families or larger homes), our formula evaluates:{" "}
-          <strong>45% Carbon Budget Adherence</strong> (staying below your personalized benchmark),{" "}
-          <strong>30% Tracking Streak Consistency</strong>, and <strong>25% Log Completeness</strong>.
+          <strong className="text-emerald-300">45% Carbon Budget Adherence</strong> (staying below your personalized benchmark),{" "}
+          <strong className="text-lime-300">30% Tracking Streak Consistency</strong>, and <strong className="text-emerald-300">25% Log Completeness</strong>.
         </div>
       </div>
 

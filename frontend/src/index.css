@@ -4,24 +4,24 @@
 
 @layer base {
   body {
-    @apply bg-softWhite text-charcoal-800 antialiased selection:bg-emerald-200 selection:text-forest-900;
+    @apply bg-[#06140B] text-white antialiased selection:bg-emerald-500 selection:text-black;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
 
 /* Glassmorphism helpers */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(22, 101, 52, 0.08);
+  background: rgba(9, 34, 21, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(16, 185, 129, 0.22);
 }
 
 .glass-panel-dark {
-  background: rgba(20, 83, 45, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(6, 20, 11, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(16, 185, 129, 0.35);
 }
 
 /* Card hover micro-interactions */
@@ -31,26 +31,28 @@
 
 .eco-card-interactive:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 28px -4px rgba(22, 101, 52, 0.15);
+  box-shadow: 0 12px 30px -4px rgba(16, 185, 129, 0.25);
+  border-color: rgba(52, 211, 153, 0.45);
 }
 
-/* Custom modern scrollbar */
+/* Custom modern scrollbar for dark theme */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #040e07;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #0d381e;
   border-radius: 9999px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #10b981;
 }
 
 /* Pulse badge animation */

@@ -16,6 +16,7 @@ import {
   CheckCircle2,
   Calendar,
   Layers,
+  Sparkles,
 } from "lucide-react";
 
 export default function ProfilePage() {
@@ -84,15 +85,12 @@ export default function ProfilePage() {
     e.preventDefault();
     try {
       setSavingSecurity(true);
-      const payload = {
-        full_name: fullName.trim(),
-      };
-      if (newPassword) {
-        payload.current_password = currentPassword;
-        payload.new_password = newPassword;
-      }
-      const res = await api.updateSettings(payload);
-      showToast("Profile settings saved successfully!", "success");
+      await api.updateProfile({
+        full_name: fullName,
+        current_password: currentPassword || undefined,
+        new_password: newPassword || undefined,
+      });
+      showToast("Security profile updated successfully!", "success");
       setCurrentPassword("");
       setNewPassword("");
       await refreshUser();
@@ -104,61 +102,61 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6 pb-12 relative z-10 text-white">
       {/* Profile Overview Banner */}
-      <div className="bg-white rounded-3xl border border-forest-100 shadow-eco p-6 sm:p-8 flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+      <div className="bg-[#07180F]/90 backdrop-blur-xl rounded-3xl border border-emerald-500/25 shadow-xl shadow-black/50 p-6 sm:p-8 flex flex-col md:flex-row items-center md:items-start justify-between gap-6 hover:border-emerald-400/50 transition-all">
         <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
           <img
             src={user?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${user?.username}`}
             alt={user?.full_name}
-            className="w-24 h-24 rounded-full border-4 border-emerald-100 bg-white object-cover shadow-eco"
+            className="w-24 h-24 rounded-full border-4 border-emerald-400/80 bg-black/40 object-cover shadow-xl"
           />
           <div>
             <div className="flex items-center justify-center sm:justify-start gap-2">
-              <h1 className="text-2xl font-black text-charcoal-900 tracking-tight">
+              <h1 className="text-2xl font-black text-white tracking-tight">
                 {user?.full_name}
               </h1>
-              <span className="text-[11px] font-bold text-forest-800 bg-forest-50 border border-forest-100 px-2 py-0.5 rounded-full">
+              <span className="text-[11px] font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
                 @{user?.username}
               </span>
             </div>
-            <p className="text-xs text-charcoal-500 mt-0.5">{user?.email}</p>
-            <div className="mt-2.5 flex items-center justify-center sm:justify-start gap-4 text-xs font-semibold text-charcoal-600">
-              <span className="flex items-center gap-1 text-forest-800">
-                <Coins className="w-3.5 h-3.5 text-amber-500" />
+            <p className="text-xs text-emerald-200/60 mt-0.5">{user?.email}</p>
+            <div className="mt-2.5 flex items-center justify-center sm:justify-start gap-4 text-xs font-semibold">
+              <span className="flex items-center gap-1 text-amber-300">
+                <Coins className="w-3.5 h-3.5 text-amber-400" />
                 {user?.eco_credits} Credits
               </span>
-              <span className="flex items-center gap-1 text-orange-600">
-                <Flame className="w-3.5 h-3.5 fill-current" />
+              <span className="flex items-center gap-1 text-orange-300">
+                <Flame className="w-3.5 h-3.5 fill-current text-orange-400" />
                 {user?.current_streak} Day Streak
               </span>
-              <span className="flex items-center gap-1 text-emerald-700">
-                <ShieldCheck className="w-3.5 h-3.5" />
+              <span className="flex items-center gap-1 text-lime-300">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
                 Score: {user?.eco_score}
               </span>
             </div>
           </div>
         </div>
 
-        <div className="bg-forest-50/70 p-4 rounded-2xl border border-forest-100 text-xs space-y-1.5 min-w-[200px]">
-          <span className="font-bold text-forest-900 block mb-1">Household Specs</span>
-          <div className="flex justify-between text-charcoal-600">
+        <div className="bg-[#040e07] p-4 rounded-2xl border border-emerald-500/30 text-xs space-y-1.5 min-w-[220px]">
+          <span className="font-bold text-emerald-400 block mb-1">Household Specs</span>
+          <div className="flex justify-between text-emerald-100/70">
             <span>Dwelling:</span>
-            <span className="font-semibold text-charcoal-900">{household?.home_type || "2BHK"}</span>
+            <span className="font-semibold text-white">{household?.home_type || "2BHK"}</span>
           </div>
-          <div className="flex justify-between text-charcoal-600">
+          <div className="flex justify-between text-emerald-100/70">
             <span>Occupants:</span>
-            <span className="font-semibold text-charcoal-900">{household?.household_members || 3} members</span>
+            <span className="font-semibold text-white">{household?.household_members || 3} members</span>
           </div>
-          <div className="flex justify-between text-charcoal-600">
+          <div className="flex justify-between text-emerald-100/70">
             <span>Area:</span>
-            <span className="font-semibold text-charcoal-900">{household?.area_sqft || 1000} sq.ft</span>
+            <span className="font-semibold text-white">{household?.area_sqft || 1000} sq.ft</span>
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 p-1 rounded-2xl bg-white border border-forest-100 shadow-sm max-w-fit">
+      <div className="flex items-center gap-2 p-1 rounded-2xl bg-[#040e07] border border-emerald-500/25 shadow-inner max-w-fit">
         {[
           { id: "household", label: "Household & Target", icon: Home },
           { id: "achievements", label: "Achievements & Badges", icon: Award },
@@ -171,8 +169,8 @@ export default function ProfilePage() {
               onClick={() => setActiveTab(tab.id)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 ${
                 activeTab === tab.id
-                  ? "bg-forest-800 text-white shadow-sm"
-                  : "text-charcoal-600 hover:text-forest-900"
+                  ? "bg-emerald-500 text-charcoal-950 font-black shadow-md scale-[1.02]"
+                  : "text-emerald-200/70 hover:text-white hover:bg-emerald-950/40"
               }`}
             >
               <Icon className="w-3.5 h-3.5" />
@@ -184,20 +182,20 @@ export default function ProfilePage() {
 
       {/* TAB 1: HOUSEHOLD & DAILY TARGET */}
       {activeTab === "household" && (
-        <div className="bg-white rounded-3xl border border-forest-100 shadow-eco p-6 sm:p-8 space-y-6">
+        <div className="bg-[#07180F]/90 backdrop-blur-xl rounded-3xl border border-emerald-500/25 shadow-xl shadow-black/50 p-6 sm:p-8 space-y-6 hover:border-emerald-400/50 transition-all">
           <div>
-            <h3 className="font-bold text-base text-forest-950">
+            <h3 className="font-black text-lg text-white">
               Daily Carbon Target & Benchmark Adjustment
             </h3>
-            <p className="text-xs text-charcoal-500 mt-0.5">
+            <p className="text-xs text-emerald-200/60 mt-0.5">
               Tune your daily CO₂ allowance. Remaining below this limit qualifies you for daily EcoCredits.
             </p>
           </div>
 
-          <div className="p-6 rounded-2xl bg-forest-50/50 border border-forest-100 max-w-xl">
+          <div className="p-6 rounded-2xl bg-[#040e07] border border-emerald-500/30 max-w-xl">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold text-charcoal-700">Daily Target Ceiling</span>
-              <span className="text-xl font-black text-forest-900">{dailyTarget} kg CO₂ / day</span>
+              <span className="text-xs font-bold text-emerald-200/80">Daily Target Ceiling</span>
+              <span className="text-xl font-black text-lime-300">{dailyTarget} kg CO₂ / day</span>
             </div>
             <input
               type="range"
@@ -206,9 +204,9 @@ export default function ProfilePage() {
               step="0.5"
               value={dailyTarget}
               onChange={(e) => setDailyTarget(parseFloat(e.target.value))}
-              className="w-full accent-forest-800 cursor-pointer"
+              className="w-full accent-emerald-400 cursor-pointer"
             />
-            <div className="flex justify-between text-[10px] text-charcoal-400 mt-1 font-semibold">
+            <div className="flex justify-between text-[10px] text-emerald-200/50 mt-1 font-semibold">
               <span>Strict (4.0 kg)</span>
               <span>Moderate (12.5 kg)</span>
               <span>High (35.0 kg)</span>
@@ -217,7 +215,7 @@ export default function ProfilePage() {
             <button
               onClick={handleSaveBudgetTarget}
               disabled={savingHousehold}
-              className="mt-5 px-5 py-2.5 rounded-xl bg-forest-800 hover:bg-forest-900 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
+              className="mt-5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-lime-400 text-charcoal-950 text-xs font-black transition flex items-center gap-1.5 shadow-md active:scale-95"
             >
               <Save className="w-3.5 h-3.5" />
               <span>{savingHousehold ? "Saving..." : "Save Target"}</span>
@@ -225,18 +223,18 @@ export default function ProfilePage() {
           </div>
 
           {/* Inventoried Appliances List */}
-          <div className="pt-4 border-t border-gray-100">
-            <h4 className="font-bold text-sm text-forest-950 mb-3">
+          <div className="pt-4 border-t border-emerald-900/40">
+            <h4 className="font-bold text-sm text-white mb-3">
               Inventoried Household Appliances ({household?.appliances?.length || 0})
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
               {household?.appliances?.map((ha) => (
                 <div
                   key={ha.id}
-                  className="p-3.5 rounded-2xl border border-gray-100 bg-gray-50/50 flex flex-col justify-between"
+                  className="p-3.5 rounded-2xl border border-emerald-500/20 bg-[#040e07] flex flex-col justify-between"
                 >
-                  <span className="font-bold text-xs text-charcoal-900">{ha.name}</span>
-                  <div className="mt-2 flex items-center justify-between text-[11px] text-charcoal-500">
+                  <span className="font-bold text-xs text-white">{ha.name}</span>
+                  <div className="mt-2 flex items-center justify-between text-[11px] text-emerald-200/60">
                     <span>Qty: {ha.quantity}</span>
                     <span>{ha.fuel_type === "gas" ? "LPG" : `${ha.power_watts}W`}</span>
                   </div>
@@ -249,21 +247,21 @@ export default function ProfilePage() {
 
       {/* TAB 2: ACHIEVEMENTS & BADGES */}
       {activeTab === "achievements" && (
-        <div className="bg-white rounded-3xl border border-forest-100 shadow-eco p-6 sm:p-8">
+        <div className="bg-[#07180F]/90 backdrop-blur-xl rounded-3xl border border-emerald-500/25 shadow-xl shadow-black/50 p-6 sm:p-8 hover:border-emerald-400/50 transition-all">
           <div className="mb-6 flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-extrabold uppercase text-emerald-700 tracking-wider">
+                <span className="text-[11px] font-extrabold uppercase text-emerald-400 tracking-wider">
                   Environmental Honors
                 </span>
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               </div>
-              <h3 className="font-black text-lg text-forest-950 mt-0.5">Achievements & 3D Badges</h3>
-              <p className="text-xs text-charcoal-500 mt-0.5">
+              <h3 className="font-black text-xl text-white mt-0.5">Achievements & 3D Badges</h3>
+              <p className="text-xs text-emerald-200/60 mt-0.5">
                 Unlock milestones to earn bonus EcoCredits and showcase flair on the leaderboard.
               </p>
             </div>
-            <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-forest-50 text-forest-900 border border-forest-100">
+            <span className="text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-950/70 text-emerald-300 border border-emerald-500/30">
               {achievements.filter((a) => a.is_unlocked).length} of {achievements.length} Unlocked
             </span>
           </div>
@@ -276,8 +274,8 @@ export default function ProfilePage() {
                 scale={1.02}
                 className={`p-6 rounded-3xl border transition-all duration-300 flex flex-col justify-between ${
                   ach.is_unlocked
-                    ? "bg-gradient-to-br from-forest-50/90 via-emerald-50/50 to-white border-emerald-200/90 shadow-eco hover:shadow-eco-lg"
-                    : "bg-white border-gray-100 opacity-65"
+                    ? "bg-[#07180F] border-emerald-500/40 shadow-xl hover:border-emerald-400"
+                    : "bg-[#040e07] border-emerald-900/40 opacity-60"
                 }`}
               >
                 <div>
@@ -286,47 +284,47 @@ export default function ProfilePage() {
                     <div
                       className={`w-12 h-12 rounded-2xl flex items-center justify-center relative transition-transform duration-300 group-hover:scale-110 ${
                         ach.is_unlocked
-                          ? "bg-gradient-to-tr from-forest-800 via-emerald-700 to-forest-900 text-limeAccent shadow-md border-2 border-emerald-400/40"
-                          : "bg-gray-100 text-gray-400 border border-gray-200"
+                          ? "bg-gradient-to-tr from-emerald-600 via-emerald-500 to-lime-400 text-charcoal-950 shadow-lg border-2 border-emerald-300/40"
+                          : "bg-emerald-950/40 text-emerald-600 border border-emerald-900/40"
                       }`}
                     >
                       <Award className="w-6 h-6" />
                       {ach.is_unlocked && (
-                        <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-limeAccent animate-ping"></span>
+                        <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-lime-300 animate-ping"></span>
                       )}
                     </div>
-                    <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-white border border-gray-100 text-forest-900 shadow-sm flex items-center gap-1">
-                      <Coins className="w-3 h-3 text-amber-500" />
+                    <span className="text-xs font-extrabold px-3 py-1 rounded-full bg-[#040e07] border border-emerald-500/30 text-amber-300 shadow-sm flex items-center gap-1">
+                      <Coins className="w-3 h-3 text-amber-400" />
                       +{ach.credit_reward} Credits
                     </span>
                   </div>
 
-                  <h4 className="font-extrabold text-base text-charcoal-900">{ach.title}</h4>
-                  <p className="text-xs text-charcoal-500 mt-1 leading-relaxed">
+                  <h4 className="font-extrabold text-base text-white">{ach.title}</h4>
+                  <p className="text-xs text-emerald-100/70 mt-1 leading-relaxed">
                     {ach.description}
                   </p>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-gray-100/80">
+                <div className="mt-5 pt-3 border-t border-emerald-900/40">
                   {ach.is_unlocked ? (
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-emerald-700 flex items-center gap-1.5 font-bold">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                      <span className="text-emerald-400 flex items-center gap-1.5 font-bold">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                         <span>Milestone Achieved</span>
                       </span>
-                      <span className="text-[10px] uppercase font-black tracking-wider text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] uppercase font-black tracking-wider text-lime-300 bg-emerald-950/80 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
                         Badge Active
                       </span>
                     </div>
                   ) : (
                     <div>
-                      <div className="flex items-center justify-between text-[11px] font-semibold text-charcoal-500 mb-1">
+                      <div className="flex items-center justify-between text-[11px] font-semibold text-emerald-200/60 mb-1">
                         <span>Progress</span>
                         <span>{ach.progress_percent}%</span>
                       </div>
-                      <div className="w-full h-1.5 rounded-full bg-gray-100 overflow-hidden">
+                      <div className="w-full h-1.5 rounded-full bg-[#040e07] overflow-hidden border border-emerald-500/20">
                         <div
-                          className="h-full bg-gradient-to-r from-emerald-500 to-limeAccent rounded-full transition-all duration-500"
+                          className="h-full bg-gradient-to-r from-emerald-500 to-lime-400 rounded-full transition-all duration-500"
                           style={{ width: `${ach.progress_percent}%` }}
                         />
                       </div>
@@ -341,36 +339,36 @@ export default function ProfilePage() {
 
       {/* TAB 3: PROFILE & SECURITY */}
       {activeTab === "security" && (
-        <div className="bg-white rounded-3xl border border-forest-100 shadow-eco p-6 sm:p-8 max-w-xl">
+        <div className="bg-[#07180F]/90 backdrop-blur-xl rounded-3xl border border-emerald-500/25 shadow-xl shadow-black/50 p-6 sm:p-8 max-w-xl hover:border-emerald-400/50 transition-all">
           <div className="mb-6">
-            <h3 className="font-bold text-base text-forest-950">Profile Settings & Password</h3>
-            <p className="text-xs text-charcoal-500 mt-0.5">
+            <h3 className="font-black text-lg text-white">Profile Settings & Password</h3>
+            <p className="text-xs text-emerald-200/60 mt-0.5">
               Update personal identity credentials
             </p>
           </div>
 
           <form onSubmit={handleSaveSecurity} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+              <label className="block text-xs font-bold text-emerald-200/90 mb-1.5">
                 Full Name
               </label>
               <input
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-xs font-medium focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-[#040e07] border border-emerald-500/30 text-xs font-medium text-white focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none"
                 required
               />
             </div>
 
-            <div className="pt-4 border-t border-gray-100">
-              <span className="text-xs font-bold text-forest-900 block mb-3">
+            <div className="pt-4 border-t border-emerald-900/40">
+              <span className="text-xs font-bold text-white block mb-3">
                 Change Password (Optional)
               </span>
 
               <div className="space-y-3">
                 <div>
-                  <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+                  <label className="block text-xs font-bold text-emerald-200/90 mb-1">
                     Current Password
                   </label>
                   <input
@@ -378,12 +376,12 @@ export default function ProfilePage() {
                     placeholder="Leave blank if not changing"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#040e07] border border-emerald-500/30 text-xs text-white focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-charcoal-700 mb-1">
+                  <label className="block text-xs font-bold text-emerald-200/90 mb-1">
                     New Password
                   </label>
                   <input
@@ -391,7 +389,7 @@ export default function ProfilePage() {
                     placeholder="Min 6 characters"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#040e07] border border-emerald-500/30 text-xs text-white focus:border-emerald-400 focus:ring-2 focus:ring-emerald-500/30 focus:outline-none"
                   />
                 </div>
               </div>
@@ -401,7 +399,7 @@ export default function ProfilePage() {
               <button
                 type="submit"
                 disabled={savingSecurity}
-                className="px-6 py-2.5 rounded-xl bg-forest-800 hover:bg-forest-900 text-white text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 hover:to-lime-400 text-charcoal-950 text-xs font-black transition flex items-center gap-1.5 shadow-md active:scale-95"
               >
                 <Save className="w-3.5 h-3.5" />
                 <span>{savingSecurity ? "Saving Changes..." : "Save Settings"}</span>

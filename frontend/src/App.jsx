@@ -26,9 +26,10 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-softWhite flex flex-col items-center justify-center">
-        <div className="w-12 h-12 border-4 border-forest-800 border-t-transparent rounded-full animate-spin mb-4"></div>
-        <span className="text-xs font-bold text-forest-900 tracking-wider uppercase">
+      <div className="min-h-screen bg-[#06140B] text-white flex flex-col items-center justify-center relative overflow-hidden">
+        <div className="absolute w-96 h-96 rounded-full bg-emerald-500/10 blur-[120px] pointer-events-none"></div>
+        <div className="w-12 h-12 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mb-4 shadow-lg shadow-emerald-500/20"></div>
+        <span className="text-xs font-black text-emerald-400 tracking-widest uppercase">
           Initializing EcoTrace Telemetry...
         </span>
       </div>
@@ -74,14 +75,14 @@ export default function App() {
 
   // 3. Authenticated App Layout (Dashboard, Tracker, Analytics, Rewards, Leaderboard, Profile, Specs)
   return (
-    <div className="min-h-screen bg-softWhite flex flex-col font-sans relative">
+    <div className="min-h-screen bg-[#06140B] text-white flex flex-col font-sans relative selection:bg-emerald-500 selection:text-black">
       <AmbientBackground />
       <Navbar
         onToggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         isSidebarCollapsed={isSidebarCollapsed}
       />
 
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative z-10">
         <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}

@@ -37,7 +37,7 @@ export default function Modal({
     >
       {/* Backdrop with Smooth Blur */}
       <div
-        className="fixed inset-0 bg-charcoal-900/60 backdrop-blur-md transition-opacity duration-300"
+        className="fixed inset-0 bg-black/85 backdrop-blur-md transition-opacity duration-300"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -46,19 +46,19 @@ export default function Modal({
       <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
         <div
           ref={dialogRef}
-          className={`relative transform overflow-hidden rounded-3xl bg-white text-left shadow-[0_25px_60px_-15px_rgba(22,101,52,0.25)] transition-all sm:my-8 w-full ${maxWidth} border border-forest-100 animate-in fade-in zoom-in-95 duration-200`}
+          className={`relative transform overflow-hidden rounded-3xl bg-[#07180F] text-left shadow-2xl shadow-black transition-all sm:my-8 w-full ${maxWidth} border border-emerald-500/35 text-white animate-in fade-in zoom-in-95 duration-200`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-4.5 border-b border-gray-100 bg-gradient-to-r from-forest-50/70 to-emerald-50/30">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-emerald-900/50 bg-[#040e07]">
             <h3
               id="modal-title"
-              className="text-lg font-black text-forest-950 tracking-tight"
+              className="text-lg font-black text-white tracking-tight"
             >
               {title}
             </h3>
             <button
               onClick={onClose}
-              className="rounded-xl p-1.5 text-charcoal-400 hover:text-charcoal-800 hover:bg-white active:scale-95 transition-all shadow-sm"
+              className="rounded-xl p-1.5 text-emerald-300 hover:text-white hover:bg-emerald-950/50 active:scale-95 transition-all shadow-sm"
               aria-label="Close dialog"
             >
               <X className="w-5 h-5" />

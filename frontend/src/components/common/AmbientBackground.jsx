@@ -57,27 +57,27 @@ export default function AmbientBackground() {
     >
       {/* 1. Top-Right Soft Emerald Ambient Orb */}
       <div
-        className="absolute -top-32 -right-32 w-[600px] h-[600px] rounded-full blur-[140px] opacity-40 transition-transform duration-700 ease-out"
+        className="absolute -top-32 -right-32 w-[650px] h-[650px] rounded-full blur-[140px] opacity-60 transition-transform duration-700 ease-out"
         style={{
-          background: "radial-gradient(circle, rgba(74, 222, 128, 0.28) 0%, rgba(22, 101, 52, 0.08) 50%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(16, 185, 129, 0.22) 0%, rgba(6, 78, 59, 0.08) 50%, transparent 70%)",
           transform: `translate3d(${offset.x * 0.8}px, ${offset.y * 0.8}px, 0)`,
         }}
       />
 
       {/* 2. Bottom-Left Soft Sage/Mint Ambient Orb */}
       <div
-        className="absolute -bottom-36 -left-36 w-[650px] h-[650px] rounded-full blur-[160px] opacity-35 transition-transform duration-700 ease-out"
+        className="absolute -bottom-36 -left-36 w-[700px] h-[700px] rounded-full blur-[160px] opacity-50 transition-transform duration-700 ease-out"
         style={{
-          background: "radial-gradient(circle, rgba(167, 243, 208, 0.35) 0%, rgba(5, 150, 105, 0.08) 55%, transparent 75%)",
+          background: "radial-gradient(circle, rgba(52, 211, 153, 0.18) 0%, rgba(6, 78, 59, 0.08) 55%, transparent 75%)",
           transform: `translate3d(${-offset.x * 0.6}px, ${-offset.y * 0.6}px, 0)`,
         }}
       />
 
-      {/* 3. Center Subtle Warm Gold/Lime Glow */}
+      {/* 3. Center Subtle Warm Lime Glow */}
       <div
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[400px] rounded-full blur-[150px] opacity-20 pointer-events-none"
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[550px] h-[450px] rounded-full blur-[150px] opacity-35 pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(190, 242, 100, 0.22) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(190, 242, 100, 0.16) 0%, transparent 70%)",
         }}
       />
 
@@ -93,7 +93,7 @@ export default function AmbientBackground() {
           ].map((mote) => (
             <div
               key={mote.id}
-              className="absolute text-emerald-600/15 animate-float-gentle will-change-transform"
+              className="absolute text-emerald-400/25 animate-float-gentle will-change-transform"
               style={{
                 left: mote.left,
                 top: mote.top,

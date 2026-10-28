@@ -83,25 +83,25 @@ export default function ExploreSustainableLiving({ onNavigateTab, onOpenLogModal
   ];
 
   return (
-    <div className="bg-white rounded-3xl border border-forest-100 shadow-eco p-6 sm:p-8">
+    <div className="bg-[#07180F]/90 backdrop-blur-xl rounded-3xl border border-emerald-500/25 shadow-xl shadow-black/50 p-6 sm:p-8 text-white hover:border-emerald-400/50 transition-all">
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-extrabold uppercase text-emerald-700 tracking-wider">
+            <span className="text-[11px] font-extrabold uppercase text-emerald-400 tracking-wider">
               Educational Telemetry & Discovery
             </span>
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
           </div>
-          <h3 className="font-black text-xl text-forest-950 mt-0.5">
+          <h3 className="font-black text-2xl text-white mt-0.5">
             Explore Sustainable Living
           </h3>
-          <p className="text-xs text-charcoal-400">
+          <p className="text-xs text-emerald-200/60">
             Actionable environmental pathways to reduce your household's baseline carbon footprint
           </p>
         </div>
 
-        <span className="text-xs font-bold text-forest-800 bg-forest-50 px-3.5 py-1.5 rounded-full border border-forest-100">
+        <span className="text-xs font-bold text-emerald-300 bg-emerald-950/60 px-3.5 py-1.5 rounded-full border border-emerald-500/30">
           6 Living Dimensions
         </span>
       </div>
@@ -116,7 +116,7 @@ export default function ExploreSustainableLiving({ onNavigateTab, onOpenLogModal
               key={topic.id}
               maxTilt={5}
               scale={1.015}
-              className="relative rounded-3xl overflow-hidden min-h-[260px] flex flex-col justify-between p-5 border border-forest-100/60 shadow-eco group transition-all"
+              className="relative rounded-3xl overflow-hidden min-h-[260px] flex flex-col justify-between p-5 border border-emerald-500/25 shadow-xl group transition-all"
             >
               {/* Background Nature Image with Zoom Effect */}
               <img
@@ -126,39 +126,38 @@ export default function ExploreSustainableLiving({ onNavigateTab, onOpenLogModal
               />
 
               {/* Gradient Scrim for Readability */}
-              <div className="absolute inset-0 bg-gradient-to-t from-forest-950/95 via-forest-900/65 to-black/30 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-[#07180F]/70 to-black/30 pointer-events-none" />
 
               {/* Top Tag & Icon */}
               <div className="relative z-10 flex items-center justify-between">
-                <span className="text-[10px] font-black uppercase tracking-wider text-limeAccent bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-limeAccent/20">
+                <span className="text-[10px] font-black uppercase tracking-wider text-lime-300 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-lime-400/30">
                   {topic.category}
                 </span>
 
-                <div className="p-2 rounded-xl bg-white/20 backdrop-blur-md text-white shadow-xs group-hover:scale-110 transition-transform">
-                  <Icon className="w-4 h-4 text-limeAccent" />
+                <div className="p-2 rounded-xl bg-black/40 backdrop-blur-md text-white shadow-xs group-hover:scale-110 transition-transform border border-white/10">
+                  <Icon className="w-4 h-4 text-emerald-400" />
                 </div>
               </div>
 
-              {/* Content and Action Button */}
-              <div className="relative z-10 mt-6">
-                <h4 className="font-extrabold text-base text-white tracking-tight leading-snug">
+              {/* Bottom Content & Interactive Action Link */}
+              <div className="relative z-10">
+                <h4 className="text-lg font-black text-white tracking-tight group-hover:text-emerald-300 transition-colors">
                   {topic.title}
                 </h4>
-                <p className="text-xs text-forest-100 mt-1 leading-relaxed opacity-90 font-normal">
+                <p className="text-xs text-emerald-100/75 mt-1 leading-relaxed">
                   {topic.description}
                 </p>
 
                 <div className="mt-4 pt-3 border-t border-white/15 flex items-center justify-between">
-                  <span className="text-[11px] text-forest-300 font-medium">
-                    Sustainable Action
+                  <span className="text-[11px] text-emerald-300/80 font-medium">
+                    Verified CEA Model
                   </span>
-
                   <button
                     onClick={topic.action}
-                    className="px-3 py-1.5 rounded-xl bg-white/20 hover:bg-forest-800 backdrop-blur-md active:scale-95 text-white text-xs font-bold transition flex items-center gap-1 border border-white/20 shadow-sm"
+                    className="flex items-center gap-1.5 text-xs font-bold text-lime-300 group-hover:text-white hover:underline transition-all"
                   >
                     <span>{topic.actionText}</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-limeAccent" />
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                   </button>
                 </div>
               </div>
