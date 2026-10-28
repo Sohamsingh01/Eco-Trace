@@ -47,6 +47,18 @@ export const NATURE_IMAGES = {
     category: "Water & Watersheds",
     caption: "Conserving domestic hot water preserves both fossil fuel energy and natural freshwater ecosystems.",
   },
+  heroEarthPodium: {
+    src: "/images/hero_earth_podium.jpg",
+    alt: "3D miniature Earth globe on glowing futuristic neon pedestal with pine trees and wind turbines",
+    title: "Living Planet Ecosystem",
+    category: "Global Sustainability",
+  },
+  dashboardMockup3d: {
+    src: "/images/dashboard_mockup_3d.jpg",
+    alt: "Floating angled 3D glass dashboard interface displaying emission trends and source breakdown",
+    title: "Precision Analytics Dashboard",
+    category: "Carbon Accounting",
+  },
 };
 
 export default NATURE_IMAGES;
