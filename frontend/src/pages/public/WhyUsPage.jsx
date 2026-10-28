@@ -442,3 +442,4 @@ export default function WhyUsPage({ onGetStarted, onLogin }) {
     </div>
   );
 }
+

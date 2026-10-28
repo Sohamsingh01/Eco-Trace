@@ -189,3 +189,4 @@ export default function PublicFooter({ onNavigate, onGetStarted, onLogin }) {
     </footer>
   );
 }
+

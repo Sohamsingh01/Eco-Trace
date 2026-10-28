@@ -296,3 +296,4 @@ export default function DashboardPreviewPage({ onGetStarted, onLogin }) {
     </div>
   );
 }
+

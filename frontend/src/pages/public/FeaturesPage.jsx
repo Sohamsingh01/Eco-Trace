@@ -322,3 +322,4 @@ export default function FeaturesPage({ onGetStarted, onLogin }) {
     </div>
   );
 }
+

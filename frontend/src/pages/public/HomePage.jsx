@@ -461,3 +461,4 @@ export default function HomePage({ onNavigate, onGetStarted, onLogin }) {
     </div>
   );
 }
+
