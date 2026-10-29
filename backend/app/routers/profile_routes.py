@@ -365,3 +365,95 @@ def get_user_achievements(current_user: User = Depends(get_current_user), db: Se
         })
 
     return {"achievements": result}
+
+
+@router.put("/household")
+def update_household(
+    payload: dict,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    h = db.query(Household).filter(Household.user_id == current_user.id).first()
+    if not h:
+        raise HTTPException(status_code=400, detail="Household profile not found.")
+    
+    if "home_type" in payload and payload["home_type"]:
+        h.home_type = payload["home_type"]
+    if "household_members" in payload and payload["household_members"] is not None:
+        h.household_members = int(payload["household_members"])
+    if "area_sqft" in payload and payload["area_sqft"] is not None:
+        h.area_sqft = float(payload["area_sqft"])
+    if "city_state" in payload and payload["city_state"]:
+        h.city_state = payload["city_state"]
+    if "daily_co2_target_kg" in payload and payload["daily_co2_target_kg"] is not None:
+        h.daily_co2_target_kg = float(payload["daily_co2_target_kg"])
+    
+    db.commit()
+    db.refresh(h)
+    return {"success": True, "message": "Household parameters updated successfully.", "household_id": h.id}
+
+
+@router.post("/household/appliances")
+def add_household_appliance(
+    payload: dict,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    h = db.query(Household).filter(Household.user_id == current_user.id).first()
+    if not h:
+        raise HTTPException(status_code=400, detail="Household profile not found.")
+    
+    app_id = payload.get("appliance_id")
+    name = payload.get("name", "Custom Appliance").strip()
+    category = payload.get("category", "Other")
+    fuel_type = payload.get("fuel_type", "electric")
+    power = float(payload.get("power_watts", 100))
+    quantity = int(payload.get("quantity", 1))
+
+    if not app_id:
+        # Create appliance entry if not exists
+        new_app = Appliance(
+            id=str(uuid.uuid4()),
+            name=name,
+            category=category,
+            default_power_watts=power,
+            fuel_type=fuel_type,
+            icon_name="Zap",
+            is_custom=True,
+            user_id=current_user.id
+        )
+        db.add(new_app)
+        db.flush()
+        app_id = new_app.id
+
+    ha = HouseholdAppliance(
+        id=str(uuid.uuid4()),
+        household_id=h.id,
+        appliance_id=app_id,
+        quantity=quantity,
+        power_watts=power
+    )
+    db.add(ha)
+    db.commit()
+    return {"success": True, "message": f"{name} added to household inventory.", "id": ha.id}
+
+
+@router.delete("/household/appliances/{ha_id}")
+def delete_household_appliance(
+    ha_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    h = db.query(Household).filter(Household.user_id == current_user.id).first()
+    if not h:
+        raise HTTPException(status_code=400, detail="Household profile not found.")
+    
+    ha = db.query(HouseholdAppliance).filter(
+        HouseholdAppliance.id == ha_id,
+        HouseholdAppliance.household_id == h.id
+    ).first()
+    if ha:
+        db.delete(ha)
+        db.commit()
+    return {"success": True, "message": "Appliance removed from inventory."}
+

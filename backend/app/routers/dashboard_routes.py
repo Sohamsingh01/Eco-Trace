@@ -69,7 +69,7 @@ def get_dashboard_summary(
     ).group_by(ActivityLog.appliance_name).order_by(desc("total_co2")).limit(8).all()
 
     pie_data = [
-        {"name": a[0], "value": round(a[1], 2), "kwh": round(a[2], 2)}
+        {"name": a[0], "appliance_name": a[0], "value": round(a[1], 2), "co2": round(a[1], 2), "kwh": round(a[2], 2)}
         for a in appliance_stats
     ]
 
@@ -84,7 +84,7 @@ def get_dashboard_summary(
     ).group_by(ActivityLog.category).order_by(desc("total_co2")).all()
 
     bar_data = [
-        {"category": c[0], "co2": round(c[1], 2), "kwh": round(c[2], 2)}
+        {"category": c[0], "name": c[0], "co2": round(c[1], 2), "value": round(c[1], 2), "kwh": round(c[2], 2)}
         for c in category_stats
     ]
 

@@ -58,8 +58,12 @@ export const api = {
   addCustomAppliance: (data) => request("/profile/appliances/custom", { method: "POST", body: data }),
   completeOnboarding: (data) => request("/profile/onboarding", { method: "POST", body: data }),
   getHousehold: () => request("/profile/household"),
+  updateHousehold: (data) => request("/profile/household", { method: "PUT", body: data }),
+  addHouseholdAppliance: (data) => request("/profile/household/appliances", { method: "POST", body: data }),
+  deleteHouseholdAppliance: (id) => request(`/profile/household/appliances/${id}`, { method: "DELETE" }),
   updateBudgetTarget: (daily_co2_target_kg) => request("/profile/budget-target", { method: "PUT", body: { daily_co2_target_kg } }),
   updateSettings: (data) => request("/profile/settings", { method: "PUT", body: data }),
+  updateProfile: (data) => request("/profile/settings", { method: "PUT", body: data }),
   getUserAchievements: () => request("/profile/achievements"),
 
   // Activities
