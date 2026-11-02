@@ -1,0 +1,43 @@
+services:
+  # ----------------------------------------------------
+  # 1. FastAPI Backend Web Service
+  # ----------------------------------------------------
+  - type: web
+    name: ecotrace-backend
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn app.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: 10080
+
+  # ----------------------------------------------------
+  # 2. React Vite Frontend Static Site
+  # ----------------------------------------------------
+  - type: web
+    name: ecotrace-frontend
+    runtime: static
+    rootDir: frontend
+    plan: free
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: ecotrace-backend
+          property: host
+          path: /api
+
