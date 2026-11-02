@@ -1,4 +1,22 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api";
+// Determine the API base URL:
+// 1. If VITE_API_BASE_URL is provided, normalize it (ensuring https:// if it's a domain, and /api suffix)
+// 2. Otherwise default to local backend
+function resolveApiBase() {
+  const envUrl = import.meta.env.VITE_API_BASE_URL;
+  if (!envUrl) {
+    return "http://127.0.0.1:8000/api";
+  }
+  let base = envUrl.trim();
+  if (!base.startsWith("http://") && !base.startsWith("https://")) {
+    base = `https://${base}`;
+  }
+  if (!base.endsWith("/api")) {
+    base = base.replace(/\/+$/, "") + "/api";
+  }
+  return base;
+}
+
+const API_BASE = resolveApiBase();
 
 function getAuthHeader() {
   const token = localStorage.getItem("ecotrace_token");
