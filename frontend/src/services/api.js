@@ -4,6 +4,10 @@
 function resolveApiBase() {
   const envUrl = import.meta.env.VITE_API_BASE_URL;
   if (!envUrl) {
+    // If running in production browser on Render, point directly to the deployed backend
+    if (typeof window !== "undefined" && window.location.hostname.includes("onrender.com")) {
+      return "https://ecotrace-backend-hisc.onrender.com/api";
+    }
     return "http://127.0.0.1:8000/api";
   }
   let base = envUrl.trim();

@@ -34,8 +34,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        fromService:
-          type: web
-          name: ecotrace-backend
-          property: host
-          path: /api
+        value: https://ecotrace-backend-hisc.onrender.com/api
